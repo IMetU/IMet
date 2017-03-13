@@ -52,6 +52,10 @@ The following **optional** features are implemented:
 * [ ] User can delete more than one person at one time
 * [ ] Have onboarding page - First-time user visual tutorial for how the app works
 
+## Wireframe
+
+<img src='http://imgur.com/a/NtwZ2'/>
+
 
 ## License
 
