@@ -54,7 +54,7 @@ The following **optional** features are implemented:
 
 ## Wireframe
 
-<img src='http://imgur.com/a/NtwZ2'/>
+<img src='IMetWireframe.png'/>
 
 
 ## License
