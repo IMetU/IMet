@@ -1,4 +1,4 @@
-package com.example.kelly79126.imet;
+package com.example.imetu.imet;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

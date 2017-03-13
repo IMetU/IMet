@@ -1,4 +1,4 @@
-package com.example.kelly79126.imet;
+package com.example.imetu.imet;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

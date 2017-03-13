@@ -1,4 +1,4 @@
-package com.example.kelly79126.imet;
+package com.example.imetu.imet;
 
 import org.junit.Test;
 
