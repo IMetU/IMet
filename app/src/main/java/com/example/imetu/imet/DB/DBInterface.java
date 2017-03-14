@@ -11,5 +11,4 @@ public interface DBInterface {
     public ArrayList<Member> queryBy(MemberFilter mf);
     public void editMember(Member member);
     public void deleteMember(int id);
-
 }

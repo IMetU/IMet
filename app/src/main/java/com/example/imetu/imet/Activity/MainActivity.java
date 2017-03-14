@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,15 +19,14 @@ import com.example.imetu.imet.Fragment.DeleteDialogFragment;
 import com.example.imetu.imet.Model.FakeData;
 import com.example.imetu.imet.Model.Member;
 import com.example.imetu.imet.R;
-import com.raizlabs.android.dbflow.sql.language.Condition;
 
-import org.parceler.Parcel;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity {
     private final int REQUEST_CODE_ADDMEMBER = 20;
+    private final int REQUEST_CODE_VIEWMEMBER = 21;
     private ListView lvMemberList;
     private ArrayList<Member> memberArrayList;
     private MemberListAdapter memberArrayAdapter;
@@ -47,7 +45,7 @@ public class MainActivity extends BaseActivity {
         syncData();
         lvMemberList = (ListView)findViewById(R.id.lvMemberList);
         //  Import fake data to arraylist
-//        memberArrayList = FakeData.CreateFakeMemberList();
+        memberArrayList = FakeData.CreateFakeMemberList();
         //  init memberArrayAdapter
         memberArrayAdapter = new MemberListAdapter(this, memberArrayList);
         //  set adapter to listview
@@ -69,6 +67,10 @@ public class MainActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //  TODO: view activity
                 Member member = memberArrayAdapter.getItem(position);
+                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                intent.putExtra("member", Parcels.wrap(member));
+                startActivityForResult(intent, REQUEST_CODE_VIEWMEMBER);
+
                 Toast.makeText(getApplicationContext(), member.getName() + " is select", Toast.LENGTH_SHORT).show();
             }
         });

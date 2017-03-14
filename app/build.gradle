@@ -59,4 +59,8 @@ dependencies {
     // compile "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbflow_version}"
     annotationProcessor 'org.parceler:parceler:1.1.6'
     testCompile 'junit:junit:4.12'
+
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/detail_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/DetailLeftTitleMargin"
+        android:textSize="@dimen/DetailTextSize"
+        tools:text="Phone"/>
+
+    <TextView
+        android:id="@+id/detail_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/DetailTextSize"
+        android:layout_marginLeft="@dimen/DetailLeftContentMargin"
+        tools:text="0910000000"/>
+
+</RelativeLayout>
