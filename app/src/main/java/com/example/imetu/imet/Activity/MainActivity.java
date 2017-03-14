@@ -1,10 +1,12 @@
 package com.example.imetu.imet.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,18 +15,25 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.imetu.imet.Adapter.MemberListAdapter;
+import com.example.imetu.imet.DB.DBEngine;
 import com.example.imetu.imet.Fragment.DeleteDialogFragment;
 import com.example.imetu.imet.Model.FakeData;
 import com.example.imetu.imet.Model.Member;
 import com.example.imetu.imet.R;
+import com.raizlabs.android.dbflow.sql.language.Condition;
+
+import org.parceler.Parcel;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity {
+    private final int REQUEST_CODE_ADDMEMBER = 20;
     private ListView lvMemberList;
     private ArrayList<Member> memberArrayList;
     private MemberListAdapter memberArrayAdapter;
     private FloatingActionButton fabAddMember;
+    private DBEngine dbEngine;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +43,11 @@ public class MainActivity extends BaseActivity {
     }
     //  TODO:setView
     private void setView() {
+        dbEngine = new DBEngine();
+        syncData();
         lvMemberList = (ListView)findViewById(R.id.lvMemberList);
         //  Import fake data to arraylist
-        memberArrayList = FakeData.CreateFakeMemberList();
+//        memberArrayList = FakeData.CreateFakeMemberList();
         //  init memberArrayAdapter
         memberArrayAdapter = new MemberListAdapter(this, memberArrayList);
         //  set adapter to listview
@@ -67,9 +78,15 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //  TODO:add member event
+                Intent intent = new Intent(MainActivity.this, AddMember.class);
+                startActivityForResult(intent, REQUEST_CODE_ADDMEMBER);
                 Toast.makeText(getApplicationContext(), "Add Member Event", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void syncData() {
+        memberArrayList = dbEngine.selectAll();
     }
 
     //  MenuBar Init
@@ -98,5 +115,15 @@ public class MainActivity extends BaseActivity {
     public void filterClick(MenuItem item) {
         //  TODO: filter action
         Toast.makeText(this, "Click filter button", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_ADDMEMBER){
+            Member member = (Member) Parcels.unwrap(data.getParcelableExtra("member"));
+            memberArrayList.add(member);
+            memberArrayAdapter.notifyDataSetChanged();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -2,9 +2,7 @@ package com.example.imetu.imet.Model;
 
 import org.parceler.Parcel;
 
-/**
- * Created by Quietus on 2017/3/14.
- */
+
 @Parcel
 public class Member {
     //  TODO:Data of member
@@ -12,6 +10,8 @@ public class Member {
     private String name;
     private String imgPath;
     private String phoneNumber;
+    private String event;
+    private boolean isEdited;
 
     public Member() {
     }
@@ -32,6 +32,14 @@ public class Member {
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
+    public String getEvent() {
+        return event;
+    }
+
+    public boolean isEdited() {
+        return isEdited;
+    }
     //  TODO:Setter
 
     public void setId(int id) {
@@ -48,5 +56,13 @@ public class Member {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public void setEvent(String event) {
+        this.event = event;
+    }
+
+    public void setEdited(boolean edited) {
+        isEdited = edited;
     }
 }
