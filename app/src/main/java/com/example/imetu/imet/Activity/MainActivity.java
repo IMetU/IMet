@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
             @Override
             public void onClick(View v) {
                 //  TODO:add member event
-                Intent intent = new Intent(MainActivity.this, AddMember.class);
+                Intent intent = new Intent(MainActivity.this, AddEditActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_ADDMEMBER);
                 Toast.makeText(getApplicationContext(), "Add Member Event", Toast.LENGTH_SHORT).show();
             }

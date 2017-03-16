@@ -31,7 +31,8 @@
         <activity android:name=".Activity.DetailActivity" />
         <activity android:name=".Activity.AdvanceSearchActivity" />
         <activity android:name=".Activity.TakePhoto" />
-        <activity android:name=".Activity.ImagePreview"></activity>
+        <activity android:name=".Activity.ImagePreview" />
+        <activity android:name=".Activity.AddEditActivity"></activity>
     </application>
 
 </manifest>
