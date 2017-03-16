@@ -2,6 +2,7 @@ package com.example.imetu.imet.DB;
 
 import com.example.imetu.imet.Model.Member;
 import com.example.imetu.imet.Model.MemberFilter;
+import com.raizlabs.android.dbflow.sql.language.ConditionGroup;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.ArrayList;
@@ -18,7 +19,12 @@ public class DBEngine implements DBInterface {
 
     @Override
     public ArrayList<Member> selectAll() {
-        List<MemberTable> memberList = SQLite.select().from(MemberTable.class).queryList();
+        // true for 'ASC', false for 'DESC'
+        List<MemberTable> memberList = SQLite.select()
+                                            .from(MemberTable.class)
+                                            .orderBy(MemberTable_Table.name, true)
+                                            .queryList();
+
         ArrayList<Member> memberArrayList = new ArrayList<>();
         for(int i = 0;i < memberList.size();i++){
             Member member = new Member();
@@ -35,7 +41,10 @@ public class DBEngine implements DBInterface {
 
     @Override
     public Member selectOne(int id) {
-        MemberTable memberTable = SQLite.select().from(MemberTable.class).querySingle();
+        MemberTable memberTable = SQLite.select()
+                                        .from(MemberTable.class)
+                                        .where(MemberTable_Table.id.eq(id))
+                                        .querySingle();
         Member member = new Member();
         member.setId(memberTable.id);
         member.setName(memberTable.name);
@@ -47,7 +56,17 @@ public class DBEngine implements DBInterface {
 
     @Override
     public ArrayList<Member> queryBy(MemberFilter mf) {
-        //  TODO: query db
+        //  TODO: query db, check the mf to add ConditionGroup
+        ConditionGroup conditionQueryBuilder = ConditionGroup.clause();
+        conditionQueryBuilder.and(MemberTable_Table.name.is("James"));
+
+        // true for 'ASC', false for 'DESC'
+        List<MemberTable> memberList = SQLite.select()
+                                            .from(MemberTable.class)
+                                            .where(conditionQueryBuilder)
+                                            .orderBy(MemberTable_Table.name, true)
+                                            .queryList();
+
         return null;
     }
 
