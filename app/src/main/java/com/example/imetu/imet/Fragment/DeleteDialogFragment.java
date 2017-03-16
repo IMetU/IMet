@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
+import com.example.imetu.imet.Activity.MainActivity;
 import com.example.imetu.imet.DB.DBEngine;
 import com.example.imetu.imet.Model.Member;
 
@@ -38,7 +39,7 @@ public class DeleteDialogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //  TODO:Delete action
-                dbEngine.deleteMember(member.getId());
+                ((MainActivity)getActivity()).deleteMember(member);
                 Toast.makeText(getActivity(), "Delete action start", Toast.LENGTH_SHORT).show();
             }
         });

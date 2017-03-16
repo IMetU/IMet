@@ -36,20 +36,12 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //  setView
-        setView();
-    }
-    //  TODO:setView
-    private void setView() {
         dbEngine = new DBEngine();
-        syncData();
         lvMemberList = (ListView)findViewById(R.id.lvMemberList);
-        //  Import fake data to arraylist
-        memberArrayList = FakeData.CreateFakeMemberList();
-        //  init memberArrayAdapter
-        memberArrayAdapter = new MemberListAdapter(this, memberArrayList);
-        //  set adapter to listview
-        lvMemberList.setAdapter(memberArrayAdapter);
+        memberArrayList = new ArrayList<>();
+
+        //  setView
+//        setView();
         //  long click event
         lvMemberList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -87,6 +79,30 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        setView();
+
+
+
+        super.onResume();
+    }
+
+    //  TODO:setView
+    private void setView() {
+
+
+
+        //  Import fake data to arraylist
+//        memberArrayList = FakeData.CreateFakeMemberList();
+
+        syncData();
+        //  init memberArrayAdapter
+        memberArrayAdapter = new MemberListAdapter(this, memberArrayList);
+        //  set adapter to listview
+        lvMemberList.setAdapter(memberArrayAdapter);
+    }
+
     private void syncData() {
         memberArrayList = dbEngine.selectAll();
     }
@@ -122,10 +138,16 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_ADDMEMBER){
-            Member member = (Member) Parcels.unwrap(data.getParcelableExtra("member"));
-            memberArrayList.add(member);
-            memberArrayAdapter.notifyDataSetChanged();
+//            Member member = (Member) Parcels.unwrap(data.getParcelableExtra("member"));
+//            memberArrayList.add(member);
+//            memberArrayAdapter.notifyDataSetChanged();
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    //  delete action
+    public void deleteMember(Member member){
+        dbEngine.deleteMember(member.getId());
+        setView();
     }
 }
