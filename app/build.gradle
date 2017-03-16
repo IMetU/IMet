@@ -45,10 +45,6 @@ dependencies {
         transitive = true;
     }
 
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile 'com.android.support:design:25.2.0'
-    compile 'org.parceler:parceler-api:1.1.6'
-
     // annotationProcessor now supported in Android Gradle plugin 2.2
     // See https://bitbucket.org/hvisser/android-apt/wiki/Migration
     annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
@@ -57,10 +53,16 @@ dependencies {
 
     // sql-cipher database encryption (optional)
     // compile "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbflow_version}"
-    annotationProcessor 'org.parceler:parceler:1.1.6'
-    testCompile 'junit:junit:4.12'
 
+
+    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:design:25.2.0'
+    compile 'org.parceler:parceler-api:1.1.6'
+    compile 'com.flurgle:camerakit:0.9.15'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'com.jakewharton:butterknife:8.4.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+    annotationProcessor 'org.parceler:parceler:1.1.6'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }

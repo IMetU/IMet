@@ -3,6 +3,9 @@
     package="com.example.imetu.imet">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".DB.DBApplication"
@@ -25,8 +28,10 @@
 
         <activity android:name=".Activity.BaseActivity" />
         <activity android:name=".Activity.AddMember" />
-        <activity android:name=".Activity.DetailActivity"/>
-        <activity android:name=".Activity.AdvanceSearchActivity"/>
+        <activity android:name=".Activity.DetailActivity" />
+        <activity android:name=".Activity.AdvanceSearchActivity" />
+        <activity android:name=".Activity.TakePhoto" />
+        <activity android:name=".Activity.ImagePreview"></activity>
     </application>
 
 </manifest>

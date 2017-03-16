@@ -1,18 +1,18 @@
 package com.example.imetu.imet.Activity;
 
+
 import android.content.Intent;
-import android.opengl.ETC1;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.example.imetu.imet.DB.DBEngine;
 import com.example.imetu.imet.Model.Member;
 import com.example.imetu.imet.R;
-
 import org.parceler.Parcels;
+
+
 
 public class AddMember extends AppCompatActivity {
     private EditText etName;
@@ -20,6 +20,8 @@ public class AddMember extends AppCompatActivity {
     private Button btnSave;
     private Member member;
     private DBEngine dbEngine;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,4 +49,12 @@ public class AddMember extends AppCompatActivity {
         });
         member = new Member();
     }
+
+    public void TakePhoto(View view) {
+        Intent intent = new Intent(this, TakePhoto.class);
+        startActivity(intent);
+
+    }
+
+
 }

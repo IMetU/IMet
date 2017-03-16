@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">IMet</string>
-    <string name="title_activity_main">MainActivity</string>
     <string name="search">Search</string>
     <string name="filter">Filter</string>
     <string name="edit">Edit</string>
