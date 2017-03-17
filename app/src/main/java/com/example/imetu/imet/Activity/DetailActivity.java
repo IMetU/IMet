@@ -11,29 +11,33 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.example.imetu.imet.DB.DBEngine;
 import com.example.imetu.imet.Fragment.AppearanceFragment;
 import com.example.imetu.imet.Fragment.InformationFragment;
 import com.example.imetu.imet.Model.Member;
 import com.example.imetu.imet.R;
 
-import org.parceler.Parcels;
-
 public class DetailActivity extends AppCompatActivity {
     private Member member;
     ViewPager vpPager;
+    private DBEngine dbEngine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
         //  get user info
-        member = (Member)Parcels.unwrap(getIntent().getParcelableExtra("member"));
-        getSupportActionBar().setTitle("Kelly");
+        dbEngine = new DBEngine();
+        int id = getIntent().getIntExtra("id", 0);
+        member = dbEngine.selectOne(id);
+
+        getSupportActionBar().setTitle(member.getName());
 
         // get viewpager
         vpPager = (ViewPager) findViewById(R.id.viewpager);
         // set the viewpager adapter for the pager
-        vpPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager()));
+        vpPager.setAdapter(new DetailPagerAdapter(getSupportFragmentManager()));
         // find the sliding tabstrip
         PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         // attach the tabstrip to the viewer
@@ -55,11 +59,11 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     //return the order of the fragment in the view pager
-    public class TweetsPagerAdapter extends FragmentStatePagerAdapter {
+    public class DetailPagerAdapter extends FragmentStatePagerAdapter {
         private String tabTitles[] = {"Information", "Appearance"};
 
         //Adapter gets the manager insert or remove fragment from activity
-        public TweetsPagerAdapter(FragmentManager fm){
+        public DetailPagerAdapter(FragmentManager fm){
             super(fm);
         }
 
@@ -67,9 +71,9 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             if(position ==0){
-                return new InformationFragment();
+                return new InformationFragment(member);
             }else if(position ==1){
-                return new AppearanceFragment();
+                return new AppearanceFragment(member);
             }else{
                 return null;
             }

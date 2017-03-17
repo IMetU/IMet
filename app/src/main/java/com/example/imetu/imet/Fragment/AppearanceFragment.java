@@ -8,7 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.imetu.imet.Model.Member;
 import com.example.imetu.imet.R;
+
+import static com.example.imetu.imet.Util.BODY_MEDIUM;
+import static com.example.imetu.imet.Util.BODY_PLUMP;
+import static com.example.imetu.imet.Util.BODY_THIN;
+import static com.example.imetu.imet.Util.GENDER_FEMALE;
+import static com.example.imetu.imet.Util.GENDER_MALE;
+import static com.example.imetu.imet.Util.GLASSES_WITH;
+import static com.example.imetu.imet.Util.GLASSES_WITHOUT;
+import static com.example.imetu.imet.Util.HAIR_LONG;
+import static com.example.imetu.imet.Util.HAIR_MEDIUM;
+import static com.example.imetu.imet.Util.HAIR_SHORT;
 
 /**
  * Created by kelly79126 on 2017/3/14.
@@ -32,6 +44,11 @@ public class AppearanceFragment  extends Fragment {
             R.id.other};
 
     static final private int NUM_INFOS = 6;
+    private Member member;
+
+    public AppearanceFragment(Member m) {
+        member = m;
+    }
 
 
     //inflation logic
@@ -66,11 +83,61 @@ public class AppearanceFragment  extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sContent = new String[NUM_INFOS];
-        sContent[0] = "Female";
-        sContent[1] = "163cm";
-        sContent[2] = "Medium";
-        sContent[3] = "Long";
-        sContent[4] = "With Glasses";
-        sContent[5] = "";
+        switch (member.getGender()) {
+            case GENDER_MALE:
+                sContent[0] = "Male";
+                break;
+            case GENDER_FEMALE:
+                sContent[0] = "Female";
+                break;
+            default:
+                sContent[0] = "";
+        }
+
+        sContent[1] = "" + member.getHeight();
+
+        switch (member.getBodyShape()){
+            case BODY_THIN:
+                sContent[2] = "Thin";
+                break;
+            case BODY_MEDIUM:
+                sContent[2] = "Medium";
+                break;
+            case BODY_PLUMP:
+                sContent[2] = "Plump";
+                break;
+            default:
+                sContent[2] = "";
+        }
+
+        switch (member.getHairLength()){
+            case HAIR_SHORT:
+                sContent[3] = "Short";
+                break;
+            case HAIR_MEDIUM:
+                sContent[3] = "Medium";
+                break;
+            case HAIR_LONG:
+                sContent[3] = "Long";
+                break;
+            default:
+                sContent[3] = "";
+        }
+
+        sContent[3] += member.isPermed() ? " Permed" : "";
+        sContent[3] += member.isDyed() ? " Dyed" : "";
+
+        switch (member.getGlasses()){
+            case GLASSES_WITH:
+                sContent[4] = "With Glasses";
+                break;
+            case GLASSES_WITHOUT:
+                sContent[4] = "Without Glasses";
+                break;
+            default:
+                sContent[4] = "";
+        }
+
+        sContent[5] = member.getOther();
     }
 }

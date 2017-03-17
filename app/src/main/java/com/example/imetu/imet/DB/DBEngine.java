@@ -2,6 +2,7 @@ package com.example.imetu.imet.DB;
 
 import com.example.imetu.imet.Model.Member;
 import com.example.imetu.imet.Model.MemberFilter;
+import com.example.imetu.imet.Util;
 import com.raizlabs.android.dbflow.sql.language.ConditionGroup;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
@@ -30,8 +31,21 @@ public class DBEngine implements DBInterface {
             Member member = new Member();
             member.setId(memberList.get(i).id);
             member.setName(memberList.get(i).name);
-            member.setPhoneNumber(memberList.get(i).phoneNumber);
+            member.setPhone(memberList.get(i).phone);
+            member.setEmail(memberList.get(i).email);
+            member.setRelationship(memberList.get(i).relationship);
             member.setEvent(memberList.get(i).event);
+            member.setLocation(memberList.get(i).location);
+            member.setYearMet(memberList.get(i).yearMet);
+            member.setTopicDiscussed(memberList.get(i).topicDiscussed);
+            member.setGender(memberList.get(i).gender);
+            member.setHeight(memberList.get(i).height);
+            member.setBodyShape(memberList.get(i).bodyShape);
+            member.setHairLength(memberList.get(i).hairLength);
+            member.setPermed(memberList.get(i).permed);
+            member.setDyed(memberList.get(i).dyed);
+            member.setGlasses(memberList.get(i).glasses);
+            member.setOther(memberList.get(i).other);
             member.setImgPath(memberList.get(i).imgPath);
             memberArrayList.add(member);
         }
@@ -45,11 +59,25 @@ public class DBEngine implements DBInterface {
                                         .from(MemberTable.class)
                                         .where(MemberTable_Table.id.eq(id))
                                         .querySingle();
+
         Member member = new Member();
         member.setId(memberTable.id);
         member.setName(memberTable.name);
-        member.setPhoneNumber(memberTable.phoneNumber);
+        member.setPhone(memberTable.phone);
+        member.setEmail(memberTable.email);
+        member.setRelationship(memberTable.relationship);
         member.setEvent(memberTable.event);
+        member.setLocation(memberTable.location);
+        member.setYearMet(memberTable.yearMet);
+        member.setTopicDiscussed(memberTable.topicDiscussed);
+        member.setGender(memberTable.gender);
+        member.setHeight(memberTable.height);
+        member.setBodyShape(memberTable.bodyShape);
+        member.setHairLength(memberTable.hairLength);
+        member.setPermed(memberTable.permed);
+        member.setDyed(memberTable.dyed);
+        member.setGlasses(memberTable.glasses);
+        member.setOther(memberTable.other);
         member.setImgPath(memberTable.imgPath);
         return member;
     }
@@ -77,14 +105,26 @@ public class DBEngine implements DBInterface {
         //  Check is id already used?
         //  if used, save table with id
         //  if not, save table without id
-        if (member.isEdited()){
+        if (member.getId() == Util.ADD_MEMBER){
             memberTable.id = member.getId();
         }
         memberTable.name = member.getName();
-        memberTable.phoneNumber = member.getPhoneNumber();
-        memberTable.imgPath = member.getImgPath();
+        memberTable.phone = member.getPhone();
+        memberTable.email = member.getEmail();
+        memberTable.relationship = member.getRelationship();
         memberTable.event = member.getEvent();
-        memberTable.isEdited = member.isEdited();
+        memberTable.location = member.getLocation();
+        memberTable.yearMet = member.getYearMet();
+        memberTable.topicDiscussed = member.getTopicDiscussed();
+        memberTable.gender = member.getGender();
+        memberTable.height = member.getHeight();
+        memberTable.bodyShape = member.getBodyShape();
+        memberTable.hairLength = member.getHairLength();
+        memberTable.permed = member.isPermed();
+        memberTable.dyed = member.isDyed();
+        memberTable.glasses = member.getGlasses();
+        memberTable.other = member.getOther();
+        memberTable.imgPath = member.getImgPath();
         memberTable.save();
     }
 }

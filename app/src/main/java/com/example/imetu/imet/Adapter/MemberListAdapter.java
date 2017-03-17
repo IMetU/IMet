@@ -2,7 +2,6 @@ package com.example.imetu.imet.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,8 +45,8 @@ public class MemberListAdapter extends ArrayAdapter<Member> {
         if (member.getName() != null){
             viewHolder.tvName.setText(member.getName());
         }
-        if (member.getPhoneNumber() != null){
-            viewHolder.tvPhoneNumber.setText(member.getPhoneNumber());
+        if (member.getPhone() != null){
+            viewHolder.tvPhoneNumber.setText(member.getPhone());
         }
         return convertView;
     }

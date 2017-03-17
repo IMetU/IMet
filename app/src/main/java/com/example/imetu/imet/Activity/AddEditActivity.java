@@ -1,28 +1,36 @@
 package com.example.imetu.imet.Activity;
 
-import android.app.DatePickerDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 
+import com.example.imetu.imet.DB.DBEngine;
+import com.example.imetu.imet.Model.Member;
 import com.example.imetu.imet.R;
 
-import java.util.Calendar;
-
-import static com.example.imetu.imet.R.id.btnSave;
-import static com.example.imetu.imet.R.id.etName;
-import static com.example.imetu.imet.R.id.etOther;
-import static com.example.imetu.imet.R.id.radio_Thin;
+import static com.example.imetu.imet.Util.ADD_MEMBER;
+import static com.example.imetu.imet.Util.BODY_MEDIUM;
+import static com.example.imetu.imet.Util.BODY_PLUMP;
+import static com.example.imetu.imet.Util.BODY_THIN;
+import static com.example.imetu.imet.Util.BODY_UNDEFINED;
+import static com.example.imetu.imet.Util.GENDER_FEMALE;
+import static com.example.imetu.imet.Util.GENDER_MALE;
+import static com.example.imetu.imet.Util.GENDER_UNDEFINED;
+import static com.example.imetu.imet.Util.GLASSES_UNDEFINED;
+import static com.example.imetu.imet.Util.GLASSES_WITH;
+import static com.example.imetu.imet.Util.GLASSES_WITHOUT;
+import static com.example.imetu.imet.Util.HAIR_LONG;
+import static com.example.imetu.imet.Util.HAIR_MEDIUM;
+import static com.example.imetu.imet.Util.HAIR_SHORT;
+import static com.example.imetu.imet.Util.HAIR_UNDEFINED;
 
 public class AddEditActivity extends AppCompatActivity {
 
-    Button btnSave;
     EditText etName;
     EditText etPhone;
     EditText etEmail;
@@ -33,35 +41,38 @@ public class AddEditActivity extends AppCompatActivity {
     EditText etTopicDiscussed;
     EditText etOther;
     SeekBar seekbarHeight;
-    String seekbarHeightProgress = "0"; //default
+    int seekbarHeightProgress = 0; //default
 
-    RadioButton radio_Male;
-    RadioButton radio_Female;
-    String MaleChecked;
-    String FemaleChecked;
+    RadioGroup genderRadioGroup;
+    RadioGroup bodyShapeRadioGroup;
+    RadioGroup hairLengthRadioGroup;
+    RadioGroup glassesRadioGroup;
+//    RadioButton radio_Male;
+//    RadioButton radio_Female;
 
-    RadioButton radio_Thin;
-    RadioButton radio_Medium;
-    RadioButton radio_Plump;
-    String ThinChecked;
-    String MediumChecked;
-    String PlumpChecked;
+//    RadioButton radio_Thin;
+//    RadioButton radio_Medium;
+//    RadioButton radio_Plump;
 
-    RadioButton radio_ShortHair;
-    RadioButton radio_MediumHair;
-    RadioButton radio_LongHair;
-    String ShortHairChecked;
-    String MediumHairChecked;
-    String LongHairChecked;
+//    RadioButton radio_ShortHair;
+//    RadioButton radio_MediumHair;
+//    RadioButton radio_LongHair;
+//    String ShortHairChecked;
+//    String MediumHairChecked;
+//    String LongHairChecked;
     CheckBox checkbox_Permed;
     CheckBox checkbox_Dyed;
-    String PermedChecked;
-    String DyedChecked;
+//    String PermedChecked;
+//    String DyedChecked;
 
-    RadioButton radio_WithGlasses;
-    RadioButton radio_WithoutGlasses;
-    String WithGlassesChecked;
-    String WithoutGlassesChecked;
+//    RadioButton radio_WithGlasses;
+//    RadioButton radio_WithoutGlasses;
+//    String WithGlassesChecked;
+//    String WithoutGlassesChecked;
+
+    private DBEngine dbEngine;
+    private Member member;
+    private int type;
 
 
     @Override
@@ -69,6 +80,134 @@ public class AddEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit);
 
+        type = getIntent().getIntExtra("TYPE", ADD_MEMBER);
+        if (type == ADD_MEMBER) {
+            member = new Member();
+        } else {
+            member = dbEngine.selectOne(getIntent().getIntExtra("id", 0));
+        }
+
+        dbEngine = new DBEngine();
+
+        setView();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_add_edit, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //  save action
+    public void saveClick(MenuItem item) {
+        if (type == ADD_MEMBER) {
+            member.setId(ADD_MEMBER);
+        }
+
+        member.setName(etName.getText().toString());
+        member.setPhone(etPhone.getText().toString());
+        member.setEmail(etEmail.getText().toString());
+        member.setRelationship(etRelationship.getText().toString());
+        member.setEvent(etEvent.getText().toString());
+        member.setLocation(etLocation.getText().toString());
+        member.setYearMet(etYearMet.getText().toString());
+        member.setTopicDiscussed(etTopicDiscussed.getText().toString());
+        member.setOther(etOther.getText().toString());
+
+        switch (genderRadioGroup.getCheckedRadioButtonId()){
+            case R.id.radio_Male:
+                member.setGender(GENDER_MALE);
+                break;
+            case R.id.radio_Female:
+                member.setGender(GENDER_FEMALE);
+                break;
+            default:
+                member.setGender(GENDER_UNDEFINED);
+        }
+
+        member.setHeight(150 + seekbarHeightProgress);
+
+        switch (bodyShapeRadioGroup.getCheckedRadioButtonId()){
+            case R.id.radio_Thin:
+                member.setBodyShape(BODY_THIN);
+                break;
+            case R.id.radio_Medium:
+                member.setBodyShape(BODY_MEDIUM);
+                break;
+            case R.id.radio_Plump:
+                member.setBodyShape(BODY_PLUMP);
+                break;
+            default:
+                member.setBodyShape(BODY_UNDEFINED);
+        }
+
+        switch (hairLengthRadioGroup.getCheckedRadioButtonId()){
+            case R.id.radio_ShortHair:
+                member.setHairLength(HAIR_SHORT);
+                break;
+            case R.id.radio_MediumHair:
+                member.setHairLength(HAIR_MEDIUM);
+                break;
+            case R.id.radio_LongHair:
+                member.setHairLength(HAIR_LONG);
+                break;
+            default:
+                member.setHairLength(HAIR_UNDEFINED);
+        }
+
+        member.setPermed(checkbox_Permed.isChecked() ? true : false);
+        member.setDyed(checkbox_Dyed.isChecked() ? true : false);
+
+        switch (glassesRadioGroup.getCheckedRadioButtonId()){
+            case R.id.radio_WithGlasses:
+                member.setGlasses(GLASSES_WITH);
+                break;
+            case R.id.radio_WithoutGlasses:
+                member.setGlasses(GLASSES_WITHOUT);
+                break;
+            default:
+                member.setGlasses(GLASSES_UNDEFINED);
+        }
+
+        dbEngine.editMember(member);
+        finish();
+/*
+        String etNameContent = etName.getText().toString();
+        String etPhoneContent = etPhone.getText().toString();
+        String etEmailContent = etEmail.getText().toString();
+        String etRelationshipContent = etRelationship.getText().toString();
+        String etEventContent = etEvent.getText().toString();
+        String etLocationContent = etLocation.getText().toString();
+        String etYearMetContent = etYearMet.getText().toString();
+        String etTopicDiscussedContent = etTopicDiscussed.getText().toString();
+        String etOtherContent = etOther.getText().toString();
+
+        MaleChecked = radio_Male.isChecked() ? "Y" : "N";
+        FemaleChecked = radio_Female.isChecked() ? "Y" : "N";
+
+        ThinChecked = radio_Thin.isChecked() ? "Y" : "N";
+        MediumChecked = radio_Medium.isChecked() ? "Y" : "N";
+        PlumpChecked = radio_Plump.isChecked() ? "Y" : "N";
+
+        ShortHairChecked = radio_ShortHair.isChecked() ? "Y" : "N";
+        MediumHairChecked = radio_MediumHair.isChecked() ? "Y" : "N";
+        LongHairChecked = radio_LongHair.isChecked() ? "Y" : "N";
+        PermedChecked = checkbox_Permed.isChecked() ? "Y" : "N";
+        DyedChecked = checkbox_Dyed.isChecked() ? "Y" : "N";
+
+        WithGlassesChecked = radio_WithGlasses.isChecked() ? "Y" : "N";
+        WithoutGlassesChecked = radio_WithoutGlasses.isChecked() ? "Y" : "N";
+
+        Log.d("DEGUG", "Name=" + etNameContent + ", Phone=" + etPhoneContent + ", Email=" + etEmailContent + ", Relationship=" + etRelationshipContent + ", Event=" + etEventContent + ", Location=" + etLocationContent + ", YearMet=" + etYearMetContent + ", TopicDiscussed=" + etTopicDiscussedContent + ", Height=" + seekbarHeightProgress);
+        Log.d("DEBUG", "MaleChecked=" + MaleChecked + ", FemaleChecked=" + FemaleChecked);
+        Log.d("DEBUG", "ThinChecked=" + ThinChecked + ", MediumChecked=" + MediumChecked + ", PlumpChecked=" + PlumpChecked);
+        Log.d("DEBUG", "ShortHairChecked=" + ShortHairChecked + ", MediumHairChecked=" + MediumHairChecked + ", LongHairChecked=" + LongHairChecked + ", PermedChecked=" + PermedChecked + ", DyedChecked=" + DyedChecked);
+        Log.d("DEBUG", "WithGlassesChecked=" + WithGlassesChecked + ", WithoutGlassesChecked=" + WithoutGlassesChecked);
+        Log.d("DEBUG", "Other=" + etOtherContent);
+*/
+    }
+
+    private void setView() {
         etName = (EditText) findViewById(R.id.etName);
         etPhone = (EditText) findViewById(R.id.etPhone);
         etEmail = (EditText) findViewById(R.id.etEmail);
@@ -79,21 +218,26 @@ public class AddEditActivity extends AppCompatActivity {
         etTopicDiscussed = (EditText) findViewById(R.id.etTopicDiscussed);
         etOther = (EditText) findViewById(R.id.etOther);
 
-        radio_Male = (RadioButton) findViewById(R.id.radio_Male);
-        radio_Female = (RadioButton) findViewById(R.id.radio_Female);
+        genderRadioGroup = (RadioGroup) findViewById(R.id.GenderRadioGroup);
+        bodyShapeRadioGroup = (RadioGroup) findViewById(R.id.BodyShapeRadioGroup);
+        hairLengthRadioGroup = (RadioGroup) findViewById(R.id.HairLengthRadioGroup);
+        glassesRadioGroup = (RadioGroup) findViewById(R.id.GlassesRadioGroup);
 
-        radio_Thin = (RadioButton) findViewById(R.id.radio_Thin);
-        radio_Medium = (RadioButton) findViewById(R.id.radio_Medium);
-        radio_Plump = (RadioButton) findViewById(R.id.radio_Plump);
-
-        radio_ShortHair = (RadioButton) findViewById(R.id.radio_ShortHair);
-        radio_MediumHair = (RadioButton) findViewById(R.id.radio_MediumHair);
-        radio_LongHair = (RadioButton) findViewById(R.id.radio_LongHair);
+//        radio_Male = (RadioButton) findViewById(radio_Male);
+//        radio_Female = (RadioButton) findViewById(radio_Female);
+//
+//        radio_Thin = (RadioButton) findViewById(R.id.radio_Thin);
+//        radio_Medium = (RadioButton) findViewById(R.id.radio_Medium);
+//        radio_Plump = (RadioButton) findViewById(R.id.radio_Plump);
+//
+//        radio_ShortHair = (RadioButton) findViewById(R.id.radio_ShortHair);
+//        radio_MediumHair = (RadioButton) findViewById(R.id.radio_MediumHair);
+//        radio_LongHair = (RadioButton) findViewById(radio_LongHair);
         checkbox_Permed = (CheckBox) findViewById(R.id.checkbox_Permed);
         checkbox_Dyed = (CheckBox) findViewById(R.id.checkbox_Dyed);
 
-        radio_WithGlasses = (RadioButton) findViewById(R.id.radio_WithGlasses);
-        radio_WithoutGlasses = (RadioButton) findViewById(R.id.radio_WithoutGlasses);
+//        radio_WithGlasses = (RadioButton) findViewById(radio_WithGlasses);
+//        radio_WithoutGlasses = (RadioButton) findViewById(radio_WithoutGlasses);
 
         seekbarHeight = (SeekBar) findViewById(R.id.seekbarHeight);
         seekbarHeight.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -101,7 +245,7 @@ public class AddEditActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
-                seekbarHeightProgress = String.valueOf(progress);
+                seekbarHeightProgress = progress;
             }
 
             @Override
@@ -112,49 +256,5 @@ public class AddEditActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
-
-
-        btnSave = (Button) findViewById(R.id.btnSave);
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String etNameContent = etName.getText().toString();
-                String etPhoneContent = etPhone.getText().toString();
-                String etEmailContent = etEmail.getText().toString();
-                String etRelationshipContent = etRelationship.getText().toString();
-                String etEventContent = etEvent.getText().toString();
-                String etLocationContent = etLocation.getText().toString();
-                String etYearMetContent = etYearMet.getText().toString();
-                String etTopicDiscussedContent = etTopicDiscussed.getText().toString();
-                String etOtherContent = etOther.getText().toString();
-
-                MaleChecked = radio_Male.isChecked() ? "Y" : "N";
-                FemaleChecked = radio_Female.isChecked() ? "Y" : "N";
-
-                ThinChecked = radio_Thin.isChecked() ? "Y" : "N";
-                MediumChecked = radio_Medium.isChecked() ? "Y" : "N";
-                PlumpChecked = radio_Plump.isChecked() ? "Y" : "N";
-
-                ShortHairChecked = radio_ShortHair.isChecked() ? "Y" : "N";
-                MediumHairChecked = radio_MediumHair.isChecked() ? "Y" : "N";
-                LongHairChecked = radio_LongHair.isChecked() ? "Y" : "N";
-                PermedChecked = checkbox_Permed.isChecked() ? "Y" : "N";
-                DyedChecked = checkbox_Dyed.isChecked() ? "Y" : "N";
-
-                WithGlassesChecked = radio_WithGlasses.isChecked() ? "Y" : "N";
-                WithoutGlassesChecked = radio_WithoutGlasses.isChecked() ? "Y" : "N";
-
-                Log.d("DEGUG", "Name=" + etNameContent + ", Phone=" + etPhoneContent + ", Email=" + etEmailContent + ", Relationship=" + etRelationshipContent + ", Event=" + etEventContent + ", Location=" + etLocationContent + ", YearMet=" + etYearMetContent + ", TopicDiscussed=" + etTopicDiscussedContent + ", Height=" + seekbarHeightProgress);
-                Log.d("DEBUG", "MaleChecked=" + MaleChecked + ", FemaleChecked=" + FemaleChecked);
-                Log.d("DEBUG", "ThinChecked=" + ThinChecked + ", MediumChecked=" + MediumChecked + ", PlumpChecked=" + PlumpChecked);
-                Log.d("DEBUG", "ShortHairChecked=" + ShortHairChecked + ", MediumHairChecked=" + MediumHairChecked + ", LongHairChecked=" + LongHairChecked + ", PermedChecked=" + PermedChecked + ", DyedChecked=" + DyedChecked);
-                Log.d("DEBUG", "WithGlassesChecked=" + WithGlassesChecked + ", WithoutGlassesChecked=" + WithoutGlassesChecked);
-                Log.d("DEBUG", "Other=" + etOtherContent);
-
-            }
-        });
-
-
     }
 }

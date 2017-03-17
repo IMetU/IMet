@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.imetu.imet.Model.Member;
 import com.example.imetu.imet.R;
 
 /**
@@ -33,7 +34,11 @@ public class InformationFragment extends Fragment {
                                 R.id.topicDiscussed};
 
     static final private int NUM_INFOS = 7;
+    private Member member;
 
+    public InformationFragment(Member m) {
+        member = m;
+    }
 
     //inflation logic
     @Nullable
@@ -48,13 +53,13 @@ public class InformationFragment extends Fragment {
         for (int idx = 0; idx < NUM_INFOS; idx++) {
             vgInformation[idx] = (ViewGroup) v.findViewById(vgInformationId[idx]);
             if (null != vgInformation[idx]) {
-                inflateInformatilGroup(vgInformation[idx], idx, R.id.detail_title, R.id.detail_content);
+                inflateInformationGroup(vgInformation[idx], idx, R.id.detail_title, R.id.detail_content);
             }
         }
         return v;
     }
 
-    private void inflateInformatilGroup(ViewGroup vgParent, int idx, int iTitle, int iContent){
+    private void inflateInformationGroup(ViewGroup vgParent, int idx, int iTitle, int iContent){
         tvTitle[idx] = (TextView)vgParent.findViewById(iTitle);
         tvTitle[idx].setText(sTitle[idx]);
         tvContent[idx] = (TextView)vgParent.findViewById(iContent);
@@ -67,13 +72,13 @@ public class InformationFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sContent = new String[NUM_INFOS];
-        sContent[0] = "0910000000";
-        sContent[1] = "kelly79126@gmail.com";
-        sContent[2] = "friends";
-        sContent[3] = "android";
-        sContent[4] = "taipei";
-        sContent[5] = "";
-        sContent[6] = "";
+        sContent[0] = member.getPhone();
+        sContent[1] = member.getEmail();
+        sContent[2] = member.getRelationship();
+        sContent[3] = member.getEvent();
+        sContent[4] = member.getLocation();
+        sContent[5] = member.getYearMet();
+        sContent[6] = member.getTopicDiscussed();
     }
 
 }

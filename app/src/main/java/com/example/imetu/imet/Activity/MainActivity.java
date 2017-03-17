@@ -18,17 +18,15 @@ import com.example.imetu.imet.DB.DBEngine;
 import com.example.imetu.imet.Fragment.DeleteDialogFragment;
 import com.example.imetu.imet.Fragment.FilterFragment;
 import com.example.imetu.imet.Fragment.FilterFragment.FilterAdvanceSearchListener;
-import com.example.imetu.imet.Model.FakeData;
 import com.example.imetu.imet.Model.Member;
 import com.example.imetu.imet.Model.MemberFilter;
 import com.example.imetu.imet.R;
 
-import org.parceler.Parcels;
-
 import java.util.ArrayList;
 
+import static com.example.imetu.imet.Util.ADD_MEMBER;
+
 public class MainActivity extends BaseActivity implements FilterFragment.FilterSearchListener, FilterAdvanceSearchListener{
-    private final int REQUEST_CODE_ADDMEMBER = 20;
     private final int REQUEST_CODE_ADVANCE_SEARCH = 21;
     private ListView lvMemberList;
     private ArrayList<Member> memberArrayList;
@@ -65,7 +63,7 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
                 //  TODO: view activity
                 Member member = memberArrayAdapter.getItem(position);
                 Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                intent.putExtra("member", Parcels.wrap(member));
+                intent.putExtra("id", member.getId());
                 startActivity(intent);
 
                 Toast.makeText(getApplicationContext(), member.getName() + " is select", Toast.LENGTH_SHORT).show();
@@ -78,7 +76,8 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
             public void onClick(View v) {
                 //  TODO:add member event
                 Intent intent = new Intent(MainActivity.this, AddEditActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_ADDMEMBER);
+                intent.putExtra("TYPE", ADD_MEMBER);
+                startActivity(intent);
                 Toast.makeText(getApplicationContext(), "Add Member Event", Toast.LENGTH_SHORT).show();
             }
         });
@@ -87,9 +86,6 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
     @Override
     protected void onResume() {
         setView();
-
-
-
         super.onResume();
     }
 
@@ -146,14 +142,9 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_ADDMEMBER){
-//            Member member = (Member) Parcels.unwrap(data.getParcelableExtra("member"));
-//            memberArrayList.add(member);
-//            memberArrayAdapter.notifyDataSetChanged();
-        } else if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_ADVANCE_SEARCH){
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_ADVANCE_SEARCH){
             String textForTest = data.getExtras().getString("test");
             Toast.makeText(this, textForTest, Toast.LENGTH_SHORT).show();
-
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

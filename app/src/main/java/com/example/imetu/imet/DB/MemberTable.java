@@ -1,13 +1,10 @@
 package com.example.imetu.imet.DB;
 
 
-import com.example.imetu.imet.Model.Member;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
-
-import org.parceler.Parcel;
 
 @Table(database = MemberDB.class)
 public class MemberTable extends BaseModel {
@@ -16,18 +13,53 @@ public class MemberTable extends BaseModel {
     int id;
     //  TODO:Table create
     @Column
+    String imgPath;
+
+    @Column
     String name;
 
     @Column
-    String phoneNumber;
+    String phone;
+
+    @Column
+    String email;
+
+    @Column
+    String relationship;
 
     @Column
     String event;
 
     @Column
-    String imgPath;
+    String location;
 
     @Column
-    boolean isEdited;
+    String yearMet;
 
+    @Column
+    String topicDiscussed;
+
+    @Column
+    int gender;
+
+    @Column
+    int height;
+
+    @Column
+    int bodyShape;
+
+    @Column
+    int hairLength;
+
+    @Column
+    boolean permed;
+
+    @Column
+    boolean dyed;
+
+    @Column
+    int glasses;
+
+    @Column
+    String other;
 }
