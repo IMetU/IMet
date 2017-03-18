@@ -79,17 +79,83 @@ public class AddEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit);
+        dbEngine = new DBEngine();
+        setView();
 
         type = getIntent().getIntExtra("TYPE", ADD_MEMBER);
         if (type == ADD_MEMBER) {
             member = new Member();
         } else {
             member = dbEngine.selectOne(getIntent().getIntExtra("id", 0));
+            setMemberValue();
+        }
+    }
+
+    private void setMemberValue() {
+        etName.setText(member.getName());
+        etPhone.setText(member.getPhone());
+        etEmail.setText(member.getEmail());
+        etRelationship.setText(member.getRelationship());
+        etEvent.setText(member.getEvent());
+        etLocation.setText(member.getLocation());
+        etYearMet.setText(member.getYearMet());
+        etTopicDiscussed.setText(member.getTopicDiscussed());
+
+        switch (member.getGender()){
+            case GENDER_MALE:
+                genderRadioGroup.check(R.id.radio_Male);
+                break;
+            case GENDER_FEMALE:
+                genderRadioGroup.check(R.id.radio_Female);
+                break;
+            default:
+                // do nothing
         }
 
-        dbEngine = new DBEngine();
+        seekbarHeight.setProgress(member.getHeight()-150);
 
-        setView();
+        switch (member.getBodyShape()){
+            case BODY_THIN:
+                bodyShapeRadioGroup.check(R.id.radio_Thin);
+                break;
+            case BODY_MEDIUM:
+                bodyShapeRadioGroup.check(R.id.radio_Medium);
+                break;
+            case  BODY_PLUMP:
+                bodyShapeRadioGroup.check(R.id.radio_Plump);
+                break;
+            default:
+                // do nothing
+        }
+
+        switch (member.getHairLength()) {
+            case HAIR_SHORT:
+                hairLengthRadioGroup.check(R.id.radio_ShortHair);
+                break;
+            case HAIR_MEDIUM:
+                hairLengthRadioGroup.check(R.id.radio_MediumHair);
+                break;
+            case HAIR_LONG:
+                hairLengthRadioGroup.check(R.id.radio_LongHair);
+                break;
+            default:
+                // do nothing
+        }
+
+        checkbox_Permed.setChecked(member.isPermed());
+        checkbox_Dyed.setChecked(member.isDyed());
+
+        switch (member.getGlasses()) {
+            case GLASSES_WITH:
+                glassesRadioGroup.check(R.id.radio_WithGlasses);
+                break;
+            case GLASSES_WITHOUT:
+                glassesRadioGroup.check(R.id.radio_WithoutGlasses);
+                break;
+            default:
+                // do nothing
+        }
+
     }
 
     @Override

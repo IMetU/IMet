@@ -36,6 +36,8 @@ public class InformationFragment extends Fragment {
     static final private int NUM_INFOS = 7;
     private Member member;
 
+    public InformationFragment(){}
+
     public InformationFragment(Member m) {
         member = m;
     }
@@ -72,6 +74,16 @@ public class InformationFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sContent = new String[NUM_INFOS];
+        setMemberValue();
+    }
+
+    public void refresh(Member newMember) {
+        member = newMember;
+        setMemberValue();
+        setTextContent();
+    }
+
+    private void setMemberValue() {
         sContent[0] = member.getPhone();
         sContent[1] = member.getEmail();
         sContent[2] = member.getRelationship();
@@ -79,6 +91,12 @@ public class InformationFragment extends Fragment {
         sContent[4] = member.getLocation();
         sContent[5] = member.getYearMet();
         sContent[6] = member.getTopicDiscussed();
+    }
+
+    private void setTextContent() {
+        for (int idx = 0; idx < NUM_INFOS; idx++) {
+            tvContent[idx].setText(sContent[idx]);
+        }
     }
 
 }

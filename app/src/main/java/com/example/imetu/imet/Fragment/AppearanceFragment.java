@@ -46,6 +46,7 @@ public class AppearanceFragment  extends Fragment {
     static final private int NUM_INFOS = 6;
     private Member member;
 
+    public AppearanceFragment() {}
     public AppearanceFragment(Member m) {
         member = m;
     }
@@ -83,6 +84,16 @@ public class AppearanceFragment  extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sContent = new String[NUM_INFOS];
+        setMemberValue();
+    }
+
+    public void refresh(Member newMember) {
+        member = newMember;
+        setMemberValue();
+        setTextContent();
+    }
+
+    private void setMemberValue() {
         switch (member.getGender()) {
             case GENDER_MALE:
                 sContent[0] = "Male";
@@ -139,5 +150,11 @@ public class AppearanceFragment  extends Fragment {
         }
 
         sContent[5] = member.getOther();
+    }
+
+    private void setTextContent() {
+        for (int idx = 0; idx < NUM_INFOS; idx++) {
+            tvContent[idx].setText(sContent[idx]);
+        }
     }
 }

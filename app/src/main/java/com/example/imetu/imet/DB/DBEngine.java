@@ -105,7 +105,7 @@ public class DBEngine implements DBInterface {
         //  Check is id already used?
         //  if used, save table with id
         //  if not, save table without id
-        if (member.getId() == Util.ADD_MEMBER){
+        if (member.getId() != Util.ADD_MEMBER){
             memberTable.id = member.getId();
         }
         memberTable.name = member.getName();

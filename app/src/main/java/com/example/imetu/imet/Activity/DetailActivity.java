@@ -1,9 +1,9 @@
 package com.example.imetu.imet.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -11,11 +11,14 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.example.imetu.imet.Adapter.SmartFragmentStatePagerAdapter;
 import com.example.imetu.imet.DB.DBEngine;
 import com.example.imetu.imet.Fragment.AppearanceFragment;
 import com.example.imetu.imet.Fragment.InformationFragment;
 import com.example.imetu.imet.Model.Member;
 import com.example.imetu.imet.R;
+
+import static com.example.imetu.imet.Util.EDIT_MEMBER;
 
 public class DetailActivity extends AppCompatActivity {
     private Member member;
@@ -54,12 +57,31 @@ public class DetailActivity extends AppCompatActivity {
 
     //  edit action
     public void editClick(MenuItem item) {
-        //  TODO: edit action
+        Intent intent = new Intent(DetailActivity.this, AddEditActivity.class);
+        intent.putExtra("TYPE", EDIT_MEMBER);
+        intent.putExtra("id", member.getId());
+        startActivity(intent);
         Toast.makeText(this, "Click edit button", Toast.LENGTH_SHORT).show();
     }
 
+
+    @Override
+    protected void onResume() {
+        member = dbEngine.selectOne(member.getId());
+        DetailPagerAdapter detailPagerAdapter = (DetailPagerAdapter) vpPager.getAdapter();
+        InformationFragment informationFragment = (InformationFragment) detailPagerAdapter.getRegisteredFragment(0);
+        if(informationFragment != null) {
+            informationFragment.refresh(member);
+        }
+        AppearanceFragment appearanceFragment = (AppearanceFragment) detailPagerAdapter.getRegisteredFragment(1);
+        if(appearanceFragment != null) {
+            appearanceFragment.refresh(member);
+        }
+        super.onResume();
+    }
+
     //return the order of the fragment in the view pager
-    public class DetailPagerAdapter extends FragmentStatePagerAdapter {
+    public class DetailPagerAdapter extends SmartFragmentStatePagerAdapter {
         private String tabTitles[] = {"Information", "Appearance"};
 
         //Adapter gets the manager insert or remove fragment from activity
