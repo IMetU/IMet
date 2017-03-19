@@ -7,21 +7,21 @@
 
 The following **required** functionality is completed:
 
-* [ ] Main view (Main_Activity, Person Item)
-  * [ ] User can view all of the person items
-  * [ ] User can tap on person item to view the person’s detail item
+* [V] Main view (Main_Activity, Person Item)
+  * [V] User can view all of the person items
+  * [V] User can tap on person item to view the person’s detail item
 
 * [ ] Add/Edit Person Detail (Detail_Activity)
-  * [ ] User can edit person detail anytime she/he wants
-  * [ ] User can store the information and characteristics of the people they meet, including:
-    * [ ] Personal Info: Name, email, phone number, relationship with the user, event/location that the user and the person have met for the first time, interest topic talked about…etc.
-    * [ ] Appearance: Gender, approximate height, fat or skinny, hair color and length, glasses or no glasses, and “other appearance characteristics” (ex: hot looking, crooked teeth, pitchy voice)
+  * [V] User can edit person detail anytime she/he wants
+  * [V] User can store the information and characteristics of the people they meet, including:
+    * [V] Personal Info: Name, email, phone number, relationship with the user, event/location that the user and the person have met for the first time, interest topic talked about…etc.
+    * [V] Appearance: Gender, approximate height, fat or skinny, hair color and length, glasses or no glasses, and “other appearance characteristics” (ex: hot looking, crooked teeth, pitchy voice)
     * [ ] Photos: Photo of business card, photo of the person taken secretly from afar, photo of the event that the user has met the person (note: even if it’s not a photo of the person, photo of the event/location helps to recall who they are)
     * [ ] User can take photo by launching camera in app
     * [ ] The location is filled by GPS automatically
 
-* [ ] User can click a "Add" icon to add person
-  * [ ] Use FloatingActionButton  and CoordinatorLayout 
+* [V] User can click a "Add" icon to add person
+  * [V] Use FloatingActionButton  and CoordinatorLayout 
 
 * [ ] User can enter a search query on SearchView to find a person by name and event
 * [ ] User can click on "filter" icon which allows selection of more search options to filter out the people that match this criteria
@@ -29,15 +29,15 @@ The following **required** functionality is completed:
   * [ ] User can query limited information for fast and easy searching, such as being able to get the name and info of the person knowing only about the person’s appearance. * [ ] Any other information can be used for searching as well, if the user remembers any. (included above)
   * [ ] User can reset the filter
 
-* [ ] User can view the detail of person by click item on main view.
-  * [ ] The detail of person has two parts: Information and Appearance.
-  * [ ] User can switch between Information and Appearance view using tabs.
+* [V] User can view the detail of person by click item on main view.
+  * [V] The detail of person has two parts: Information and Appearance.
+  * [V] User can switch between Information and Appearance view using tabs.
 
-* [ ] User can remove "person item" ("person detail")
-* [ ] User can view more people items as they scroll with infinite pagination
+* [V] User can remove "person item" ("person detail")
+* [V] User can view more people items as they scroll with infinite pagination
 * [ ] Store All of the data in cloud and set/get by restful API
-* [ ] Person information are persisted into SQLite and can be displayed from the local DB
-  * [ ] User can open the app
+* [V] Person information are persisted into SQLite and can be displayed from the local DB
+  * [V] User can open the app offline
 * [ ] Improve the UI / UX of our app
 
 
@@ -55,6 +55,12 @@ The following **optional** features are implemented:
 ## Wireframe
 
 <img src='IMetWireframe.png'/>
+
+
+## Video Walkthrough
+
+Here's a walkthrough of implemented user stories:
+[Link to Video Walkthrough](https://www.dropbox.com/s/2o9tydb7j3ogzam/IMet_milestone2.mp4?dl=0)
 
 
 ## License

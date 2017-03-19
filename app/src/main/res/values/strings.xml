@@ -1,6 +1,40 @@
 <resources>
     <string name="app_name">IMet</string>
-    <string name="title_activity_main">MainActivity</string>
     <string name="search">Search</string>
     <string name="filter">Filter</string>
+    <string name="edit">Edit</string>
+
+    <string name="tvName_StrID">Name</string>
+    <string name="tvPhone_StrID">Phone</string>
+    <string name="tvEmail_StrID">Email</string>
+    <string name="tvRelationship_StrID">Relationship</string>
+    <string name="tvEvent_StrID">Event</string>
+    <string name="tvLocation_StrID">Location</string>
+    <string name="tvYearMet_StrID">Year Met</string>
+    <string name="tvTopicDiscussed_StrID">Topic Discussed</string>
+    <string name="tvGender_StrID">Gender</string>
+    <string name="tvHeight_StrID">Height</string>
+    <string name="tvBodyShape_StrID">Body Shape</string>
+    <string name="tvHair_StrID">Hair</string>
+    <string name="tvGlasses_StrID">Glasses</string>
+    <string name="tvOther_StrID">Other</string>
+
+    <string name="radioMale_StrID">Male</string>
+    <string name="radioFemale_StrID">Female</string>
+
+    <string name="radioThin_StrID">Thin</string>
+    <string name="radioMedium_StrID">Medium</string>
+    <string name="radioPlump_StrID">Plump</string>
+
+    <string name="radioShortHair_StrID">Short</string>
+    <string name="radioMediumHair_StrID">Medium</string>
+    <string name="radioLongHair_StrID">Long</string>
+    <string name="checkboxPermedHair_StrID">Permed</string>
+    <string name="checkboxDyedHair_StrID">Dyed</string>
+
+    <string name="radioWithGlasses_StrID">With Glasses</string>
+    <string name="radioWithoutGlasses_StrID">None</string>
+
+    <string name="save_Str_ID">Save</string>
+
 </resources>
