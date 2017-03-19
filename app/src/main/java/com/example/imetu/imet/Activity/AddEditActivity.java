@@ -112,7 +112,8 @@ public class AddEditActivity extends AppCompatActivity {
                 // do nothing
         }
 
-        seekbarHeight.setProgress(member.getHeight()-150);
+//        seekbarHeight.setProgress(member.getHeight()-150);
+        seekbarHeight.setProgress((member.getHeight()-150)*100/40);
 
         switch (member.getBodyShape()){
             case BODY_THIN:
@@ -191,7 +192,8 @@ public class AddEditActivity extends AppCompatActivity {
                 member.setGender(GENDER_UNDEFINED);
         }
 
-        member.setHeight(150 + seekbarHeightProgress);
+//        member.setHeight(150 + seekbarHeightProgress);
+        member.setHeight((seekbarHeightProgress*40/100)+150);
 
         switch (bodyShapeRadioGroup.getCheckedRadioButtonId()){
             case R.id.radio_Thin:
