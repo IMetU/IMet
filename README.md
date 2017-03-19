@@ -7,21 +7,21 @@
 
 The following **required** functionality is completed:
 
-* [V] Main view (Main_Activity, Person Item)
-  * [V] User can view all of the person items
-  * [V] User can tap on person item to view the person’s detail item
+* [x] Main view (Main_Activity, Person Item)
+  * [x] User can view all of the person items
+  * [x] User can tap on person item to view the person’s detail item
 
 * [ ] Add/Edit Person Detail (Detail_Activity)
-  * [V] User can edit person detail anytime she/he wants
-  * [V] User can store the information and characteristics of the people they meet, including:
-    * [V] Personal Info: Name, email, phone number, relationship with the user, event/location that the user and the person have met for the first time, interest topic talked about…etc.
-    * [V] Appearance: Gender, approximate height, fat or skinny, hair color and length, glasses or no glasses, and “other appearance characteristics” (ex: hot looking, crooked teeth, pitchy voice)
+  * [x] User can edit person detail anytime she/he wants
+  * [x] User can store the information and characteristics of the people they meet, including:
+    * [x] Personal Info: Name, email, phone number, relationship with the user, event/location that the user and the person have met for the first time, interest topic talked about…etc.
+    * [x] Appearance: Gender, approximate height, fat or skinny, hair color and length, glasses or no glasses, and “other appearance characteristics” (ex: hot looking, crooked teeth, pitchy voice)
     * [ ] Photos: Photo of business card, photo of the person taken secretly from afar, photo of the event that the user has met the person (note: even if it’s not a photo of the person, photo of the event/location helps to recall who they are)
     * [ ] User can take photo by launching camera in app
     * [ ] The location is filled by GPS automatically
 
-* [V] User can click a "Add" icon to add person
-  * [V] Use FloatingActionButton  and CoordinatorLayout 
+* [x] User can click a "Add" icon to add person
+  * [x] Use FloatingActionButton  and CoordinatorLayout 
 
 * [ ] User can enter a search query on SearchView to find a person by name and event
 * [ ] User can click on "filter" icon which allows selection of more search options to filter out the people that match this criteria
@@ -29,15 +29,15 @@ The following **required** functionality is completed:
   * [ ] User can query limited information for fast and easy searching, such as being able to get the name and info of the person knowing only about the person’s appearance. * [ ] Any other information can be used for searching as well, if the user remembers any. (included above)
   * [ ] User can reset the filter
 
-* [V] User can view the detail of person by click item on main view.
-  * [V] The detail of person has two parts: Information and Appearance.
-  * [V] User can switch between Information and Appearance view using tabs.
+* [x] User can view the detail of person by click item on main view.
+  * [x] The detail of person has two parts: Information and Appearance.
+  * [x] User can switch between Information and Appearance view using tabs.
 
-* [V] User can remove "person item" ("person detail")
-* [V] User can view more people items as they scroll with infinite pagination
+* [x] User can remove "person item" ("person detail")
+* [x] User can view more people items as they scroll with infinite pagination
 * [ ] Store All of the data in cloud and set/get by restful API
-* [V] Person information are persisted into SQLite and can be displayed from the local DB
-  * [V] User can open the app offline
+* [x] Person information are persisted into SQLite and can be displayed from the local DB
+  * [x] User can open the app offline
 * [ ] Improve the UI / UX of our app
 
 
