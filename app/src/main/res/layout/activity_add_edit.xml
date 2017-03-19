@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.imetu.imet.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_add_edit"
@@ -245,7 +245,7 @@
             android:text="@string/tvHeight_StrID"
             android:textSize="20sp" />
 
-        <SeekBar
+        <com.xw.repo.BubbleSeekBar
             android:id="@+id/seekbarHeight"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
@@ -254,35 +254,22 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30px"
             android:layout_toRightOf="@+id/tvHeight"
-            android:max="40"
-            android:progress="0" />
-
-        <TextView
-            android:id="@+id/tv150"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/seekbarHeight"
-            android:layout_below="@+id/seekbarHeight"
-            android:layout_marginBottom="30px"
-            android:text="150"
-            android:textSize="10sp" />
-
-        <TextView
-            android:id="@+id/tv190"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/seekbarHeight"
-            android:layout_below="@+id/seekbarHeight"
-            android:layout_marginBottom="30px"
-            android:text="190"
-            android:textSize="10sp" />
+            app:bsb_bubble_color="@color/colorPrimary"
+            app:bsb_bubble_text_color="@color/colorPrimaryDark"
+            app:bsb_max="190"
+            app:bsb_min="150"
+            app:bsb_progress="165"
+            app:bsb_show_section_text="true"
+            app:bsb_show_thumb_text="true"
+            app:bsb_track_color="@color/colorPrimaryDark"
+            app:bsb_second_track_color="@color/colorAccent"/>
 
         <TextView
             android:id="@+id/tvBodyShape"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/tvHeight"
-            android:layout_below="@+id/tv190"
+            android:layout_below="@+id/seekbarHeight"
             android:layout_marginTop="20dp"
             android:text="@string/tvBodyShape_StrID"
             android:textSize="20sp" />
@@ -453,5 +440,5 @@
             android:layout_marginLeft="20dp"
             android:inputType="textMultiLine" />
     </RelativeLayout>
-</ScrollView>
+</com.example.imetu.imet.ObservableScrollView>
 
