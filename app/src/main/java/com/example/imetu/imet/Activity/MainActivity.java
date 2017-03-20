@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 
 import static com.example.imetu.imet.Util.ADD_MEMBER;
 
-public class MainActivity extends BaseActivity implements FilterFragment.FilterSearchListener, FilterAdvanceSearchListener{
+public class MainActivity extends AppCompatActivity implements FilterFragment.FilterSearchListener, FilterAdvanceSearchListener{
     private final int REQUEST_CODE_ADVANCE_SEARCH = 21;
     private ListView lvMemberList;
     private ArrayList<Member> memberArrayList;

@@ -26,7 +26,6 @@
             android:name="io.fabric.ApiKey"
             android:value="5a886e0e5fc27349ea9c9dabe31c6ec1869cff45" />
 
-        <activity android:name=".Activity.BaseActivity" />
         <activity android:name=".Activity.AddMember" />
         <activity android:name=".Activity.DetailActivity" />
         <activity android:name=".Activity.AdvanceSearchActivity" />
