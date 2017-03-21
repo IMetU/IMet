@@ -1,4 +1,4 @@
-package com.example.imetu.imet.Activity;
+package com.example.imetu.imet.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +11,11 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.example.imetu.imet.Adapter.SmartFragmentStatePagerAdapter;
-import com.example.imetu.imet.DB.DBEngine;
-import com.example.imetu.imet.Fragment.AppearanceFragment;
-import com.example.imetu.imet.Fragment.InformationFragment;
-import com.example.imetu.imet.Model.Member;
+import com.example.imetu.imet.adapter.SmartFragmentStatePagerAdapter;
+import com.example.imetu.imet.database.DBEngine;
+import com.example.imetu.imet.fragment.AppearanceFragment;
+import com.example.imetu.imet.fragment.InformationFragment;
+import com.example.imetu.imet.model.Member;
 import com.example.imetu.imet.R;
 
 import static com.example.imetu.imet.Util.EDIT_MEMBER;

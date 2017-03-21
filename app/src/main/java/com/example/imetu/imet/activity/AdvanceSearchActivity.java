@@ -1,4 +1,4 @@
-package com.example.imetu.imet.Activity;
+package com.example.imetu.imet.activity;
 
 import android.content.Intent;
 import android.os.Bundle;

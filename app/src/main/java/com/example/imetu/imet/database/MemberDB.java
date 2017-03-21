@@ -1,4 +1,4 @@
-package com.example.imetu.imet.DB;
+package com.example.imetu.imet.database;
 
 
 import com.raizlabs.android.dbflow.annotation.Database;

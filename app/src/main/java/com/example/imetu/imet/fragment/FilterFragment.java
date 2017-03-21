@@ -1,4 +1,4 @@
-package com.example.imetu.imet.Fragment;
+package com.example.imetu.imet.fragment;
 
 import android.annotation.TargetApi;
 import android.os.Build;
@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 
-import com.example.imetu.imet.Model.MemberFilter;
+import com.example.imetu.imet.model.MemberFilter;
 import com.example.imetu.imet.R;
 
 import butterknife.BindView;

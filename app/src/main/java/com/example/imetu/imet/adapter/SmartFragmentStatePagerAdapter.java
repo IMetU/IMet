@@ -1,4 +1,4 @@
-package com.example.imetu.imet.Adapter;
+package com.example.imetu.imet.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

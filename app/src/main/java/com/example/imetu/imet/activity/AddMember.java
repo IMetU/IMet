@@ -1,4 +1,4 @@
-package com.example.imetu.imet.Activity;
+package com.example.imetu.imet.activity;
 
 
 import android.content.Intent;
@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import com.example.imetu.imet.DB.DBEngine;
-import com.example.imetu.imet.Model.Member;
+import com.example.imetu.imet.database.DBEngine;
+import com.example.imetu.imet.model.Member;
 import com.example.imetu.imet.R;
 import org.parceler.Parcels;
 

@@ -1,4 +1,4 @@
-package com.example.imetu.imet.Activity;
+package com.example.imetu.imet.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +9,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
-import com.example.imetu.imet.DB.DBEngine;
-import com.example.imetu.imet.Model.Member;
+import com.example.imetu.imet.database.DBEngine;
+import com.example.imetu.imet.model.Member;
 import com.example.imetu.imet.ObservableScrollView;
 import com.example.imetu.imet.R;
 import com.xw.repo.BubbleSeekBar;

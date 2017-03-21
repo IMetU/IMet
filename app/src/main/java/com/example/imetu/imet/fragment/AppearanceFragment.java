@@ -1,4 +1,4 @@
-package com.example.imetu.imet.Fragment;
+package com.example.imetu.imet.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.imetu.imet.Model.Member;
+import com.example.imetu.imet.model.Member;
 import com.example.imetu.imet.R;
 
 import static com.example.imetu.imet.Util.BODY_MEDIUM;

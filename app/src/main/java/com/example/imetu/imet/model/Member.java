@@ -1,4 +1,4 @@
-package com.example.imetu.imet.Model;
+package com.example.imetu.imet.model;
 
 import org.parceler.Parcel;
 

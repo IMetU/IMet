@@ -1,4 +1,4 @@
-package com.example.imetu.imet.Image;
+package com.example.imetu.imet.image;
 
 import android.graphics.Bitmap;
 import android.support.annotation.Nullable;

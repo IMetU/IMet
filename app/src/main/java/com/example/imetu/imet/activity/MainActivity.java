@@ -1,4 +1,4 @@
-package com.example.imetu.imet.Activity;
+package com.example.imetu.imet.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,13 +13,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.imetu.imet.Adapter.MemberListAdapter;
-import com.example.imetu.imet.DB.DBEngine;
-import com.example.imetu.imet.Fragment.DeleteDialogFragment;
-import com.example.imetu.imet.Fragment.FilterFragment;
-import com.example.imetu.imet.Fragment.FilterFragment.FilterAdvanceSearchListener;
-import com.example.imetu.imet.Model.Member;
-import com.example.imetu.imet.Model.MemberFilter;
+import com.example.imetu.imet.adapter.MemberListAdapter;
+import com.example.imetu.imet.database.DBEngine;
+import com.example.imetu.imet.fragment.DeleteDialogFragment;
+import com.example.imetu.imet.fragment.FilterFragment;
+import com.example.imetu.imet.fragment.FilterFragment.FilterAdvanceSearchListener;
+import com.example.imetu.imet.model.Member;
+import com.example.imetu.imet.model.MemberFilter;
 import com.example.imetu.imet.R;
 
 import java.util.ArrayList;

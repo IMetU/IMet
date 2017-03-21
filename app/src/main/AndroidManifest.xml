@@ -8,13 +8,13 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".DB.DBApplication"
+        android:name=".database.DBApplication"
         android:allowBackup="true"
         android:icon="@mipmap/imetlogo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,13 +26,13 @@
             android:name="io.fabric.ApiKey"
             android:value="5a886e0e5fc27349ea9c9dabe31c6ec1869cff45" />
 
-        <activity android:name=".Activity.BaseActivity" />
-        <activity android:name=".Activity.AddMember" />
-        <activity android:name=".Activity.DetailActivity" />
-        <activity android:name=".Activity.AdvanceSearchActivity" />
-        <activity android:name=".Activity.TakePhoto" />
-        <activity android:name=".Activity.ImagePreview" />
-        <activity android:name=".Activity.AddEditActivity"></activity>
+        <activity android:name=".activity.BaseActivity" />
+        <activity android:name=".activity.AddMember" />
+        <activity android:name=".activity.DetailActivity" />
+        <activity android:name=".activity.AdvanceSearchActivity" />
+        <activity android:name=".activity.TakePhoto" />
+        <activity android:name=".activity.ImagePreview" />
+        <activity android:name=".activity.AddEditActivity"></activity>
     </application>
 
 </manifest>

@@ -1,16 +1,15 @@
-package com.example.imetu.imet.Fragment;
+package com.example.imetu.imet.fragment;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.support.v4.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
-import com.example.imetu.imet.Activity.MainActivity;
-import com.example.imetu.imet.DB.DBEngine;
-import com.example.imetu.imet.Model.Member;
+import com.example.imetu.imet.activity.MainActivity;
+import com.example.imetu.imet.database.DBEngine;
+import com.example.imetu.imet.model.Member;
 
 import org.parceler.Parcels;
 

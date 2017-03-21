@@ -1,4 +1,4 @@
-package com.example.imetu.imet.DB;
+package com.example.imetu.imet.database;
 
 import android.app.Application;
 import android.content.res.Configuration;

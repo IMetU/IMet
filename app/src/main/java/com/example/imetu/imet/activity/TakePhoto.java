@@ -1,4 +1,4 @@
-package com.example.imetu.imet.Activity;
+package com.example.imetu.imet.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -6,13 +6,11 @@ import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.imetu.imet.Image.ResultHolder;
+import com.example.imetu.imet.image.ResultHolder;
 import com.example.imetu.imet.R;
 import com.flurgle.camerakit.CameraListener;
 import com.flurgle.camerakit.CameraView;
-import com.flurgle.camerakit.Size;
 
 public class TakePhoto extends AppCompatActivity {
     private CameraView cameraView;

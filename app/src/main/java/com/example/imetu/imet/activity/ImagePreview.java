@@ -1,4 +1,4 @@
-package com.example.imetu.imet.Activity;
+package com.example.imetu.imet.activity;
 
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.imetu.imet.Image.ResultHolder;
+import com.example.imetu.imet.image.ResultHolder;
 import com.example.imetu.imet.R;
 
 public class ImagePreview extends AppCompatActivity {

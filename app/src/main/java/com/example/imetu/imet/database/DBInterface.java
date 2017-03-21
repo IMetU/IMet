@@ -1,7 +1,7 @@
-package com.example.imetu.imet.DB;
+package com.example.imetu.imet.database;
 
-import com.example.imetu.imet.Model.Member;
-import com.example.imetu.imet.Model.MemberFilter;
+import com.example.imetu.imet.model.Member;
+import com.example.imetu.imet.model.MemberFilter;
 
 import java.util.ArrayList;
 
