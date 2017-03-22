@@ -1,4 +1,4 @@
-package com.example.imetu.imet;
+package com.example.imetu.imet.widget;
 
 /**
  * Created by kelly79126 on 2017/3/16.
@@ -11,6 +11,8 @@ public class Util {
     public static final int GENDER_UNDEFINED = 0;
     public static final int GENDER_MALE = 1;
     public static final int GENDER_FEMALE = 2;
+
+    public static final int HEIGHT_UNDEFINED = -1;
 
     public static final int BODY_UNDEFINED = 0;
     public static final int BODY_THIN = 1;

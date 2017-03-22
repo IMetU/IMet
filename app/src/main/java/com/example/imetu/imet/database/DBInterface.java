@@ -8,7 +8,8 @@ import java.util.ArrayList;
 public interface DBInterface {
     public ArrayList<Member> selectAll();
     public Member selectOne(int id);
-    public ArrayList<Member> queryBy(MemberFilter mf);
+    public ArrayList<Member> fullQuery(MemberFilter mf);
+    public ArrayList<Member> simpleQuery(String querystring);
     public void editMember(Member member);
     public void deleteMember(int id);
 }

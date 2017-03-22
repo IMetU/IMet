@@ -68,7 +68,6 @@ public class InformationFragment extends Fragment {
         tvContent[idx].setText(sContent[idx]);
     }
 
-
     //create lifecycle event
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

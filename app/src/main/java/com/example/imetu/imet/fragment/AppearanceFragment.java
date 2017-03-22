@@ -11,16 +11,16 @@ import android.widget.TextView;
 import com.example.imetu.imet.model.Member;
 import com.example.imetu.imet.R;
 
-import static com.example.imetu.imet.Util.BODY_MEDIUM;
-import static com.example.imetu.imet.Util.BODY_PLUMP;
-import static com.example.imetu.imet.Util.BODY_THIN;
-import static com.example.imetu.imet.Util.GENDER_FEMALE;
-import static com.example.imetu.imet.Util.GENDER_MALE;
-import static com.example.imetu.imet.Util.GLASSES_WITH;
-import static com.example.imetu.imet.Util.GLASSES_WITHOUT;
-import static com.example.imetu.imet.Util.HAIR_LONG;
-import static com.example.imetu.imet.Util.HAIR_MEDIUM;
-import static com.example.imetu.imet.Util.HAIR_SHORT;
+import static com.example.imetu.imet.widget.Util.BODY_MEDIUM;
+import static com.example.imetu.imet.widget.Util.BODY_PLUMP;
+import static com.example.imetu.imet.widget.Util.BODY_THIN;
+import static com.example.imetu.imet.widget.Util.GENDER_FEMALE;
+import static com.example.imetu.imet.widget.Util.GENDER_MALE;
+import static com.example.imetu.imet.widget.Util.GLASSES_WITH;
+import static com.example.imetu.imet.widget.Util.GLASSES_WITHOUT;
+import static com.example.imetu.imet.widget.Util.HAIR_LONG;
+import static com.example.imetu.imet.widget.Util.HAIR_MEDIUM;
+import static com.example.imetu.imet.widget.Util.HAIR_SHORT;
 
 /**
  * Created by kelly79126 on 2017/3/14.

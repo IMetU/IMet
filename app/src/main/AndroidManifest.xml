@@ -28,7 +28,8 @@
 
         <activity android:name=".activity.BaseActivity" />
         <activity android:name=".activity.AddMember" />
-        <activity android:name=".activity.DetailActivity" />
+        <activity android:name=".activity.DetailActivity"
+            android:configChanges="orientation|screenSize"/>
         <activity android:name=".activity.AdvanceSearchActivity" />
         <activity android:name=".activity.TakePhoto" />
         <activity android:name=".activity.ImagePreview" />

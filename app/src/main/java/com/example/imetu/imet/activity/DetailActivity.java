@@ -18,7 +18,7 @@ import com.example.imetu.imet.fragment.InformationFragment;
 import com.example.imetu.imet.model.Member;
 import com.example.imetu.imet.R;
 
-import static com.example.imetu.imet.Util.EDIT_MEMBER;
+import static com.example.imetu.imet.widget.Util.EDIT_MEMBER;
 
 public class DetailActivity extends AppCompatActivity {
     private Member member;
@@ -78,6 +78,21 @@ public class DetailActivity extends AppCompatActivity {
             appearanceFragment.refresh(member);
         }
         super.onResume();
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        if(savedInstanceState != null){
+            int id = savedInstanceState.getInt("id");
+            member = dbEngine.selectOne(id);
+        }
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("id", member.getId());
+        super.onSaveInstanceState(outState);
     }
 
     //return the order of the fragment in the view pager

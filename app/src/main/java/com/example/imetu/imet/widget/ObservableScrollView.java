@@ -1,4 +1,4 @@
-package com.example.imetu.imet;
+package com.example.imetu.imet.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;

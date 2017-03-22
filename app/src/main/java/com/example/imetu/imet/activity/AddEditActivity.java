@@ -11,25 +11,25 @@ import android.widget.RadioGroup;
 
 import com.example.imetu.imet.database.DBEngine;
 import com.example.imetu.imet.model.Member;
-import com.example.imetu.imet.ObservableScrollView;
+import com.example.imetu.imet.widget.ObservableScrollView;
 import com.example.imetu.imet.R;
 import com.xw.repo.BubbleSeekBar;
 
-import static com.example.imetu.imet.Util.ADD_MEMBER;
-import static com.example.imetu.imet.Util.BODY_MEDIUM;
-import static com.example.imetu.imet.Util.BODY_PLUMP;
-import static com.example.imetu.imet.Util.BODY_THIN;
-import static com.example.imetu.imet.Util.BODY_UNDEFINED;
-import static com.example.imetu.imet.Util.GENDER_FEMALE;
-import static com.example.imetu.imet.Util.GENDER_MALE;
-import static com.example.imetu.imet.Util.GENDER_UNDEFINED;
-import static com.example.imetu.imet.Util.GLASSES_UNDEFINED;
-import static com.example.imetu.imet.Util.GLASSES_WITH;
-import static com.example.imetu.imet.Util.GLASSES_WITHOUT;
-import static com.example.imetu.imet.Util.HAIR_LONG;
-import static com.example.imetu.imet.Util.HAIR_MEDIUM;
-import static com.example.imetu.imet.Util.HAIR_SHORT;
-import static com.example.imetu.imet.Util.HAIR_UNDEFINED;
+import static com.example.imetu.imet.widget.Util.ADD_MEMBER;
+import static com.example.imetu.imet.widget.Util.BODY_MEDIUM;
+import static com.example.imetu.imet.widget.Util.BODY_PLUMP;
+import static com.example.imetu.imet.widget.Util.BODY_THIN;
+import static com.example.imetu.imet.widget.Util.BODY_UNDEFINED;
+import static com.example.imetu.imet.widget.Util.GENDER_FEMALE;
+import static com.example.imetu.imet.widget.Util.GENDER_MALE;
+import static com.example.imetu.imet.widget.Util.GENDER_UNDEFINED;
+import static com.example.imetu.imet.widget.Util.GLASSES_UNDEFINED;
+import static com.example.imetu.imet.widget.Util.GLASSES_WITH;
+import static com.example.imetu.imet.widget.Util.GLASSES_WITHOUT;
+import static com.example.imetu.imet.widget.Util.HAIR_LONG;
+import static com.example.imetu.imet.widget.Util.HAIR_MEDIUM;
+import static com.example.imetu.imet.widget.Util.HAIR_SHORT;
+import static com.example.imetu.imet.widget.Util.HAIR_UNDEFINED;
 
 public class AddEditActivity extends AppCompatActivity {
 
@@ -68,8 +68,10 @@ public class AddEditActivity extends AppCompatActivity {
         type = getIntent().getIntExtra("TYPE", ADD_MEMBER);
         if (type == ADD_MEMBER) {
             member = new Member();
+            getSupportActionBar().setTitle("ADD NEW MEMBER");
         } else {
             member = dbEngine.selectOne(getIntent().getIntExtra("id", 0));
+            getSupportActionBar().setTitle("EDIT MEMBER");
             setMemberValue();
         }
     }

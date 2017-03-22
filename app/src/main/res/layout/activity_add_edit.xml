@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.imetu.imet.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.imetu.imet.widget.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_add_edit"
@@ -40,10 +40,10 @@
             android:id="@+id/etName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tvName"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/tvName"
+            android:layout_alignBaseline="@+id/tvName"
             android:ems="10"
             android:inputType="textPersonName" />
 
@@ -61,7 +61,7 @@
             android:id="@+id/etPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tvPhone"
+            android:layout_alignBaseline="@+id/tvPhone"
             android:layout_below="@+id/etName"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
@@ -83,7 +83,7 @@
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tvEmail"
+            android:layout_alignBaseline="@+id/tvEmail"
             android:layout_below="@+id/etPhone"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
@@ -105,7 +105,7 @@
             android:id="@+id/etRelationship"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tvRelationship"
+            android:layout_alignBaseline="@+id/tvRelationship"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/tvRelationship"
@@ -126,7 +126,7 @@
             android:id="@+id/etEvent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tvEvent"
+            android:layout_alignBaseline="@+id/tvEvent"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/tvEvent"
@@ -147,7 +147,7 @@
             android:id="@+id/etLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tvLocation"
+            android:layout_alignBaseline="@+id/tvLocation"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/tvLocation"
@@ -168,7 +168,7 @@
             android:id="@+id/etYearMet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tvYearMet"
+            android:layout_alignBaseline="@+id/tvYearMet"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/tvYearMet"
@@ -210,7 +210,6 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/tvGender"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/tvGender"
             android:orientation="horizontal">
 
@@ -250,7 +249,7 @@
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/tvHeight"
+            android:layout_alignBottom="@+id/tvHeight"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30px"
             android:layout_toRightOf="@+id/tvHeight"
@@ -278,7 +277,7 @@
             android:id="@+id/etBodyShape"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tvBodyShape"
+            android:layout_alignBottom="@+id/tvBodyShape"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/tvBodyShape"
@@ -440,5 +439,5 @@
             android:layout_marginLeft="20dp"
             android:inputType="textMultiLine" />
     </RelativeLayout>
-</com.example.imetu.imet.ObservableScrollView>
+</com.example.imetu.imet.widget.ObservableScrollView>
 

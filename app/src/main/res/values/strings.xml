@@ -3,6 +3,9 @@
     <string name="search">Search</string>
     <string name="filter">Filter</string>
     <string name="edit">Edit</string>
+    <string name="quick_search">QuickSearch</string>
+    <string name="reset">Reset</string>
+    <string name="advance_search">More Search Options</string>
 
     <string name="tvName_StrID">Name</string>
     <string name="tvPhone_StrID">Phone</string>
@@ -18,6 +21,8 @@
     <string name="tvHair_StrID">Hair</string>
     <string name="tvGlasses_StrID">Glasses</string>
     <string name="tvOther_StrID">Other</string>
+
+    <string name="checkboxAny_StrID">Any</string>
 
     <string name="radioMale_StrID">Male</string>
     <string name="radioFemale_StrID">Female</string>

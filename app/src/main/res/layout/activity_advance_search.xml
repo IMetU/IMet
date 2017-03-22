@@ -1,10 +1,375 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<com.example.imetu.imet.widget.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_advance_search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.imetu.imet.activity.AdvanceSearchActivity">
 
-    <TextView
-        android:text="HelloWorld"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/addEditImage"
+            android:layout_marginTop="20dp"
+            android:text="@string/tvName_StrID"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/tvName"
+            android:layout_alignBaseline="@+id/tvName"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/tvRelationship"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvName"
+            android:layout_below="@+id/tvName"
+            android:layout_marginTop="10dp"
+            android:text="@string/tvRelationship_StrID"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/etRelationship"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvRelationship"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/tvRelationship"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/tvEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvRelationship"
+            android:layout_below="@+id/etRelationship"
+            android:layout_marginTop="10dp"
+            android:text="@string/tvEvent_StrID"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/etEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvEvent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/tvEvent"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/tvYearMet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvEvent"
+            android:layout_below="@+id/tvEvent"
+            android:layout_marginTop="10dp"
+            android:text="@string/tvYearMet_StrID"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/etYearMet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvYearMet"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/tvYearMet"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/tvTopicDiscussed"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignStart="@+id/tvYearMet"
+            android:layout_below="@+id/etYearMet"
+            android:layout_marginTop="10dp"
+            android:text="@string/tvTopicDiscussed_StrID"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/etTopicDiscussed"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/tvTopicDiscussed"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp" />
+        <!--android:inputType="textMultiLine" />-->
+
+        <TextView
+            android:id="@+id/tvGender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvTopicDiscussed"
+            android:layout_below="@+id/etTopicDiscussed"
+            android:layout_marginTop="10dp"
+            android:text="@string/tvGender_StrID"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:id="@+id/etGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tvGender"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/tvGender"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:id="@+id/GenderRadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_Male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/radioMale_StrID" />
+
+                <RadioButton
+                    android:id="@+id/radio_Female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/radioFemale_StrID" />
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvHeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvGender"
+            android:layout_below="@+id/tvGender"
+            android:layout_marginTop="20dp"
+            android:text="@string/tvHeight_StrID"
+            android:textSize="20sp" />
+
+        <com.xw.repo.BubbleSeekBar
+            android:id="@+id/seekbarHeight"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tvHeight"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30px"
+            android:layout_toRightOf="@+id/tvHeight"
+            app:bsb_bubble_color="@color/colorPrimary"
+            app:bsb_bubble_text_color="@color/colorPrimaryDark"
+            app:bsb_max="190"
+            app:bsb_min="150"
+            app:bsb_progress="165"
+            app:bsb_show_section_text="true"
+            app:bsb_show_thumb_text="true"
+            app:bsb_track_color="@color/colorPrimaryDark"
+            app:bsb_second_track_color="@color/colorAccent"/>
+
+        <CheckBox
+            android:id="@+id/cbAny"
+            android:text="@string/checkboxAny_StrID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvHeight"
+            android:layout_toRightOf="@+id/seekbarHeight" />
+
+        <TextView
+            android:id="@+id/tvBodyShape"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvHeight"
+            android:layout_below="@+id/seekbarHeight"
+            android:layout_marginTop="20dp"
+            android:text="@string/tvBodyShape_StrID"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:id="@+id/etBodyShape"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tvBodyShape"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/tvBodyShape"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:id="@+id/BodyShapeRadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_Thin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/radioThin_StrID" />
+
+                <RadioButton
+                    android:id="@+id/radio_Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/radioMedium_StrID" />
+
+                <RadioButton
+                    android:id="@+id/radio_Plump"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/radioPlump_StrID" />
+
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvHair"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvBodyShape"
+            android:layout_below="@+id/etBodyShape"
+            android:layout_marginTop="10dp"
+            android:text="@string/tvHair_StrID"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:id="@+id/etHair"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tvHair"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/tvHair"
+            android:orientation="vertical">
+
+            <RadioGroup
+                android:id="@+id/HairLengthRadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_ShortHair"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/radioShortHair_StrID" />
+
+                <RadioButton
+                    android:id="@+id/radio_MediumHair"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/radioMediumHair_StrID" />
+
+                <RadioButton
+                    android:id="@+id/radio_LongHair"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/radioLongHair_StrID" />
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkbox_Permed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/checkboxPermedHair_StrID" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_Dyed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/checkboxDyedHair_StrID" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvGlasses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvHair"
+            android:layout_below="@+id/etHair"
+            android:layout_marginTop="10dp"
+            android:text="@string/tvGlasses_StrID"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:id="@+id/etGlasses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tvGlasses"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/tvGlasses"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:id="@+id/GlassesRadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_WithGlasses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/radioWithGlasses_StrID" />
+
+                <RadioButton
+                    android:id="@+id/radio_WithoutGlasses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/radioWithoutGlasses_StrID" />
+
+            </RadioGroup>
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tvOther"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tvGlasses"
+            android:layout_below="@+id/etGlasses"
+            android:layout_marginTop="10dp"
+            android:text="@string/tvOther_StrID"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/etOther"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvOther"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:inputType="textMultiLine" />
+    </RelativeLayout>
+</com.example.imetu.imet.widget.ObservableScrollView>
+

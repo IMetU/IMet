@@ -24,7 +24,7 @@ import com.example.imetu.imet.R;
 
 import java.util.ArrayList;
 
-import static com.example.imetu.imet.Util.ADD_MEMBER;
+import static com.example.imetu.imet.widget.Util.ADD_MEMBER;
 
 public class MainActivity extends BaseActivity implements FilterFragment.FilterSearchListener, FilterAdvanceSearchListener{
     private final int REQUEST_CODE_ADVANCE_SEARCH = 21;
@@ -40,6 +40,8 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dbEngine = new DBEngine();
+        memberFilter = new MemberFilter();
+
         lvMemberList = (ListView)findViewById(R.id.lvMemberList);
         memberArrayList = new ArrayList<>();
 
@@ -116,6 +118,11 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
             public boolean onQueryTextSubmit(String query) {
                 //  TODO:query submit action
                 Toast.makeText(getBaseContext(), query, Toast.LENGTH_SHORT).show();
+                memberArrayList = dbEngine.simpleQuery(query);
+                //  init memberArrayAdapter
+                memberArrayAdapter = new MemberListAdapter(MainActivity.this, memberArrayList);
+                //  set adapter to listview
+                lvMemberList.setAdapter(memberArrayAdapter);
                 return true;
             }
 
@@ -125,8 +132,18 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
                 return false;
             }
         });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                setView();
+                return false;
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
+
     //  filter action
     public void filterClick(MenuItem item) {
         //  TODO: filter action
@@ -136,7 +153,7 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
 
     private void showFilterDialog() {
         FragmentManager fm = getSupportFragmentManager();
-        FilterFragment filterFragment = FilterFragment.newInstance("Filter");
+        FilterFragment filterFragment = FilterFragment.newInstance(memberFilter);
         filterFragment.show(fm, "Filter");
     }
 
@@ -156,14 +173,20 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
     }
 
     @Override
-    public void onFilterAdvanceSearch(MemberFilter memberFilter) {
+    public void onFilterAdvanceSearch(MemberFilter mf) {
         Toast.makeText(this, "Return From AdvanceSearch", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(MainActivity.this, AdvanceSearchActivity.class);
         startActivityForResult(intent, REQUEST_CODE_ADVANCE_SEARCH);
     }
 
     @Override
-    public void onFilterSearch(MemberFilter memberFilter) {
+    public void onFilterSearch(MemberFilter mf) {
+        memberFilter = mf;
+        memberArrayList = dbEngine.fullQuery(memberFilter);
+        //  init memberArrayAdapter
+        memberArrayAdapter = new MemberListAdapter(MainActivity.this, memberArrayList);
+        //  set adapter to listview
+        lvMemberList.setAdapter(memberArrayAdapter);
         Toast.makeText(this, "Return From FilterSearch", Toast.LENGTH_SHORT).show();
     }
 }
