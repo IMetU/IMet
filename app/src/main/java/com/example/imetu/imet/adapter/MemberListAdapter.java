@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.imetu.imet.activity.AddEditActivity;
 import com.example.imetu.imet.model.Member;
 import com.example.imetu.imet.R;
 
@@ -41,6 +43,7 @@ public class MemberListAdapter extends ArrayAdapter<Member> {
         //  TODO:Set ImageView and Textview form data Model
         if (member.getImgPath() != null){
             //  TODO:Picasso action
+            Glide.with(getContext()).load(member.getImgPath()).into(viewHolder.ivPhoto);
         }
         if (member.getName() != null){
             viewHolder.tvName.setText(member.getName());

@@ -6,10 +6,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.imetu.imet.model.Member;
 import com.example.imetu.imet.R;
+
+import static java.lang.System.load;
 
 /**
  * Created by kelly79126 on 2017/3/14.
@@ -20,6 +24,7 @@ public class InformationFragment extends Fragment {
     public View v;
 
     private ViewGroup vgInformation[];
+    private ImageView ivPhoto;
     private TextView tvTitle[];
     private TextView tvContent[];
     private String sTitle[] = {"Phone", "Email", "Relationship", "Event", "Location", "Year Met","TopicDiscussed"};
@@ -47,7 +52,7 @@ public class InformationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_information, parent, false);
-
+        setPhoto();
         vgInformation = new ViewGroup[NUM_INFOS];
         tvTitle = new TextView[NUM_INFOS];
         tvContent = new TextView[NUM_INFOS];
@@ -76,10 +81,16 @@ public class InformationFragment extends Fragment {
         setMemberValue();
     }
 
+    private void setPhoto() {
+        ivPhoto = (ImageView)v.findViewById(R.id.ivPhoto);
+        Glide.with(this).load(member.getImgPath()).into(ivPhoto);
+    }
+
     public void refresh(Member newMember) {
         member = newMember;
         setMemberValue();
         setTextContent();
+        setPhoto();
     }
 
     private void setMemberValue() {

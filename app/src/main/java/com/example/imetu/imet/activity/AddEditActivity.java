@@ -1,20 +1,37 @@
 package com.example.imetu.imet.activity;
 
+import android.Manifest;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 
+import com.bumptech.glide.Glide;
 import com.example.imetu.imet.database.DBEngine;
 import com.example.imetu.imet.model.Member;
 import com.example.imetu.imet.widget.ObservableScrollView;
 import com.example.imetu.imet.R;
 import com.xw.repo.BubbleSeekBar;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import static android.R.attr.permission;
 import static com.example.imetu.imet.widget.Util.ADD_MEMBER;
 import static com.example.imetu.imet.widget.Util.BODY_MEDIUM;
 import static com.example.imetu.imet.widget.Util.BODY_PLUMP;
@@ -30,10 +47,12 @@ import static com.example.imetu.imet.widget.Util.HAIR_LONG;
 import static com.example.imetu.imet.widget.Util.HAIR_MEDIUM;
 import static com.example.imetu.imet.widget.Util.HAIR_SHORT;
 import static com.example.imetu.imet.widget.Util.HAIR_UNDEFINED;
+import static java.lang.System.out;
 
 public class AddEditActivity extends AppCompatActivity {
 
     ObservableScrollView obsScrollView;
+    ImageView ivPreview;
     EditText etName;
     EditText etPhone;
     EditText etEmail;
@@ -56,7 +75,11 @@ public class AddEditActivity extends AppCompatActivity {
     private DBEngine dbEngine;
     private Member member;
     private int type;
-
+    private final int TAKE_PICTURE_REQUEST_CODE = 10;
+    private static final int REQUEST_CAMERA = 111;
+    private static final int REQUEST_WRITE_STORAGE = 112;
+    private String photoPath;
+    public FileOutputStream out = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,8 +172,51 @@ public class AddEditActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menuSave:
+                saveClick();
+                return true;
+            case R.id.menuTakePhoto:
+                takePhoto();
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private void takePhoto() {
+        int cameraPermission = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA);
+        int storagePermission = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (cameraPermission != PackageManager.PERMISSION_GRANTED){
+            Log.i("CAMERA", "Permission to record denied");
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.CAMERA)) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Permission to access your camera for this app.")
+                        .setTitle("Permission required");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        makeCameraRequest();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }else{
+                makeCameraRequest();
+            }
+        }else{
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent, TAKE_PICTURE_REQUEST_CODE);
+        }
+    }
+
     //  save action
-    public void saveClick(MenuItem item) {
+    public void saveClick() {
         if (type == ADD_MEMBER) {
             member.setId(ADD_MEMBER);
         }
@@ -225,6 +291,7 @@ public class AddEditActivity extends AppCompatActivity {
     }
 
     private void setView() {
+        ivPreview = (ImageView)findViewById(R.id.addEditImage);
         etName = (EditText) findViewById(R.id.etName);
         etPhone = (EditText) findViewById(R.id.etPhone);
         etEmail = (EditText) findViewById(R.id.etEmail);
@@ -271,5 +338,72 @@ public class AddEditActivity extends AppCompatActivity {
                 seekbarHeight.correctOffsetWhenContainerOnScrolling();
             }
         });
+
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bitmap pictureBitmap = (Bitmap)data.getExtras().get("data");
+        File photoDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        photoPath = photoDir + "/IMG_" + System.currentTimeMillis() + ".jpg";
+        int permission = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            Log.i("Storage Permission", "Permission to record denied");
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Permission to access the SD-CARD is required for this app to Download PDF.")
+                        .setTitle("Permission required");
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int id) {
+                        Log.i("Storage Permission", "Clicked");
+                        makeStorageRequest();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+            } else {
+                makeStorageRequest();
+            }
+        }
+        try{
+            out = new FileOutputStream(photoPath);
+            pictureBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            try{
+                if (out != null){
+                    out.close();
+                    member.setImgPath(photoPath);
+                    Glide.with(AddEditActivity.this).load(member.getImgPath()).into(ivPreview);
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    private void makeStorageRequest() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                REQUEST_WRITE_STORAGE);
+    }
+
+    protected void makeCameraRequest() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.CAMERA},
+                REQUEST_CAMERA);
     }
 }
