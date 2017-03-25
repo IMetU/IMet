@@ -66,6 +66,8 @@ public class AdvanceSearchActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Advance Search");
         setView();
         setInitState();
+        // hide keyboard
+//        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     @Override

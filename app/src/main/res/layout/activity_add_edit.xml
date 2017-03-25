@@ -45,7 +45,8 @@
             android:layout_toRightOf="@+id/tvName"
             android:layout_alignBaseline="@+id/tvName"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:imeOptions="actionDone"/>
 
         <TextView
             android:id="@+id/tvPhone"
