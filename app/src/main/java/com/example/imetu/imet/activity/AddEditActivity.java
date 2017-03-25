@@ -101,7 +101,7 @@ public class AddEditActivity extends AppCompatActivity {
 
     private Address myAddress;
     private final String GEOCODING_API_URL = "https://maps.googleapis.com/maps/api/geocode/json?";
-    private final String GEOCODING_API_KEY = "AIzaSyCLUtWFp8wD_NosqvkRusP8QX7Lil-Ld1k";
+    private final String GEOCODING_API_KEY = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
