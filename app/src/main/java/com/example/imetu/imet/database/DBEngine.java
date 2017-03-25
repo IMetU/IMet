@@ -13,7 +13,9 @@ import static com.example.imetu.imet.database.MemberTable_Table.name;
 import static com.example.imetu.imet.widget.Util.BODY_UNDEFINED;
 import static com.example.imetu.imet.widget.Util.GENDER_UNDEFINED;
 import static com.example.imetu.imet.widget.Util.GLASSES_UNDEFINED;
+import static com.example.imetu.imet.widget.Util.HAIR_UNDEFINED;
 import static com.example.imetu.imet.widget.Util.HEIGHT_UNDEFINED;
+import static com.example.imetu.imet.widget.Util.REQUEST_ADVANCE_SEARCH;
 
 
 public class DBEngine implements DBInterface {
@@ -66,17 +68,26 @@ public class DBEngine implements DBInterface {
 
     @Override
     public ArrayList<Member> fullQuery(MemberFilter mf) {
-        //  TODO: query db, check the mf to add ConditionGroup
+        //  query db, check the mf to add ConditionGroup
         ConditionGroup conditionQueryBuilder = ConditionGroup.clause();
 
         if(!mf.getName().equals("")) {
-            conditionQueryBuilder.and(MemberTable_Table.name.eq(mf.getName()));
+            conditionQueryBuilder.and(MemberTable_Table.name.like('%'+mf.getName()+'%'));
         }
         if(!mf.getRelationship().equals("")) {
-            conditionQueryBuilder.and(MemberTable_Table.relationship.is(mf.getRelationship()));
+            conditionQueryBuilder.and(MemberTable_Table.relationship.like('%'+mf.getRelationship()+'%'));
         }
         if(!mf.getEvent().equals("")) {
-            conditionQueryBuilder.and(MemberTable_Table.event.is(mf.getEvent()));
+            conditionQueryBuilder.and(MemberTable_Table.event.like('%'+mf.getEvent()+'%'));
+        }
+        if(!mf.getYearMet().equals("")) {
+            conditionQueryBuilder.and(MemberTable_Table.yearMet.like('%'+mf.getYearMet()+'%'));
+        }
+        if(!mf.getTopicDiscussed().equals("")) {
+            conditionQueryBuilder.and(MemberTable_Table.topicDiscussed.like('%'+mf.getTopicDiscussed()+'%'));
+        }
+        if(!mf.getOther().equals("")) {
+            conditionQueryBuilder.and(MemberTable_Table.other.like('%'+mf.getOther()+'%'));
         }
         if(mf.getGender() != GENDER_UNDEFINED) {
             conditionQueryBuilder.and(MemberTable_Table.gender.is(mf.getGender()));
@@ -86,6 +97,13 @@ public class DBEngine implements DBInterface {
         }
         if(mf.getBodyShape() != BODY_UNDEFINED) {
             conditionQueryBuilder.and(MemberTable_Table.bodyShape.is(mf.getBodyShape()));
+        }
+        if(mf.getHairLength() != HAIR_UNDEFINED) {
+            conditionQueryBuilder.and(MemberTable_Table.hairLength.is(mf.getHairLength()));
+        }
+        if(mf.getFilterOrAdvance() == REQUEST_ADVANCE_SEARCH) {
+            conditionQueryBuilder.and(MemberTable_Table.permed.is(mf.isPermed()));
+            conditionQueryBuilder.and(MemberTable_Table.dyed.is(mf.isDyed()));
         }
         if(mf.getGlasses() != GLASSES_UNDEFINED) {
             conditionQueryBuilder.and(MemberTable_Table.glasses.is(mf.getGlasses()));
@@ -106,8 +124,8 @@ public class DBEngine implements DBInterface {
         // true for 'ASC', false for 'DESC'
         List<MemberTable> memberList = SQLite.select()
                 .from(MemberTable.class)
-                .where(MemberTable_Table.name.eq(querystring))
-                .or(MemberTable_Table.event.eq(querystring))
+                .where(MemberTable_Table.name.like('%'+querystring+'%'))
+                .or(MemberTable_Table.event.like('%'+querystring+'%'))
                 .orderBy(name, true)
                 .queryList();
 
@@ -144,7 +162,7 @@ public class DBEngine implements DBInterface {
 
     @Override
     public void editMember(Member member) {
-        //  TODO: edit member and add new member
+        //  edit member and add new member
         MemberTable memberTable = new MemberTable();
         //  Check is id already used?
         //  if used, save table with id

@@ -27,4 +27,7 @@ public class Util {
     public static final int GLASSES_UNDEFINED = 0;
     public static final int GLASSES_WITH = 1;
     public static final int GLASSES_WITHOUT = 2;
+
+    public static final int REQUEST_FILTER = 0;
+    public static final int REQUEST_ADVANCE_SEARCH = 1;
 }

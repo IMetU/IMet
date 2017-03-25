@@ -21,17 +21,16 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 
 import com.bumptech.glide.Glide;
+import com.example.imetu.imet.R;
 import com.example.imetu.imet.database.DBEngine;
 import com.example.imetu.imet.model.Member;
 import com.example.imetu.imet.widget.ObservableScrollView;
-import com.example.imetu.imet.R;
 import com.xw.repo.BubbleSeekBar;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static android.R.attr.permission;
 import static com.example.imetu.imet.widget.Util.ADD_MEMBER;
 import static com.example.imetu.imet.widget.Util.BODY_MEDIUM;
 import static com.example.imetu.imet.widget.Util.BODY_PLUMP;
@@ -47,7 +46,6 @@ import static com.example.imetu.imet.widget.Util.HAIR_LONG;
 import static com.example.imetu.imet.widget.Util.HAIR_MEDIUM;
 import static com.example.imetu.imet.widget.Util.HAIR_SHORT;
 import static com.example.imetu.imet.widget.Util.HAIR_UNDEFINED;
-import static java.lang.System.out;
 
 public class AddEditActivity extends AppCompatActivity {
 
@@ -287,6 +285,8 @@ public class AddEditActivity extends AppCompatActivity {
         }
 
         dbEngine.editMember(member);
+
+        setResult(RESULT_OK);
         finish();
     }
 
@@ -316,7 +316,6 @@ public class AddEditActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(int progress, float progressFloat) {
                 seekbarHeightProgress = progress;
-                Log.d("Kelly", "" + seekbarHeightProgress);
             }
 
             @Override
@@ -338,9 +337,6 @@ public class AddEditActivity extends AppCompatActivity {
                 seekbarHeight.correctOffsetWhenContainerOnScrolling();
             }
         });
-
-
-
     }
 
     @Override

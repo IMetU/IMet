@@ -8,15 +8,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.example.imetu.imet.R;
 import com.example.imetu.imet.adapter.SmartFragmentStatePagerAdapter;
 import com.example.imetu.imet.database.DBEngine;
 import com.example.imetu.imet.fragment.AppearanceFragment;
 import com.example.imetu.imet.fragment.InformationFragment;
 import com.example.imetu.imet.model.Member;
-import com.example.imetu.imet.R;
 
 import static com.example.imetu.imet.widget.Util.EDIT_MEMBER;
 
@@ -24,6 +23,8 @@ public class DetailActivity extends AppCompatActivity {
     private Member member;
     ViewPager vpPager;
     private DBEngine dbEngine;
+    private final int REQUEST_CODE_EDIT_MEMBER = 31;
+    private boolean modifyFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,24 +61,26 @@ public class DetailActivity extends AppCompatActivity {
         Intent intent = new Intent(DetailActivity.this, AddEditActivity.class);
         intent.putExtra("TYPE", EDIT_MEMBER);
         intent.putExtra("id", member.getId());
-        startActivity(intent);
-        Toast.makeText(this, "Click edit button", Toast.LENGTH_SHORT).show();
+        startActivityForResult(intent, REQUEST_CODE_EDIT_MEMBER);
     }
 
-
     @Override
-    protected void onResume() {
-        member = dbEngine.selectOne(member.getId());
-        DetailPagerAdapter detailPagerAdapter = (DetailPagerAdapter) vpPager.getAdapter();
-        InformationFragment informationFragment = (InformationFragment) detailPagerAdapter.getRegisteredFragment(0);
-        if(informationFragment != null) {
-            informationFragment.refresh(member);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_EDIT_MEMBER) {
+            member = dbEngine.selectOne(member.getId());
+            DetailPagerAdapter detailPagerAdapter = (DetailPagerAdapter) vpPager.getAdapter();
+            InformationFragment informationFragment = (InformationFragment) detailPagerAdapter.getRegisteredFragment(0);
+            if(informationFragment != null) {
+                informationFragment.refresh(member);
+            }
+            AppearanceFragment appearanceFragment = (AppearanceFragment) detailPagerAdapter.getRegisteredFragment(1);
+            if(appearanceFragment != null) {
+                appearanceFragment.refresh(member);
+            }
+            getSupportActionBar().setTitle(member.getName());
+            modifyFlag = true;
         }
-        AppearanceFragment appearanceFragment = (AppearanceFragment) detailPagerAdapter.getRegisteredFragment(1);
-        if(appearanceFragment != null) {
-            appearanceFragment.refresh(member);
-        }
-        super.onResume();
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -125,5 +128,13 @@ public class DetailActivity extends AppCompatActivity {
         public int getCount() {
             return tabTitles.length;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(modifyFlag) {
+            setResult(RESULT_OK);
+        }
+        finish(); // closes the activity, pass data to parent
     }
 }

@@ -10,6 +10,7 @@ import static com.example.imetu.imet.widget.Util.GENDER_UNDEFINED;
 import static com.example.imetu.imet.widget.Util.GLASSES_UNDEFINED;
 import static com.example.imetu.imet.widget.Util.HAIR_UNDEFINED;
 import static com.example.imetu.imet.widget.Util.HEIGHT_UNDEFINED;
+import static com.example.imetu.imet.widget.Util.REQUEST_FILTER;
 
 
 @Parcel
@@ -27,6 +28,7 @@ public class MemberFilter {
     private boolean dyed;
     private int glasses;
     private String other;
+    private int filterOrAdvance;
 
     public MemberFilter() {
         this.name = "";
@@ -42,6 +44,7 @@ public class MemberFilter {
         this.dyed = false;
         this.glasses = GLASSES_UNDEFINED;
         this.other = "";
+        this.filterOrAdvance = REQUEST_FILTER;
     }
 
     public String getName() {
@@ -96,6 +99,10 @@ public class MemberFilter {
         return other;
     }
 
+    public int getFilterOrAdvance() {
+        return filterOrAdvance;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -147,4 +154,9 @@ public class MemberFilter {
     public void setOther(String other) {
         this.other = other;
     }
+
+    public void setFilterOrAdvance(int filterOrAdvance) {
+        this.filterOrAdvance = filterOrAdvance;
+    }
+
 }

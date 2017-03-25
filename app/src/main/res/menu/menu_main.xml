@@ -8,10 +8,15 @@
         app:showAsAction="ifRoom"
         app:actionViewClass="android.support.v7.widget.SearchView" />
     <item
+        android:title="@string/reset"
+        android:icon="@drawable/ic_undo"
+        android:orderInCategory="10"
+        app:showAsAction="ifRoom"
+        android:onClick="resetClick"/>
+    <item
         android:title="@string/filter"
         android:icon="@drawable/ic_filter"
         android:orderInCategory="10"
         app:showAsAction="ifRoom"
         android:onClick="filterClick"/>
-
 </menu>
