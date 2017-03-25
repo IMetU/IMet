@@ -25,6 +25,7 @@ public class Member {
     private int glasses;
     private String other;
 
+
     public Member() {
     }
 
@@ -173,4 +174,5 @@ public class Member {
     public void setOther(String other) {
         this.other = other;
     }
+
 }

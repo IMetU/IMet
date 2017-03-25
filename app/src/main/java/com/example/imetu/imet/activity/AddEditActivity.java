@@ -1,13 +1,18 @@
 package com.example.imetu.imet.activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -19,17 +24,32 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.imetu.imet.R;
 import com.example.imetu.imet.database.DBEngine;
+import com.example.imetu.imet.model.Address;
 import com.example.imetu.imet.model.Member;
 import com.example.imetu.imet.widget.ObservableScrollView;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.xw.repo.BubbleSeekBar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import cz.msebera.android.httpclient.Header;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.OnShowRationale;
+import permissions.dispatcher.PermissionRequest;
+import permissions.dispatcher.RuntimePermissions;
 
 import static com.example.imetu.imet.widget.Util.ADD_MEMBER;
 import static com.example.imetu.imet.widget.Util.BODY_MEDIUM;
@@ -46,7 +66,7 @@ import static com.example.imetu.imet.widget.Util.HAIR_LONG;
 import static com.example.imetu.imet.widget.Util.HAIR_MEDIUM;
 import static com.example.imetu.imet.widget.Util.HAIR_SHORT;
 import static com.example.imetu.imet.widget.Util.HAIR_UNDEFINED;
-
+@RuntimePermissions
 public class AddEditActivity extends AppCompatActivity {
 
     ObservableScrollView obsScrollView;
@@ -79,6 +99,10 @@ public class AddEditActivity extends AppCompatActivity {
     private String photoPath;
     public FileOutputStream out = null;
 
+    private Address myAddress;
+    private final String GEOCODING_API_URL = "https://maps.googleapis.com/maps/api/geocode/json?";
+    private final String GEOCODING_API_KEY = "AIzaSyCLUtWFp8wD_NosqvkRusP8QX7Lil-Ld1k";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +114,7 @@ public class AddEditActivity extends AppCompatActivity {
         if (type == ADD_MEMBER) {
             member = new Member();
             getSupportActionBar().setTitle("ADD NEW MEMBER");
+            AddEditActivityPermissionsDispatcher.getGPSWithCheck(this);
         } else {
             member = dbEngine.selectOne(getIntent().getIntExtra("id", 0));
             getSupportActionBar().setTitle("EDIT MEMBER");
@@ -401,5 +426,71 @@ public class AddEditActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.CAMERA},
                 REQUEST_CAMERA);
+    }
+    @NeedsPermission({Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
+    public void getGPS(){
+        LocationManager myLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Location myLocation = myLocationManager.getLastKnownLocation("gps");
+        if (myLocation != null){
+            getLocation(myLocation);
+
+
+        }
+    }
+    @OnShowRationale({Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
+    public void showRationaleForGPS(PermissionRequest request){
+        showRationaleDialog(R.string.permission_gps_rationale, request);
+    }
+    @OnPermissionDenied({Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
+    public void onGPSDenied(){
+        Toast.makeText(this, R.string.permission_gps_denied, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onGPSNeverAskAgain(){
+        Toast.makeText(this, R.string.permission_gps_neverask, Toast.LENGTH_SHORT).show();
+    }
+
+    private void getLocation(Location location) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("key", GEOCODING_API_KEY);
+        params.put("language", "zh-TW");
+        params.put("latlng", location.getLatitude() + "," + location.getLongitude());
+        client.get(GEOCODING_API_URL, params, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try{
+                    myAddress = new Address(response.getJSONArray("results").getJSONObject(0));
+                    if (myAddress != null){
+                        member.setLocation(myAddress.getArea_level_1() + myAddress.getArea_level_3());
+                        etLocation.setText(member.getLocation());
+                    }
+
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+
+            }
+        });
+    }
+
+    private void showRationaleDialog(@StringRes int messageResId, final PermissionRequest request) {
+        new AlertDialog.Builder(this)
+                .setPositiveButton(R.string.button_allow, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(@NonNull DialogInterface dialog, int which) {
+                        request.proceed();
+                    }
+                })
+                .setNegativeButton(R.string.button_deny, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(@NonNull DialogInterface dialog, int which) {
+                        request.cancel();
+                    }
+                })
+                .setCancelable(false)
+                .setMessage(messageResId)
+                .show();
     }
 }

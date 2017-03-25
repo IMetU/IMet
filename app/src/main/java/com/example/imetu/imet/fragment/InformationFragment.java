@@ -90,7 +90,6 @@ public class InformationFragment extends Fragment {
         member = newMember;
         setMemberValue();
         setTextContent();
-        setPhoto();
     }
 
     private void setMemberValue() {

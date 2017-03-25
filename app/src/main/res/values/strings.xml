@@ -41,5 +41,12 @@
     <string name="radioWithoutGlasses_StrID">None</string>
 
     <string name="save_Str_ID">Save</string>
+    <string name="ApiKey"></string>
+    <string name="ApiUrl"></string>
+    <string name="button_allow">Allow</string>
+    <string name="button_deny">Deny</string>
+    <string name="permission_gps_rationale">Need Permission for GPS</string>
+    <string name="permission_gps_denied">Permission GPS Denied</string>
+    <string name="permission_gps_neverask">Permission GPS Never Ask</string>
 
 </resources>
