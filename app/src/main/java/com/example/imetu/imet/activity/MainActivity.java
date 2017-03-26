@@ -32,11 +32,13 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
     private final int REQUEST_CODE_ADVANCE_SEARCH = 21;
     private final int REQUEST_CODE_ADD_MEMBER = 22;
     private final int REQUEST_CODE_DETAIL_VIEW = 23;
+    private final String SEARCH_KEY = "search";
 
     private ListView lvMemberList;
     private ArrayList<Member> memberArrayList;
     private MemberListAdapter memberArrayAdapter;
     private FloatingActionButton fabAddMember;
+    private SearchView searchView;
     private DBEngine dbEngine;
     private MemberFilter memberFilter;
     private String query;
@@ -83,7 +85,9 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
                 startActivityForResult(intent, REQUEST_CODE_ADD_MEMBER);
             }
         });
-
+        if (savedInstanceState != null){
+            query = savedInstanceState.getString(SEARCH_KEY);
+        }
         //set Data
         getAllDataSetView();
     }
@@ -103,7 +107,12 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem searchItem = menu.findItem(R.id.menuSearch);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        if (query != null && !query.isEmpty()){
+            searchView.onActionViewExpanded();
+            searchView.setQuery(query, true);
+            searchView.setFocusable(true);
+        }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -119,7 +128,6 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                query = newText;
                 return false;
             }
         });
@@ -179,7 +187,8 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putString("query", query);
+        query = searchView.getQuery().toString();
+        outState.putString(SEARCH_KEY, query);
         super.onSaveInstanceState(outState);
     }
 
