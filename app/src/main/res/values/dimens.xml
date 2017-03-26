@@ -3,7 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="NameSize">20sp</dimen>
-    <dimen name="PhoneNumberSize">20sp</dimen>
+    <dimen name="PhoneNumberSize">18sp</dimen>
     <dimen name="DetailTextSize">20sp</dimen>
     <dimen name="DetailTopMargin">15dp</dimen>
     <dimen name="DetailLeftTitleMargin">15dp</dimen>
