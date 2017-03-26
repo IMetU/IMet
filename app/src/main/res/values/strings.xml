@@ -48,5 +48,9 @@
     <string name="permission_gps_rationale">Need Permission for GPS</string>
     <string name="permission_gps_denied">Permission GPS Denied</string>
     <string name="permission_gps_neverask">Permission GPS Never Ask</string>
+    <string name="permission_camera_denied">Permission Camera Denied</string>
+    <string name="permission_camera_neverask">Permission Camera Never Ask</string>
+    <string name="permission_storage_denied">Permission Storage Denied</string>
+    <string name="permission_storage_neverask">Permission Storage Never Ask</string>
 
 </resources>

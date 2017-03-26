@@ -46,6 +46,7 @@ import java.io.IOException;
 
 import cz.msebera.android.httpclient.Header;
 import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
@@ -66,6 +67,7 @@ import static com.example.imetu.imet.widget.Util.HAIR_LONG;
 import static com.example.imetu.imet.widget.Util.HAIR_MEDIUM;
 import static com.example.imetu.imet.widget.Util.HAIR_SHORT;
 import static com.example.imetu.imet.widget.Util.HAIR_UNDEFINED;
+
 @RuntimePermissions
 public class AddEditActivity extends AppCompatActivity {
 
@@ -96,9 +98,11 @@ public class AddEditActivity extends AppCompatActivity {
     private final int TAKE_PICTURE_REQUEST_CODE = 10;
     private static final int REQUEST_CAMERA = 111;
     private static final int REQUEST_WRITE_STORAGE = 112;
+    private static final int REQUEST_GPS = 113;
     private String photoPath;
     public FileOutputStream out = null;
 
+    Bitmap pictureBitmap;
     private Address myAddress;
     private final String GEOCODING_API_URL = "https://maps.googleapis.com/maps/api/geocode/json?";
     private final String GEOCODING_API_KEY = "";
@@ -132,7 +136,7 @@ public class AddEditActivity extends AppCompatActivity {
         etYearMet.setText(member.getYearMet());
         etTopicDiscussed.setText(member.getTopicDiscussed());
 
-        switch (member.getGender()){
+        switch (member.getGender()) {
             case GENDER_MALE:
                 genderRadioGroup.check(R.id.radio_Male);
                 break;
@@ -145,14 +149,14 @@ public class AddEditActivity extends AppCompatActivity {
 
         seekbarHeight.setProgress(member.getHeight());
 
-        switch (member.getBodyShape()){
+        switch (member.getBodyShape()) {
             case BODY_THIN:
                 bodyShapeRadioGroup.check(R.id.radio_Thin);
                 break;
             case BODY_MEDIUM:
                 bodyShapeRadioGroup.check(R.id.radio_Medium);
                 break;
-            case  BODY_PLUMP:
+            case BODY_PLUMP:
                 bodyShapeRadioGroup.check(R.id.radio_Plump);
                 break;
             default:
@@ -197,44 +201,15 @@ public class AddEditActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menuSave:
                 saveClick();
                 return true;
             case R.id.menuTakePhoto:
-                takePhoto();
+                AddEditActivityPermissionsDispatcher.takePhotoWithCheck(this);
                 return true;
             default:
                 return false;
-        }
-    }
-
-    private void takePhoto() {
-        int cameraPermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CAMERA);
-        int storagePermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (cameraPermission != PackageManager.PERMISSION_GRANTED){
-            Log.i("CAMERA", "Permission to record denied");
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.CAMERA)) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Permission to access your camera for this app.")
-                        .setTitle("Permission required");
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        makeCameraRequest();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }else{
-                makeCameraRequest();
-            }
-        }else{
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent, TAKE_PICTURE_REQUEST_CODE);
         }
     }
 
@@ -254,7 +229,7 @@ public class AddEditActivity extends AppCompatActivity {
         member.setTopicDiscussed(etTopicDiscussed.getText().toString());
         member.setOther(etOther.getText().toString());
 
-        switch (genderRadioGroup.getCheckedRadioButtonId()){
+        switch (genderRadioGroup.getCheckedRadioButtonId()) {
             case R.id.radio_Male:
                 member.setGender(GENDER_MALE);
                 break;
@@ -267,7 +242,7 @@ public class AddEditActivity extends AppCompatActivity {
 
         member.setHeight(seekbarHeightProgress);
 
-        switch (bodyShapeRadioGroup.getCheckedRadioButtonId()){
+        switch (bodyShapeRadioGroup.getCheckedRadioButtonId()) {
             case R.id.radio_Thin:
                 member.setBodyShape(BODY_THIN);
                 break;
@@ -281,7 +256,7 @@ public class AddEditActivity extends AppCompatActivity {
                 member.setBodyShape(BODY_UNDEFINED);
         }
 
-        switch (hairLengthRadioGroup.getCheckedRadioButtonId()){
+        switch (hairLengthRadioGroup.getCheckedRadioButtonId()) {
             case R.id.radio_ShortHair:
                 member.setHairLength(HAIR_SHORT);
                 break;
@@ -298,7 +273,7 @@ public class AddEditActivity extends AppCompatActivity {
         member.setPermed(checkbox_Permed.isChecked() ? true : false);
         member.setDyed(checkbox_Dyed.isChecked() ? true : false);
 
-        switch (glassesRadioGroup.getCheckedRadioButtonId()){
+        switch (glassesRadioGroup.getCheckedRadioButtonId()) {
             case R.id.radio_WithGlasses:
                 member.setGlasses(GLASSES_WITH);
                 break;
@@ -316,7 +291,7 @@ public class AddEditActivity extends AppCompatActivity {
     }
 
     private void setView() {
-        ivPreview = (ImageView)findViewById(R.id.addEditImage);
+        ivPreview = (ImageView) findViewById(R.id.addEditImage);
         etName = (EditText) findViewById(R.id.etName);
         etPhone = (EditText) findViewById(R.id.etPhone);
         etEmail = (EditText) findViewById(R.id.etEmail);
@@ -367,53 +342,10 @@ public class AddEditActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Bitmap pictureBitmap = (Bitmap)data.getExtras().get("data");
+        pictureBitmap = (Bitmap) data.getExtras().get("data");
         File photoDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         photoPath = photoDir + "/IMG_" + System.currentTimeMillis() + ".jpg";
-        int permission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            Log.i("Storage Permission", "Permission to record denied");
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Permission to access the SD-CARD is required for this app to Download PDF.")
-                        .setTitle("Permission required");
-
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int id) {
-                        Log.i("Storage Permission", "Clicked");
-                        makeStorageRequest();
-                    }
-                });
-
-                AlertDialog dialog = builder.create();
-                dialog.show();
-
-            } else {
-                makeStorageRequest();
-            }
-        }
-        try{
-            out = new FileOutputStream(photoPath);
-            pictureBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            try{
-                if (out != null){
-                    out.close();
-                    member.setImgPath(photoPath);
-                    Glide.with(AddEditActivity.this).load(member.getImgPath()).into(ivPreview);
-                }
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-        }
-
+        AddEditActivityPermissionsDispatcher.savePhotoWithCheck(this, photoPath);
     }
 
     private void makeStorageRequest() {
@@ -422,75 +354,107 @@ public class AddEditActivity extends AppCompatActivity {
                 REQUEST_WRITE_STORAGE);
     }
 
-    protected void makeCameraRequest() {
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.CAMERA},
-                REQUEST_CAMERA);
+    @NeedsPermission({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    public void takePhoto() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, TAKE_PICTURE_REQUEST_CODE);
     }
+    @OnShowRationale({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    public void showRationaleForCamera(PermissionRequest request){
+        request.proceed();
+    }
+    @OnPermissionDenied({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    public void OnCameraDenied(){
+        Toast.makeText(this, R.string.permission_camera_denied, Toast.LENGTH_SHORT).show();
+    }
+    @OnNeverAskAgain({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    public void OnCameraNeverAskAgain(){
+        Toast.makeText(this, R.string.permission_camera_neverask, Toast.LENGTH_SHORT).show();
+    }
+
     @NeedsPermission({Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
-    public void getGPS(){
+    public void getGPS() {
         LocationManager myLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Location myLocation = myLocationManager.getLastKnownLocation("gps");
-        if (myLocation != null){
+        if (myLocation != null) {
             getLocation(myLocation);
-
-
         }
     }
-    @OnShowRationale({Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
-    public void showRationaleForGPS(PermissionRequest request){
-        showRationaleDialog(R.string.permission_gps_rationale, request);
+    @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    public void savePhoto(String photoPath){
+        try{
+            out = new FileOutputStream(photoPath);
+            pictureBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            try{
+                if (out != null) {
+                    out.close();
+                    member.setImgPath(photoPath);
+                    Glide.with(AddEditActivity.this).load(member.getImgPath()).into(ivPreview);
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
     }
+    @OnShowRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    public void showRationaleForStorage(PermissionRequest request){
+        request.proceed();
+    }
+    @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    public void OnStorageDenied(){
+        Toast.makeText(this, R.string.permission_storage_denied, Toast.LENGTH_SHORT).show();
+    }
+    @OnNeverAskAgain(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    public void OnStorageNeverAskAgain(){
+        Toast.makeText(this, R.string.permission_storage_neverask, Toast.LENGTH_SHORT).show();
+    }
+
+    @OnShowRationale({Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
+    public void showRationaleForGPS(PermissionRequest request) {
+        request.proceed();
+    }
+
     @OnPermissionDenied({Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
-    public void onGPSDenied(){
+    public void onGPSDenied() {
         Toast.makeText(this, R.string.permission_gps_denied, Toast.LENGTH_SHORT).show();
     }
 
-    public void onGPSNeverAskAgain(){
+    @OnNeverAskAgain({Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
+    public void onGPSNeverAskAgain() {
         Toast.makeText(this, R.string.permission_gps_neverask, Toast.LENGTH_SHORT).show();
     }
-
+    //  Use Geocoding api for location
     private void getLocation(Location location) {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("key", GEOCODING_API_KEY);
         params.put("language", "zh-TW");
         params.put("latlng", location.getLatitude() + "," + location.getLongitude());
-        client.get(GEOCODING_API_URL, params, new JsonHttpResponseHandler(){
+        client.get(GEOCODING_API_URL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                try{
+                try {
                     myAddress = new Address(response.getJSONArray("results").getJSONObject(0));
-                    if (myAddress != null){
+                    if (myAddress != null) {
                         member.setLocation(myAddress.getArea_level_1() + myAddress.getArea_level_3());
                         etLocation.setText(member.getLocation());
                     }
 
-                }catch (JSONException e){
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
             }
         });
     }
-
-    private void showRationaleDialog(@StringRes int messageResId, final PermissionRequest request) {
-        new AlertDialog.Builder(this)
-                .setPositiveButton(R.string.button_allow, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(@NonNull DialogInterface dialog, int which) {
-                        request.proceed();
-                    }
-                })
-                .setNegativeButton(R.string.button_deny, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(@NonNull DialogInterface dialog, int which) {
-                        request.cancel();
-                    }
-                })
-                .setCancelable(false)
-                .setMessage(messageResId)
-                .show();
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        AddEditActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
+
 }
