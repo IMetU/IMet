@@ -39,6 +39,7 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
     private FloatingActionButton fabAddMember;
     private DBEngine dbEngine;
     private MemberFilter memberFilter;
+    private String query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +104,7 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem searchItem = menu.findItem(R.id.menuSearch);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -117,7 +119,7 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //  TODO:query text change action
+                query = newText;
                 return false;
             }
         });
@@ -173,6 +175,12 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
             getAllDataSetView();
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("query", query);
+        super.onSaveInstanceState(outState);
     }
 
     //  delete action

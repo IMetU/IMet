@@ -113,7 +113,6 @@ public class AddEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_edit);
         dbEngine = new DBEngine();
         setView();
-
         type = getIntent().getIntExtra("TYPE", ADD_MEMBER);
         if (type == ADD_MEMBER) {
             member = new Member();
@@ -124,6 +123,12 @@ public class AddEditActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("EDIT MEMBER");
             setMemberValue();
         }
+        if (savedInstanceState != null){
+            member.setImgPath(savedInstanceState.getString("ImgPath"));
+            Glide.with(AddEditActivity.this).load(member.getImgPath()).into(ivPreview);
+        }
+
+
     }
 
     private void setMemberValue() {
@@ -189,6 +194,9 @@ public class AddEditActivity extends AppCompatActivity {
                 break;
             default:
                 // do nothing
+        }
+        if (member.getImgPath() != null){
+            Glide.with(AddEditActivity.this).load(member.getImgPath()).into(ivPreview);
         }
 
     }
@@ -337,23 +345,28 @@ public class AddEditActivity extends AppCompatActivity {
                 seekbarHeight.correctOffsetWhenContainerOnScrolling();
             }
         });
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        pictureBitmap = (Bitmap) data.getExtras().get("data");
-        File photoDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        photoPath = photoDir + "/IMG_" + System.currentTimeMillis() + ".jpg";
-        AddEditActivityPermissionsDispatcher.savePhotoWithCheck(this, photoPath);
+        if (requestCode == TAKE_PICTURE_REQUEST_CODE){
+            if (resultCode == RESULT_OK){
+                pictureBitmap = (Bitmap) data.getExtras().get("data");
+                File photoDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+                photoPath = photoDir + "/IMG_" + System.currentTimeMillis() + ".jpg";
+                AddEditActivityPermissionsDispatcher.savePhotoWithCheck(this, photoPath);
+            }
+        }
     }
 
-    private void makeStorageRequest() {
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                REQUEST_WRITE_STORAGE);
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("ImgPath", member.getImgPath());
+        super.onSaveInstanceState(outState);
     }
-
+    //  Camera permission
     @NeedsPermission({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void takePhoto() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -371,15 +384,7 @@ public class AddEditActivity extends AppCompatActivity {
     public void OnCameraNeverAskAgain(){
         Toast.makeText(this, R.string.permission_camera_neverask, Toast.LENGTH_SHORT).show();
     }
-
-    @NeedsPermission({Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
-    public void getGPS() {
-        LocationManager myLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Location myLocation = myLocationManager.getLastKnownLocation("gps");
-        if (myLocation != null) {
-            getLocation(myLocation);
-        }
-    }
+    //  Save photo permission
     @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     public void savePhoto(String photoPath){
         try{
@@ -411,17 +416,23 @@ public class AddEditActivity extends AppCompatActivity {
     public void OnStorageNeverAskAgain(){
         Toast.makeText(this, R.string.permission_storage_neverask, Toast.LENGTH_SHORT).show();
     }
-
+    //  GPS Permission
+    @NeedsPermission({Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
+    public void getGPS() {
+        LocationManager myLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Location myLocation = myLocationManager.getLastKnownLocation("gps");
+        if (myLocation != null) {
+            getLocation(myLocation);
+        }
+    }
     @OnShowRationale({Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
     public void showRationaleForGPS(PermissionRequest request) {
         request.proceed();
     }
-
     @OnPermissionDenied({Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
     public void onGPSDenied() {
         Toast.makeText(this, R.string.permission_gps_denied, Toast.LENGTH_SHORT).show();
     }
-
     @OnNeverAskAgain({Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
     public void onGPSNeverAskAgain() {
         Toast.makeText(this, R.string.permission_gps_neverask, Toast.LENGTH_SHORT).show();
@@ -443,11 +454,9 @@ public class AddEditActivity extends AppCompatActivity {
                         member.setLocation(myAddress.getArea_level_1() + myAddress.getArea_level_3());
                         etLocation.setText(member.getLocation());
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         });
     }
