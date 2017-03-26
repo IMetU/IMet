@@ -3,7 +3,7 @@
     <string name="search">Search</string>
     <string name="filter">Filter</string>
     <string name="edit">Edit</string>
-    <string name="quick_search">QuickSearch</string>
+    <string name="quick_search">Quick Search</string>
     <string name="reset">Reset</string>
     <string name="advance_search">More Search Options</string>
 
@@ -38,7 +38,7 @@
     <string name="checkboxDyedHair_StrID">Dyed</string>
 
     <string name="radioWithGlasses_StrID">With Glasses</string>
-    <string name="radioWithoutGlasses_StrID">None</string>
+    <string name="radioWithoutGlasses_StrID">No Glasses</string>
 
     <string name="save_Str_ID">Save</string>
     <string name="ApiKey"></string>

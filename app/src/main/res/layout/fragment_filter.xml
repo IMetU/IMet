@@ -1,171 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.example.imetu.imet.widget.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:id="@+id/fragment_filter"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:text="@string/quick_search"
-            android:textSize="20sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp">
 
-        <Button
-            android:id="@+id/btnReset"
-            android:text="@string/reset"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="180dp" />
+            android:layout_marginLeft="5dp"
+            android:text="@string/quick_search"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tvName"
-            android:text="@string/tvName_StrID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btnReset"
             android:layout_alignParentStart="true"
+            android:layout_below="@+id/btnReset"
             android:layout_marginStart="21dp"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="20dp"
+            android:text="@string/tvName_StrID" />
 
         <EditText
             android:id="@+id/etName"
-            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:layout_alignBaseline="@+id/tvName"
+            android:layout_alignBottom="@+id/tvName"
+            android:layout_marginLeft="62dp"
+            android:layout_toRightOf="@+id/tvName"
             android:background="@color/background_tab_pressed"
             android:ems="10"
-            android:layout_toRightOf="@+id/tvName"
-            android:layout_marginLeft="100dp"
-            android:layout_alignBaseline="@+id/tvName"
-            android:layout_alignBottom="@+id/tvName" />
+            android:inputType="textPersonName"
+            android:layout_width="170dp" />
 
         <TextView
             android:id="@+id/tvRelationship"
-            android:text="@string/tvRelationship_StrID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/etName"
             android:layout_alignStart="@+id/tvName"
-            android:layout_marginTop="15dp" />
+            android:layout_below="@+id/etName"
+            android:layout_marginTop="15dp"
+            android:text="@string/tvRelationship_StrID" />
 
         <EditText
             android:id="@+id/etRelationship"
-            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:layout_alignBaseline="@+id/tvRelationship"
+            android:layout_alignStart="@+id/etName"
+            android:layout_below="@+id/etName"
             android:background="@color/background_tab_pressed"
             android:ems="10"
-            android:layout_below="@+id/etName"
-            android:layout_alignBaseline="@+id/tvRelationship"
-            android:layout_alignStart="@+id/etName" />
+            android:inputType="textPersonName"
+            android:layout_width="170dp" />
 
         <TextView
             android:id="@+id/tvEvent"
-            android:text="@string/tvEvent_StrID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/etRelationship"
             android:layout_alignStart="@+id/tvRelationship"
-            android:layout_marginTop="16dp" />
+            android:layout_below="@+id/etRelationship"
+            android:layout_marginTop="16dp"
+            android:text="@string/tvEvent_StrID" />
 
         <EditText
             android:id="@+id/etEvent"
-            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:layout_alignBaseline="@+id/tvEvent"
+            android:layout_alignStart="@+id/etRelationship"
+            android:layout_below="@+id/etRelationship"
             android:background="@color/background_tab_pressed"
             android:ems="10"
-            android:layout_below="@+id/etRelationship"
-            android:layout_alignBaseline="@+id/tvEvent"
-            android:layout_alignStart="@+id/etRelationship" />
+            android:inputType="textPersonName"
+            android:layout_width="170dp" />
 
         <TextView
             android:id="@+id/tvGender"
-            android:text="@string/tvGender_StrID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_alignStart="@+id/tvEvent"
             android:layout_below="@+id/etEvent"
-            android:layout_alignStart="@+id/tvEvent" />
+            android:layout_marginTop="18dp"
+            android:text="@string/tvGender_StrID" />
 
         <RadioGroup
             android:id="@+id/rgGender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/tvGender"
+            android:layout_marginLeft="35dp"
             android:layout_toRightOf="@+id/tvGender"
-            android:layout_marginLeft="50dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:scaleX="0.8"
+            android:scaleY="0.8">
+
             <RadioButton
                 android:id="@+id/radio_Female"
-                android:text="@string/radioFemale_StrID"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/radioFemale_StrID" />
 
             <RadioButton
                 android:id="@+id/radio_Male"
-                android:text="@string/radioMale_StrID"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="@string/radioMale_StrID" />
         </RadioGroup>
-
 
         <TextView
             android:id="@+id/tvHeight"
-            android:text="@string/tvHeight_StrID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_alignStart="@+id/tvGender"
             android:layout_below="@+id/tvGender"
-            android:layout_alignStart="@+id/tvGender" />
+            android:layout_marginTop="18dp"
+            android:text="@string/tvHeight_StrID" />
 
         <com.xw.repo.BubbleSeekBar
             android:id="@+id/sbHeight"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tvHeight"
             android:layout_alignStart="@+id/rgGender"
+            android:layout_alignTop="@+id/tvHeight"
             app:bsb_bubble_color="@color/colorPrimary"
             app:bsb_bubble_text_color="@color/colorPrimaryDark"
             app:bsb_max="190"
             app:bsb_min="150"
             app:bsb_progress="165"
+            app:bsb_second_track_color="@color/colorAccent"
             app:bsb_show_section_text="true"
             app:bsb_show_thumb_text="true"
-            app:bsb_track_color="@color/colorPrimaryDark"
-            app:bsb_second_track_color="@color/colorAccent"/>
+            app:bsb_track_color="@color/colorPrimaryDark" />
 
         <CheckBox
             android:id="@+id/cbAny"
-            android:text="@string/checkboxAny_StrID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tvHeight"
-            android:layout_toRightOf="@+id/sbHeight" />
+            android:layout_toRightOf="@+id/sbHeight"
+            android:text="@string/checkboxAny_StrID" />
 
         <TextView
             android:id="@+id/tvBodyShape"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvHeight"
             android:layout_alignStart="@+id/tvHeight"
+            android:layout_below="@+id/tvHeight"
             android:layout_marginTop="18dp"
             android:text="@string/tvBodyShape_StrID" />
-
 
         <RadioGroup
             android:id="@+id/rgBodyShape"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tvBodyShape"
             android:layout_alignStart="@+id/rgGender"
-            android:orientation="horizontal">
+            android:layout_alignTop="@+id/tvBodyShape"
+            android:layout_marginLeft="-6dp"
+            android:orientation="horizontal"
+            android:scaleX="0.8"
+            android:scaleY="0.8">
 
             <RadioButton
                 android:id="@+id/radio_Thin"
@@ -190,19 +192,21 @@
             android:id="@+id/tvGlasses"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvBodyShape"
             android:layout_alignStart="@+id/tvHeight"
+            android:layout_below="@+id/tvBodyShape"
             android:layout_marginTop="18dp"
             android:text="@string/tvGlasses_StrID" />
-
 
         <RadioGroup
             android:id="@+id/rgGlasses"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tvGlasses"
             android:layout_alignStart="@+id/rgGender"
-            android:orientation="horizontal">
+            android:layout_alignTop="@+id/tvGlasses"
+            android:layout_marginLeft="-6dp"
+            android:orientation="horizontal"
+            android:scaleX="0.8"
+            android:scaleY="0.8">
 
             <RadioButton
                 android:id="@+id/radio_WithGlasses"
@@ -219,19 +223,28 @@
 
         <Button
             android:id="@+id/btnSearch"
-            android:text="@string/search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rgGlasses"
             android:layout_alignEnd="@+id/tvRelationship"
-            android:layout_marginTop="38dp" />
+            android:layout_below="@+id/rgGlasses"
+            android:layout_marginTop="38dp"
+            android:text="@string/search" />
 
         <Button
             android:id="@+id/btnAdvanceSearch"
-            android:text="@string/advance_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/btnSearch"
-            android:layout_alignEnd="@+id/cbAny" />
+            android:text="@string/advance_search"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/etEvent" />
+
+        <Button
+            android:id="@+id/btnReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="180dp"
+            android:text="@string/reset"
+            android:layout_alignParentTop="true"
+            android:layout_alignEnd="@+id/btnAdvanceSearch" />
     </RelativeLayout>
 </com.example.imetu.imet.widget.ObservableScrollView>
