@@ -29,7 +29,6 @@
             android:value="5a886e0e5fc27349ea9c9dabe31c6ec1869cff45" />
 
         <activity android:name=".activity.BaseActivity" />
-        <activity android:name=".activity.AddMember" />
         <activity android:name=".activity.DetailActivity"
             android:configChanges="orientation|screenSize"/>
         <activity android:name=".activity.AdvanceSearchActivity"

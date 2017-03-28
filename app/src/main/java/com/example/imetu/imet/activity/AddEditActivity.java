@@ -4,12 +4,14 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -31,6 +33,7 @@ import com.example.imetu.imet.R;
 import com.example.imetu.imet.database.DBEngine;
 import com.example.imetu.imet.model.Address;
 import com.example.imetu.imet.model.Member;
+import com.example.imetu.imet.widget.ConfidentialUtil;
 import com.example.imetu.imet.widget.ObservableScrollView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -105,13 +108,18 @@ public class AddEditActivity extends AppCompatActivity {
     Bitmap pictureBitmap;
     private Address myAddress;
     private final String GEOCODING_API_URL = "https://maps.googleapis.com/maps/api/geocode/json?";
-    private final String GEOCODING_API_KEY = "";
+    private final String GEOCODING_API_KEY = ConfidentialUtil.GEOCODING_API_KEY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit);
-        dbEngine = new DBEngine();
+
+        SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(this);
+        String iMetUserId = mSettings.getString("iMetUserId", null);
+
+        dbEngine = new DBEngine(iMetUserId);
+
         setView();
         type = getIntent().getIntExtra("TYPE", ADD_MEMBER);
         if (type == ADD_MEMBER) {
@@ -457,6 +465,12 @@ public class AddEditActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Log.d("IMet", "AddEditActivity, getLocation onFailure, statusCode: " + statusCode + "responseString: " + responseString);
             }
         });
     }

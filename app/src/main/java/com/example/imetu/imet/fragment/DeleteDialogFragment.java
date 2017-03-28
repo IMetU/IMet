@@ -1,6 +1,8 @@
 package com.example.imetu.imet.fragment;
 
 import android.app.Dialog;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -30,7 +32,11 @@ public class DeleteDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Member member = (Member) Parcels.unwrap(getArguments().getParcelable("member"));
-        dbEngine = new DBEngine();
+
+        SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String iMetUserId = mSettings.getString("iMetUserId", null);
+        dbEngine = new DBEngine(iMetUserId);
+
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle("Delete");
         alertDialogBuilder.setMessage("Please make sure you want to delete " + member.getName() + "'s profile?");

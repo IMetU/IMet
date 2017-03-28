@@ -1,7 +1,9 @@
 package com.example.imetu.imet.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -32,7 +34,10 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         //  get user info
-        dbEngine = new DBEngine();
+        SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(this);
+        String iMetUserId = mSettings.getString("iMetUserId", null);
+
+        dbEngine = new DBEngine(iMetUserId);
         int id = getIntent().getIntExtra("id", 0);
         member = dbEngine.selectOne(id);
 

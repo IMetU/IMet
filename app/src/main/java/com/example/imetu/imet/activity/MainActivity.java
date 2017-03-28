@@ -1,11 +1,14 @@
 package com.example.imetu.imet.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +27,7 @@ import com.example.imetu.imet.model.MemberFilter;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static com.example.imetu.imet.widget.Util.ADD_MEMBER;
 import static com.example.imetu.imet.widget.Util.REQUEST_ADVANCE_SEARCH;
@@ -45,9 +49,21 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(this);
+        String iMetUserId = mSettings.getString("iMetUserId", null);
+
+        if(iMetUserId == null){
+            Log.d("IMet", "iMetUserId is null");
+            SharedPreferences.Editor editor = mSettings.edit();
+            String username = UUID.randomUUID().toString();
+            editor.putString("iMetUserId", username);
+            editor.apply();
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dbEngine = new DBEngine();
+        dbEngine = new DBEngine(iMetUserId);
         memberFilter = new MemberFilter();
         lvMemberList = (ListView)findViewById(R.id.lvMemberList);
         memberArrayList = new ArrayList<>();

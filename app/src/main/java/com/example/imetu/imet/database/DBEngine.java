@@ -1,29 +1,64 @@
 package com.example.imetu.imet.database;
 
+import android.util.Log;
+
 import com.example.imetu.imet.model.Member;
 import com.example.imetu.imet.model.MemberFilter;
 import com.example.imetu.imet.widget.Util;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.raizlabs.android.dbflow.sql.language.ConditionGroup;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
+
 import static com.example.imetu.imet.database.MemberTable_Table.name;
+import static com.example.imetu.imet.widget.ConfidentialUtil.FIREBASE_URL;
 import static com.example.imetu.imet.widget.Util.BODY_UNDEFINED;
 import static com.example.imetu.imet.widget.Util.GENDER_UNDEFINED;
 import static com.example.imetu.imet.widget.Util.GLASSES_UNDEFINED;
 import static com.example.imetu.imet.widget.Util.HAIR_UNDEFINED;
 import static com.example.imetu.imet.widget.Util.HEIGHT_UNDEFINED;
 import static com.example.imetu.imet.widget.Util.REQUEST_ADVANCE_SEARCH;
+import static com.raizlabs.android.dbflow.config.FlowManager.getContext;
 
 
 public class DBEngine implements DBInterface {
+    public String iMetUserId;
+
+    public DBEngine(String iMetUserId){
+        this.iMetUserId = iMetUserId;
+    }
+
     @Override
     public void deleteMember(int id) {
         MemberTable memberTable = new MemberTable();
         memberTable.id = id;
         memberTable.delete();
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        String deleteMemberURL = FIREBASE_URL + "/users/" + iMetUserId + "/member/" + id + ".json";
+
+        client.delete(deleteMemberURL, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Log.d("IMet", "DBEngine, deleteMember, statusCode: " + statusCode + "responseString: " + responseString);
+            }
+        });
     }
 
     @Override
@@ -188,5 +223,50 @@ public class DBEngine implements DBInterface {
         memberTable.other = member.getOther();
         memberTable.imgPath = member.getImgPath();
         memberTable.save();
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        String editMemberURL = FIREBASE_URL + "/users/" + iMetUserId + "/member/" + memberTable.id  + ".json";
+
+        JSONObject jsonParams = new JSONObject();
+        try {
+            jsonParams.put("name", memberTable.name);
+            jsonParams.put("phone", memberTable.phone);
+            jsonParams.put("email", memberTable.email);
+            jsonParams.put("relationship", memberTable.relationship);
+            jsonParams.put("event", memberTable.event);
+            jsonParams.put("location", memberTable.location);
+            jsonParams.put("yearMet", memberTable.yearMet);
+            jsonParams.put("topicDiscussed", memberTable.topicDiscussed);
+            jsonParams.put("gender", memberTable.gender);
+            jsonParams.put("height", memberTable.height);
+            jsonParams.put("bodyShape", memberTable.bodyShape);
+            jsonParams.put("hairLength", memberTable.hairLength);
+            jsonParams.put("permed", memberTable.permed);
+            jsonParams.put("dyed", memberTable.dyed);
+            jsonParams.put("glasses", memberTable.glasses);
+            jsonParams.put("other", memberTable.other);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        StringEntity entity = null;
+        try {
+            entity = new StringEntity(jsonParams.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        client.put(getContext(), editMemberURL, entity, "application/json", new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Log.d("IMet", "DBEngine, editMember, statusCode: " + statusCode + "responseString: " + responseString);
+            }
+        });
     }
 }
