@@ -7,6 +7,8 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
@@ -14,9 +16,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.imetu.imet.R;
 import com.example.imetu.imet.adapter.MemberListAdapter;
+import com.example.imetu.imet.adapter.MemberListRvAdapter;
 import com.example.imetu.imet.database.DBEngine;
 import com.example.imetu.imet.fragment.DeleteDialogFragment;
 import com.example.imetu.imet.fragment.FilterFragment;
@@ -27,8 +31,10 @@ import com.example.imetu.imet.model.MemberFilter;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 import static com.example.imetu.imet.widget.Util.ADD_MEMBER;
 import static com.example.imetu.imet.widget.Util.REQUEST_ADVANCE_SEARCH;
 
@@ -38,9 +44,10 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
     private final int REQUEST_CODE_DETAIL_VIEW = 23;
     private final String SEARCH_KEY = "search";
 
-    private ListView lvMemberList;
+    private RecyclerView rvMemberList;
     private ArrayList<Member> memberArrayList;
-    private MemberListAdapter memberArrayAdapter;
+//    private MemberListAdapter memberArrayAdapter;
+    private MemberListRvAdapter memberListRvAdapter;
     private FloatingActionButton fabAddMember;
     private SearchView searchView;
     private DBEngine dbEngine;
@@ -65,31 +72,35 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
         setContentView(R.layout.activity_main);
         dbEngine = new DBEngine(iMetUserId);
         memberFilter = new MemberFilter();
-        lvMemberList = (ListView)findViewById(R.id.lvMemberList);
+        rvMemberList = (RecyclerView) findViewById(R.id.rvMemberList);
+        rvMemberList.setHasFixedSize(true);
+        final GridLayoutManager layout = new GridLayoutManager(MainActivity.this, 2);
+        rvMemberList.setLayoutManager(layout);
         memberArrayList = new ArrayList<>();
 
-        //  long click event
-        lvMemberList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Member member = memberArrayAdapter.getItem(position);
-                FragmentManager fm = getSupportFragmentManager();
-                DeleteDialogFragment alertDialog = DeleteDialogFragment.newInstance(member);
-                alertDialog.show(fm, "fragment_alert");
-                return true;
-            }
-        });
-        //  item click event
-        lvMemberList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // view detail
-                Member member = memberArrayAdapter.getItem(position);
-                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                intent.putExtra("id", member.getId());
-                startActivityForResult(intent, REQUEST_CODE_DETAIL_VIEW);
-            }
-        });
+//
+//        //  long click event
+//        lvMemberList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                Member member = memberArrayAdapter.getItem(position);
+//                FragmentManager fm = getSupportFragmentManager();
+//                DeleteDialogFragment alertDialog = DeleteDialogFragment.newInstance(member);
+//                alertDialog.show(fm, "fragment_alert");
+//                return true;
+//            }
+//        });
+//        //  item click event
+//        lvMemberList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                // view detail
+//                Member member = memberArrayAdapter.getItem(position);
+//                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+//                intent.putExtra("id", member.getId());
+//                startActivityForResult(intent, REQUEST_CODE_DETAIL_VIEW);
+//            }
+//        });
 
         fabAddMember = (FloatingActionButton)findViewById(R.id.fabAddMember);
         fabAddMember.setOnClickListener(new View.OnClickListener() {
@@ -113,9 +124,11 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
 //        memberArrayList = FakeData.CreateFakeMemberList();
         memberArrayList = dbEngine.selectAll();
         //  init memberArrayAdapter
-        memberArrayAdapter = new MemberListAdapter(this, memberArrayList);
+//        memberArrayAdapter = new MemberListAdapter(this, memberArrayList);
+        memberListRvAdapter = new MemberListRvAdapter(this, memberArrayList);
         //  set adapter to listview
-        lvMemberList.setAdapter(memberArrayAdapter);
+        rvMemberList.setAdapter(memberListRvAdapter);
+
     }
 
     //  MenuBar Init
@@ -136,9 +149,9 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
                 //  query submit action
                 memberArrayList = dbEngine.simpleQuery(query);
                 //  init memberArrayAdapter
-                memberArrayAdapter = new MemberListAdapter(MainActivity.this, memberArrayList);
+                memberListRvAdapter = new MemberListRvAdapter(MainActivity.this, memberArrayList);
                 //  set adapter to listview
-                lvMemberList.setAdapter(memberArrayAdapter);
+                rvMemberList.setAdapter(memberListRvAdapter);
                 return true;
             }
 
@@ -181,9 +194,9 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
 
             memberArrayList = dbEngine.fullQuery(mf);
             //  init memberArrayAdapter
-            memberArrayAdapter = new MemberListAdapter(MainActivity.this, memberArrayList);
+            memberListRvAdapter = new MemberListRvAdapter(MainActivity.this, memberArrayList);
             //  set adapter to listview
-            lvMemberList.setAdapter(memberArrayAdapter);
+            rvMemberList.setAdapter(memberListRvAdapter);
 
             memberFilter.setName(mf.getName());
             memberFilter.setRelationship(mf.getRelationship());
@@ -226,8 +239,8 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
         memberFilter = mf;
         memberArrayList = dbEngine.fullQuery(memberFilter);
         //  init memberArrayAdapter
-        memberArrayAdapter = new MemberListAdapter(MainActivity.this, memberArrayList);
+        memberListRvAdapter = new MemberListRvAdapter(MainActivity.this, memberArrayList);
         //  set adapter to listview
-        lvMemberList.setAdapter(memberArrayAdapter);
+        rvMemberList.setAdapter(memberListRvAdapter);
     }
 }

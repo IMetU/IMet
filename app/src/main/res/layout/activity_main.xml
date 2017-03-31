@@ -3,10 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/lvMemberList"
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvMemberList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabAddMember"
@@ -15,7 +17,7 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add"
-        app:layout_anchor="@id/lvMemberList"
+        app:layout_anchor="@id/rvMemberList"
         app:layout_anchorGravity="bottom|right|end" />
 
 </android.support.design.widget.CoordinatorLayout>
