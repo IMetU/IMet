@@ -28,7 +28,7 @@ public class MemberListRvAdapter extends RecyclerView.Adapter<MemberListRvAdapte
         public ViewHolder(View itemView){
             super(itemView);
             rootView = itemView;
-            ivPhoto = (ImageView)itemView.findViewById(R.id.ivPhoto);
+            ivPhoto = (ImageView)itemView.findViewById(R.id.ivProfile);
             tvName = (TextView)itemView.findViewById(R.id.tvName);
             tvEvent = (TextView)itemView.findViewById(R.id.tvEvent);
         }
@@ -56,9 +56,9 @@ public class MemberListRvAdapter extends RecyclerView.Adapter<MemberListRvAdapte
         holder.rootView.setTag(member);
         holder.tvName.setText(member.getName());
         holder.tvEvent.setText(member.getEvent() + "," + member.getLocation());
-//        if (member.getImgPath() != null){
-//            Glide.with(mContext).load(member.getImgPath()).override(40,40).centerCrop().into(holder.ivPhoto);
-//        }
+        if (member.getImgPath() != null){
+            Glide.with(mContext).load(member.getImgPath()).centerCrop().into(holder.ivPhoto);
+        }
 
     }
 
