@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.imetu.imet.R;
 import com.example.imetu.imet.adapter.MemberListAdapter;
 import com.example.imetu.imet.adapter.MemberListRvAdapter;
+import com.example.imetu.imet.adapter.RecyclerItemClickListener;
 import com.example.imetu.imet.database.DBEngine;
 import com.example.imetu.imet.fragment.DeleteDialogFragment;
 import com.example.imetu.imet.fragment.FilterFragment;
@@ -38,7 +39,7 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 import static com.example.imetu.imet.widget.Util.ADD_MEMBER;
 import static com.example.imetu.imet.widget.Util.REQUEST_ADVANCE_SEARCH;
 
-public class MainActivity extends BaseActivity implements FilterFragment.FilterSearchListener, FilterAdvanceSearchListener{
+public class MainActivity extends BaseActivity implements FilterFragment.FilterSearchListener, FilterAdvanceSearchListener {
     private final int REQUEST_CODE_ADVANCE_SEARCH = 21;
     private final int REQUEST_CODE_ADD_MEMBER = 22;
     private final int REQUEST_CODE_DETAIL_VIEW = 23;
@@ -46,7 +47,7 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
 
     private RecyclerView rvMemberList;
     private ArrayList<Member> memberArrayList;
-//    private MemberListAdapter memberArrayAdapter;
+    //    private MemberListAdapter memberArrayAdapter;
     private MemberListRvAdapter memberListRvAdapter;
     private FloatingActionButton fabAddMember;
     private SearchView searchView;
@@ -60,7 +61,7 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
         SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(this);
         String iMetUserId = mSettings.getString("iMetUserId", null);
 
-        if(iMetUserId == null){
+        if (iMetUserId == null) {
             Log.d("IMet", "iMetUserId is null");
             SharedPreferences.Editor editor = mSettings.edit();
             String username = UUID.randomUUID().toString();
@@ -77,7 +78,25 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
         final GridLayoutManager layout = new GridLayoutManager(MainActivity.this, 2);
         rvMemberList.setLayoutManager(layout);
         memberArrayList = new ArrayList<>();
+        rvMemberList.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, rvMemberList, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Member member = memberArrayList.get(position);
+                        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                        intent.putExtra("id", member.getId());
+                        startActivityForResult(intent, REQUEST_CODE_DETAIL_VIEW);
+                    }
 
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                        Member member = memberArrayList.get(position);
+                        FragmentManager fm = getSupportFragmentManager();
+                        DeleteDialogFragment alertDialog = DeleteDialogFragment.newInstance(member);
+                        alertDialog.show(fm, "fragment_alert");
+                    }
+                })
+        );
 //
 //        //  long click event
 //        lvMemberList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -102,7 +121,7 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
 //            }
 //        });
 
-        fabAddMember = (FloatingActionButton)findViewById(R.id.fabAddMember);
+        fabAddMember = (FloatingActionButton) findViewById(R.id.fabAddMember);
         fabAddMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,7 +131,7 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
                 startActivityForResult(intent, REQUEST_CODE_ADD_MEMBER);
             }
         });
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             query = savedInstanceState.getString(SEARCH_KEY);
         }
         //set Data
@@ -121,10 +140,8 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
 
     private void getAllDataSetView() {
         //  Import fake data to arraylist
-//        memberArrayList = FakeData.CreateFakeMemberList();
         memberArrayList = dbEngine.selectAll();
         //  init memberArrayAdapter
-//        memberArrayAdapter = new MemberListAdapter(this, memberArrayList);
         memberListRvAdapter = new MemberListRvAdapter(this, memberArrayList);
         //  set adapter to listview
         rvMemberList.setAdapter(memberListRvAdapter);
@@ -137,7 +154,7 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem searchItem = menu.findItem(R.id.menuSearch);
         searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        if (query != null && !query.isEmpty()){
+        if (query != null && !query.isEmpty()) {
             searchView.onActionViewExpanded();
             searchView.setQuery(query, true);
             searchView.setFocusable(true);
@@ -187,7 +204,7 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_ADVANCE_SEARCH){
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_ADVANCE_SEARCH) {
 
             MemberFilter mf = (MemberFilter) Parcels.unwrap(data.getParcelableExtra("memberFilter"));
             mf.setFilterOrAdvance(REQUEST_ADVANCE_SEARCH);
@@ -206,9 +223,9 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
             memberFilter.setBodyShape(mf.getBodyShape());
             memberFilter.setGlasses(mf.getGlasses());
 
-        }else if(resultCode == RESULT_OK && requestCode == REQUEST_CODE_ADD_MEMBER){
+        } else if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_ADD_MEMBER) {
             getAllDataSetView();
-        }else if(resultCode == RESULT_OK && requestCode == REQUEST_CODE_DETAIL_VIEW){
+        } else if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_DETAIL_VIEW) {
             getAllDataSetView();
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -230,7 +247,7 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
     @Override
     public void onFilterAdvanceSearch(MemberFilter mf) {
         Intent intent = new Intent(MainActivity.this, AdvanceSearchActivity.class);
-        intent.putExtra("memberFilter" , Parcels.wrap(mf));
+        intent.putExtra("memberFilter", Parcels.wrap(mf));
         startActivityForResult(intent, REQUEST_CODE_ADVANCE_SEARCH);
     }
 

@@ -38,7 +38,6 @@ public class DeleteDialogFragment extends DialogFragment {
         dbEngine = new DBEngine(iMetUserId);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-        alertDialogBuilder.setTitle("Delete");
         alertDialogBuilder.setMessage("Please make sure you want to delete " + member.getName() + "'s profile?");
         alertDialogBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
