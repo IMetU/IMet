@@ -14,12 +14,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.imetu.imet.R;
-import com.example.imetu.imet.adapter.MemberListAdapter;
 import com.example.imetu.imet.adapter.MemberListRvAdapter;
 import com.example.imetu.imet.adapter.RecyclerItemClickListener;
 import com.example.imetu.imet.database.DBEngine;
@@ -32,10 +28,8 @@ import com.example.imetu.imet.model.MemberFilter;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 import static com.example.imetu.imet.widget.Util.ADD_MEMBER;
 import static com.example.imetu.imet.widget.Util.REQUEST_ADVANCE_SEARCH;
 

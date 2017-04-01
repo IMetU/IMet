@@ -2,10 +2,8 @@ package com.example.imetu.imet.activity;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
@@ -14,10 +12,6 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -39,9 +33,7 @@ import com.example.imetu.imet.widget.ObservableScrollView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
 import com.xw.repo.BubbleSeekBar;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -134,7 +126,7 @@ public class AddEditActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("EDIT MEMBER");
             setMemberValue();
         }
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             member.setImgPath(savedInstanceState.getString("ImgPath"));
             Glide.with(AddEditActivity.this).load(member.getImgPath()).into(ivPreview);
 //            Picasso.with(AddEditActivity.this).load(member.getImgPath()).transform(new CircleTransform()).into(ivPreview);
@@ -207,7 +199,7 @@ public class AddEditActivity extends AppCompatActivity {
             default:
                 // do nothing
         }
-        if (member.getImgPath() != null){
+        if (member.getImgPath() != null) {
             Glide.with(AddEditActivity.this).load(member.getImgPath()).into(ivPreview);
 //            Picasso.with(AddEditActivity.this).load(member.getImgPath()).transform(new CircleTransform()).into(ivPreview);
         }
@@ -364,8 +356,8 @@ public class AddEditActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == TAKE_PICTURE_REQUEST_CODE){
-            if (resultCode == RESULT_OK){
+        if (requestCode == TAKE_PICTURE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
                 pictureBitmap = (Bitmap) data.getExtras().get("data");
 
                 pictureBitmap = ImageHelper.getCroppedBitmap(pictureBitmap, 100);
@@ -382,57 +374,66 @@ public class AddEditActivity extends AppCompatActivity {
         outState.putString("ImgPath", member.getImgPath());
         super.onSaveInstanceState(outState);
     }
+
     //  Camera permission
     @NeedsPermission({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void takePhoto() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, TAKE_PICTURE_REQUEST_CODE);
     }
+
     @OnShowRationale({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
-    public void showRationaleForCamera(PermissionRequest request){
+    public void showRationaleForCamera(PermissionRequest request) {
         request.proceed();
     }
+
     @OnPermissionDenied({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
-    public void OnCameraDenied(){
+    public void OnCameraDenied() {
         Toast.makeText(this, R.string.permission_camera_denied, Toast.LENGTH_SHORT).show();
     }
+
     @OnNeverAskAgain({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
-    public void OnCameraNeverAskAgain(){
+    public void OnCameraNeverAskAgain() {
         Toast.makeText(this, R.string.permission_camera_neverask, Toast.LENGTH_SHORT).show();
     }
+
     //  Save photo permission
     @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    public void savePhoto(String photoPath){
-        try{
+    public void savePhoto(String photoPath) {
+        try {
             out = new FileOutputStream(photoPath);
             pictureBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            try{
+        } finally {
+            try {
                 if (out != null) {
                     out.close();
                     member.setImgPath(photoPath);
-                  Glide.with(AddEditActivity.this).load(member.getImgPath()).into(ivPreview);
+                    Glide.with(AddEditActivity.this).load(member.getImgPath()).into(ivPreview);
 //                    Picasso.with(AddEditActivity.this).load(member.getImgPath()).transform(new CircleTransform()).into(ivPreview);
                 }
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+
     @OnShowRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    public void showRationaleForStorage(PermissionRequest request){
+    public void showRationaleForStorage(PermissionRequest request) {
         request.proceed();
     }
+
     @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    public void OnStorageDenied(){
+    public void OnStorageDenied() {
         Toast.makeText(this, R.string.permission_storage_denied, Toast.LENGTH_SHORT).show();
     }
+
     @OnNeverAskAgain(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    public void OnStorageNeverAskAgain(){
+    public void OnStorageNeverAskAgain() {
         Toast.makeText(this, R.string.permission_storage_neverask, Toast.LENGTH_SHORT).show();
     }
+
     //  GPS Permission
     @NeedsPermission({Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
     public void getGPS() {
@@ -442,18 +443,22 @@ public class AddEditActivity extends AppCompatActivity {
             getLocation(myLocation);
         }
     }
+
     @OnShowRationale({Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
     public void showRationaleForGPS(PermissionRequest request) {
         request.proceed();
     }
+
     @OnPermissionDenied({Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
     public void onGPSDenied() {
         Toast.makeText(this, R.string.permission_gps_denied, Toast.LENGTH_SHORT).show();
     }
+
     @OnNeverAskAgain({Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION})
     public void onGPSNeverAskAgain() {
         Toast.makeText(this, R.string.permission_gps_neverask, Toast.LENGTH_SHORT).show();
     }
+
     //  Use Geocoding api for location
     private void getLocation(Location location) {
         AsyncHttpClient client = new AsyncHttpClient();
@@ -483,6 +488,7 @@ public class AddEditActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
