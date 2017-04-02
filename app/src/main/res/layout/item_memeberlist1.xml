@@ -5,7 +5,7 @@
     android:layout_marginLeft="@dimen/grid_margin"
     android:layout_marginRight="@dimen/grid_margin"
     android:layout_marginTop="@dimen/cell_margin"
-    android:layout_width="match_parent"
+    android:layout_width="@dimen/grid_profile_width"
     android:layout_height="wrap_content"
     android:clickable="true"
     card_view:cardCornerRadius="@dimen/card_corner_radius"
@@ -18,7 +18,7 @@
 
         <ImageView
             android:id="@+id/ivProfile"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/grid_profile_width"
             android:layout_height="@dimen/grid_profile_height"
             android:scaleType="centerCrop" />
 

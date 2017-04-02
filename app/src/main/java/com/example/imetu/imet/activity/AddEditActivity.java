@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.imetu.imet.R;
 import com.example.imetu.imet.database.DBEngine;
+import com.example.imetu.imet.image.CircleTransform;
 import com.example.imetu.imet.image.ImageHelper;
 import com.example.imetu.imet.model.Address;
 import com.example.imetu.imet.model.Member;
@@ -128,7 +129,7 @@ public class AddEditActivity extends AppCompatActivity {
         }
         if (savedInstanceState != null) {
             member.setImgPath(savedInstanceState.getString("ImgPath"));
-            Glide.with(AddEditActivity.this).load(member.getImgPath()).into(ivPreview);
+            Glide.with(AddEditActivity.this).load(member.getImgPath()).transform(new CircleTransform(AddEditActivity.this)).into(ivPreview);
 //            Picasso.with(AddEditActivity.this).load(member.getImgPath()).transform(new CircleTransform()).into(ivPreview);
         }
 
@@ -200,7 +201,7 @@ public class AddEditActivity extends AppCompatActivity {
                 // do nothing
         }
         if (member.getImgPath() != null) {
-            Glide.with(AddEditActivity.this).load(member.getImgPath()).into(ivPreview);
+            Glide.with(AddEditActivity.this).load(member.getImgPath()).transform(new CircleTransform(AddEditActivity.this)).into(ivPreview);
 //            Picasso.with(AddEditActivity.this).load(member.getImgPath()).transform(new CircleTransform()).into(ivPreview);
         }
 
@@ -360,7 +361,7 @@ public class AddEditActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 pictureBitmap = (Bitmap) data.getExtras().get("data");
 
-                pictureBitmap = ImageHelper.getCroppedBitmap(pictureBitmap, 100);
+//                pictureBitmap = ImageHelper.getCroppedBitmap(pictureBitmap, 100);
 
                 File photoDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
                 photoPath = photoDir + "/IMG_" + System.currentTimeMillis() + ".jpg";
@@ -410,7 +411,7 @@ public class AddEditActivity extends AppCompatActivity {
                 if (out != null) {
                     out.close();
                     member.setImgPath(photoPath);
-                    Glide.with(AddEditActivity.this).load(member.getImgPath()).into(ivPreview);
+                    Glide.with(AddEditActivity.this).load(member.getImgPath()).transform(new CircleTransform(AddEditActivity.this)).into(ivPreview);
 //                    Picasso.with(AddEditActivity.this).load(member.getImgPath()).transform(new CircleTransform()).into(ivPreview);
                 }
             } catch (IOException e) {
