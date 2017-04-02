@@ -33,4 +33,6 @@
     <dimen name="dialog_action_bottom_margin">8dp</dimen>
     <dimen name="dialog_action_right_margin">16dp</dimen>
     <dimen name="dialog_action_inter_margin">8dp</dimen>
+
+    <dimen name="image_top_margin">16dp</dimen>
 </resources>

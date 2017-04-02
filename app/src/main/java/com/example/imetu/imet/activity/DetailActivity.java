@@ -4,19 +4,23 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.astuetz.PagerSlidingTabStrip;
+import com.bumptech.glide.Glide;
 import com.example.imetu.imet.R;
 import com.example.imetu.imet.adapter.SmartFragmentStatePagerAdapter;
 import com.example.imetu.imet.database.DBEngine;
 import com.example.imetu.imet.fragment.AppearanceFragment;
 import com.example.imetu.imet.fragment.InformationFragment;
+import com.example.imetu.imet.image.CircleTransform;
 import com.example.imetu.imet.model.Member;
 
 import static com.example.imetu.imet.widget.Util.EDIT_MEMBER;
@@ -27,6 +31,9 @@ public class DetailActivity extends AppCompatActivity {
     private DBEngine dbEngine;
     private final int REQUEST_CODE_EDIT_MEMBER = 31;
     private boolean modifyFlag = false;
+
+    private ImageView ivPhoto;
+    private TextView tvName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +48,19 @@ public class DetailActivity extends AppCompatActivity {
         int id = getIntent().getIntExtra("id", 0);
         member = dbEngine.selectOne(id);
 
-        getSupportActionBar().setTitle(member.getName());
-
         // get viewpager
         vpPager = (ViewPager) findViewById(R.id.viewpager);
         // set the viewpager adapter for the pager
         vpPager.setAdapter(new DetailPagerAdapter(getSupportFragmentManager()));
-        // find the sliding tabstrip
-        PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        // attach the tabstrip to the viewer
-        tabStrip.setViewPager(vpPager);
+
+        // Give the TabLayout the ViewPager
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(vpPager);
+
+        ivPhoto = (ImageView) findViewById(R.id.personImage);
+        Glide.with(this).load(member.getImgPath()).transform(new CircleTransform(this)).into(ivPhoto);
+        tvName = (TextView) findViewById(R.id.personName);
+        tvName.setText(member.getName());
     }
 
 
