@@ -17,7 +17,7 @@
     <string name="tvTopicDiscussed_StrID">Topic Discussed</string>
     <string name="tvGender_StrID">Gender</string>
     <string name="tvHeight_StrID">Height</string>
-    <string name="tvBodyShape_StrID">Body Shape</string>
+    <string name="tvBodyShape_StrID">Body</string>
     <string name="tvHair_StrID">Hair</string>
     <string name="tvGlasses_StrID">Glasses</string>
     <string name="tvOther_StrID">Other</string>

@@ -22,4 +22,15 @@
     <dimen name="contact_details_phone_margin_top">8dp</dimen>
     <dimen name="fab_elevation">8dp</dimen>
     <dimen name="grid_profile_width">160dp</dimen>
+
+    <dimen name="dialog_top_margin">24dp</dimen>
+    <dimen name="dialog_width_margin">24dp</dimen>
+    <dimen name="dialog_bottom_margin">16dp</dimen>
+    <dimen name="dialog_item_height">48dp</dimen>
+    <dimen name="title_text_size">14sp</dimen>
+    <dimen name="dialog_item_margin">84dp</dimen>
+    <dimen name="dialog_action_height">48dp</dimen>
+    <dimen name="dialog_action_bottom_margin">8dp</dimen>
+    <dimen name="dialog_action_right_margin">16dp</dimen>
+    <dimen name="dialog_action_inter_margin">8dp</dimen>
 </resources>

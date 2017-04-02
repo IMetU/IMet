@@ -120,11 +120,9 @@ public class AddEditActivity extends AppCompatActivity {
         type = getIntent().getIntExtra("TYPE", ADD_MEMBER);
         if (type == ADD_MEMBER) {
             member = new Member();
-            getSupportActionBar().setTitle("ADD NEW MEMBER");
             AddEditActivityPermissionsDispatcher.getGPSWithCheck(this);
         } else {
             member = dbEngine.selectOne(getIntent().getIntExtra("id", 0));
-            getSupportActionBar().setTitle("EDIT MEMBER");
             setMemberValue();
         }
         if (savedInstanceState != null) {

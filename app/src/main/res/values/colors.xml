@@ -5,7 +5,9 @@
     <color name="colorAccent">#FF4081</color> -->
 
     <color name="colorPrimary">#00C6C4</color>
-    <color name="colorPrimaryDark">#595757</color>
+    <color name="colorPrimaryDark">#00948F</color>
     <color name="colorAccent">#00948F</color>
+
+    <color name="colorTextBlack">#000000</color>
 
 </resources>

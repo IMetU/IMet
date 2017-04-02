@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="bodyshape_array">
+        <item>@string/checkboxAny_StrID</item>
+        <item>@string/radioThin_StrID</item>
+        <item>@string/radioMedium_StrID</item>
+        <item>@string/radioPlump_StrID</item>
+    </string-array>
+</resources>

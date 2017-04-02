@@ -3,15 +3,15 @@ package com.example.imetu.imet.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.Switch;
 
 import com.example.imetu.imet.R;
 import com.example.imetu.imet.model.MemberFilter;
@@ -31,7 +31,6 @@ import static com.example.imetu.imet.widget.Util.BODY_UNDEFINED;
 import static com.example.imetu.imet.widget.Util.GENDER_FEMALE;
 import static com.example.imetu.imet.widget.Util.GENDER_MALE;
 import static com.example.imetu.imet.widget.Util.GENDER_UNDEFINED;
-import static com.example.imetu.imet.widget.Util.GLASSES_UNDEFINED;
 import static com.example.imetu.imet.widget.Util.GLASSES_WITH;
 import static com.example.imetu.imet.widget.Util.GLASSES_WITHOUT;
 import static com.example.imetu.imet.widget.Util.HEIGHT_UNDEFINED;
@@ -40,17 +39,13 @@ public class FilterFragment extends DialogFragment implements Button.OnClickList
 
     @BindView(R.id.btnReset) Button btnReset;
     @BindView(R.id.btnSearch) Button btnSearch;
-    @BindView(R.id.btnAdvanceSearch) Button btnAdvanceSearch;
-
-    @BindView(R.id.etName) EditText etName;
-    @BindView(R.id.etRelationship) EditText etRelationship;
-    @BindView(R.id.etEvent) EditText etEvent;
 
     @BindView(R.id.rgGender) RadioGroup rgGender;
-    @BindView(R.id.rgBodyShape) RadioGroup rgBodyShape;
-    @BindView(R.id.rgGlasses) RadioGroup rgGlasses;
     @BindView(R.id.sbHeight) BubbleSeekBar seekbarHeight;
     @BindView(R.id.cbAny) CheckBox cbAny;
+    @BindView(R.id.bodyShape_spinner) Spinner bodyShapeSpinner;
+    @BindView(R.id.glasses_switch) Switch glassesSwitch;
+
     @BindView(R.id.fragment_filter) ObservableScrollView obsScrollView;
 
     private Unbinder unbinder;
@@ -94,14 +89,12 @@ public class FilterFragment extends DialogFragment implements Button.OnClickList
 
         btnReset.setOnClickListener(this);
         btnSearch.setOnClickListener(this);
-        btnAdvanceSearch.setOnClickListener(this);
 
         seekbarHeight.correctOffsetWhenContainerOnScrolling();
         seekbarHeight.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
             @Override
             public void onProgressChanged(int progress, float progressFloat) {
                 seekbarHeightProgress = progress;
-                Log.d("Kelly", " " + progress);
             }
 
             @Override
@@ -133,10 +126,6 @@ public class FilterFragment extends DialogFragment implements Button.OnClickList
     }
 
     private void setInitFilterState(MemberFilter mf) {
-        etName.setText(mf.getName());
-        etRelationship.setText(mf.getRelationship());
-        etEvent.setText(mf.getEvent());
-
         switch (mf.getGender()){
             case GENDER_MALE:
                 rgGender.check(R.id.radio_Male);
@@ -157,27 +146,27 @@ public class FilterFragment extends DialogFragment implements Button.OnClickList
 
         switch (mf.getBodyShape()){
             case BODY_THIN:
-                rgBodyShape.check(R.id.radio_Thin);
+                bodyShapeSpinner.setSelection(1);
                 break;
             case BODY_MEDIUM:
-                rgBodyShape.check(R.id.radio_Medium);
+                bodyShapeSpinner.setSelection(2);
                 break;
             case  BODY_PLUMP:
-                rgBodyShape.check(R.id.radio_Plump);
+                bodyShapeSpinner.setSelection(3);
                 break;
             default:
-                // do nothing
+                bodyShapeSpinner.setSelection(0);
         }
 
         switch (mf.getGlasses()) {
             case GLASSES_WITH:
-                rgGlasses.check(R.id.radio_WithGlasses);
+                glassesSwitch.setChecked(true);
                 break;
             case GLASSES_WITHOUT:
-                rgGlasses.check(R.id.radio_WithoutGlasses);
+                glassesSwitch.setChecked(false);
                 break;
             default:
-                // do nothing
+                glassesSwitch.setChecked(false);
         }
     }
 
@@ -185,12 +174,9 @@ public class FilterFragment extends DialogFragment implements Button.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnReset:
-                etName.getText().clear();
-                etRelationship.getText().clear();
-                etEvent.getText().clear();
                 rgGender.clearCheck();
-                rgBodyShape.clearCheck();
-                rgGlasses.clearCheck();
+                bodyShapeSpinner.setSelection(0);
+                glassesSwitch.setChecked(false);
                 cbAny.setChecked(true);
                 break;
             case R.id.btnSearch:
@@ -198,20 +184,11 @@ public class FilterFragment extends DialogFragment implements Button.OnClickList
                 searchListener.onFilterSearch(getMemberFilterValue());
                 dismiss();
                 break;
-            case R.id.btnAdvanceSearch:
-                FilterAdvanceSearchListener advanceSearchListener = (FilterAdvanceSearchListener) getActivity();
-                advanceSearchListener.onFilterAdvanceSearch(getMemberFilterValue());
-                dismiss();
-                break;
-        }
+           }
     }
 
     private MemberFilter getMemberFilterValue() {
         MemberFilter memberFilter = new MemberFilter();
-
-        memberFilter.setName(etName.getText().toString());
-        memberFilter.setRelationship(etRelationship.getText().toString());
-        memberFilter.setEvent(etEvent.getText().toString());
 
         switch (rgGender.getCheckedRadioButtonId()){
             case R.id.radio_Male:
@@ -230,29 +207,25 @@ public class FilterFragment extends DialogFragment implements Button.OnClickList
             memberFilter.setHeight(seekbarHeightProgress);
         }
 
-        switch (rgBodyShape.getCheckedRadioButtonId()){
-            case R.id.radio_Thin:
+        String value = bodyShapeSpinner.getSelectedItem().toString();
+        switch (value){
+            case "Thin":
                 memberFilter.setBodyShape(BODY_THIN);
                 break;
-            case R.id.radio_Medium:
+            case "Medium":
                 memberFilter.setBodyShape(BODY_MEDIUM);
                 break;
-            case R.id.radio_Plump:
+            case "Plump":
                 memberFilter.setBodyShape(BODY_PLUMP);
                 break;
             default:
                 memberFilter.setBodyShape(BODY_UNDEFINED);
         }
 
-        switch (rgGlasses.getCheckedRadioButtonId()){
-            case R.id.radio_WithGlasses:
-                memberFilter.setGlasses(GLASSES_WITH);
-                break;
-            case R.id.radio_WithoutGlasses:
-                memberFilter.setGlasses(GLASSES_WITHOUT);
-                break;
-            default:
-                memberFilter.setGlasses(GLASSES_UNDEFINED);
+        if(glassesSwitch.isChecked()) {
+            memberFilter.setGlasses(GLASSES_WITH);
+        }else{
+            memberFilter.setGlasses(GLASSES_WITHOUT);
         }
 
         return memberFilter;
