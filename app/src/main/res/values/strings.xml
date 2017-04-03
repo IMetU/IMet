@@ -55,4 +55,7 @@
 
     <string name="album_name">IMetPhoto</string>
 
+    <string name="appearance_title">Appearance</string>
+    <string name="information_title">Basic Information</string>
+
 </resources>

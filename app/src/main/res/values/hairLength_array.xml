@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="hairLength_array">
+        <item>@string/checkboxAny_StrID</item>
+        <item>@string/radioShortHair_StrID</item>
+        <item>@string/radioMediumHair_StrID</item>
+        <item>@string/radioLongHair_StrID</item>
+    </string-array>
+
+
+</resources>

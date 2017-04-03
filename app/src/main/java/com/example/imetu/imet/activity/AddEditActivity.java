@@ -22,6 +22,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -66,7 +68,6 @@ import static com.example.imetu.imet.widget.Util.BODY_UNDEFINED;
 import static com.example.imetu.imet.widget.Util.GENDER_FEMALE;
 import static com.example.imetu.imet.widget.Util.GENDER_MALE;
 import static com.example.imetu.imet.widget.Util.GENDER_UNDEFINED;
-import static com.example.imetu.imet.widget.Util.GLASSES_UNDEFINED;
 import static com.example.imetu.imet.widget.Util.GLASSES_WITH;
 import static com.example.imetu.imet.widget.Util.GLASSES_WITHOUT;
 import static com.example.imetu.imet.widget.Util.HAIR_LONG;
@@ -92,9 +93,10 @@ public class AddEditActivity extends AppCompatActivity {
     int seekbarHeightProgress = 165; //default
 
     RadioGroup genderRadioGroup;
-    RadioGroup bodyShapeRadioGroup;
-    RadioGroup hairLengthRadioGroup;
-    RadioGroup glassesRadioGroup;
+    Spinner spinnerBodyShape;
+
+    Spinner spinnerHairLength;
+    Switch switchGlasses;
     CheckBox checkbox_Permed;
     CheckBox checkbox_Dyed;
 
@@ -152,7 +154,6 @@ public class AddEditActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             member.setImgPath(savedInstanceState.getString("ImgPath"));
             Glide.with(AddEditActivity.this).load(member.getImgPath()).transform(new CircleTransform(AddEditActivity.this)).into(ivPreview);
-//            Picasso.with(AddEditActivity.this).load(member.getImgPath()).transform(new CircleTransform()).into(ivPreview);
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
@@ -189,48 +190,50 @@ public class AddEditActivity extends AppCompatActivity {
 
         switch (member.getBodyShape()) {
             case BODY_THIN:
-                bodyShapeRadioGroup.check(R.id.radio_Thin);
+                spinnerBodyShape.setSelection(1);
                 break;
             case BODY_MEDIUM:
-                bodyShapeRadioGroup.check(R.id.radio_Medium);
+                spinnerBodyShape.setSelection(2);
                 break;
             case BODY_PLUMP:
-                bodyShapeRadioGroup.check(R.id.radio_Plump);
+                spinnerBodyShape.setSelection(3);
                 break;
             default:
-                // do nothing
+                spinnerBodyShape.setSelection(0);
         }
 
         switch (member.getHairLength()) {
             case HAIR_SHORT:
-                hairLengthRadioGroup.check(R.id.radio_ShortHair);
+                spinnerHairLength.setSelection(1);
                 break;
             case HAIR_MEDIUM:
-                hairLengthRadioGroup.check(R.id.radio_MediumHair);
+                spinnerHairLength.setSelection(2);
                 break;
             case HAIR_LONG:
-                hairLengthRadioGroup.check(R.id.radio_LongHair);
+                spinnerHairLength.setSelection(3);
                 break;
             default:
-                // do nothing
+                spinnerHairLength.setSelection(0);
         }
+
 
         checkbox_Permed.setChecked(member.isPermed());
         checkbox_Dyed.setChecked(member.isDyed());
 
         switch (member.getGlasses()) {
             case GLASSES_WITH:
-                glassesRadioGroup.check(R.id.radio_WithGlasses);
+                switchGlasses.setChecked(true);
                 break;
             case GLASSES_WITHOUT:
-                glassesRadioGroup.check(R.id.radio_WithoutGlasses);
+                switchGlasses.setChecked(false);
                 break;
             default:
-                // do nothing
+                switchGlasses.setChecked(false);
         }
+
+
         if (member.getImgPath() != null) {
             Glide.with(AddEditActivity.this).load(member.getImgPath()).transform(new CircleTransform(AddEditActivity.this)).into(ivPreview);
-//            Picasso.with(AddEditActivity.this).load(member.getImgPath()).transform(new CircleTransform()).into(ivPreview);
         }
 
     }
@@ -284,28 +287,28 @@ public class AddEditActivity extends AppCompatActivity {
 
         member.setHeight(seekbarHeightProgress);
 
-        switch (bodyShapeRadioGroup.getCheckedRadioButtonId()) {
-            case R.id.radio_Thin:
+        switch (spinnerBodyShape.getSelectedItem().toString()) {
+            case "Thin":
                 member.setBodyShape(BODY_THIN);
                 break;
-            case R.id.radio_Medium:
+            case "Medium":
                 member.setBodyShape(BODY_MEDIUM);
                 break;
-            case R.id.radio_Plump:
+            case "Plump":
                 member.setBodyShape(BODY_PLUMP);
                 break;
             default:
                 member.setBodyShape(BODY_UNDEFINED);
         }
 
-        switch (hairLengthRadioGroup.getCheckedRadioButtonId()) {
-            case R.id.radio_ShortHair:
+        switch (spinnerHairLength.getSelectedItem().toString()) {
+            case "Short":
                 member.setHairLength(HAIR_SHORT);
                 break;
-            case R.id.radio_MediumHair:
+            case "Medium":
                 member.setHairLength(HAIR_MEDIUM);
                 break;
-            case R.id.radio_LongHair:
+            case "Long":
                 member.setHairLength(HAIR_LONG);
                 break;
             default:
@@ -315,15 +318,10 @@ public class AddEditActivity extends AppCompatActivity {
         member.setPermed(checkbox_Permed.isChecked() ? true : false);
         member.setDyed(checkbox_Dyed.isChecked() ? true : false);
 
-        switch (glassesRadioGroup.getCheckedRadioButtonId()) {
-            case R.id.radio_WithGlasses:
-                member.setGlasses(GLASSES_WITH);
-                break;
-            case R.id.radio_WithoutGlasses:
-                member.setGlasses(GLASSES_WITHOUT);
-                break;
-            default:
-                member.setGlasses(GLASSES_UNDEFINED);
+        if (switchGlasses.isChecked()) {
+            member.setGlasses(GLASSES_WITH);
+        } else {
+            member.setGlasses(GLASSES_WITHOUT);
         }
 
         dbEngine.editMember(member);
@@ -345,9 +343,9 @@ public class AddEditActivity extends AppCompatActivity {
         etOther = (EditText) findViewById(R.id.etOther);
 
         genderRadioGroup = (RadioGroup) findViewById(R.id.GenderRadioGroup);
-        bodyShapeRadioGroup = (RadioGroup) findViewById(R.id.BodyShapeRadioGroup);
-        hairLengthRadioGroup = (RadioGroup) findViewById(R.id.HairLengthRadioGroup);
-        glassesRadioGroup = (RadioGroup) findViewById(R.id.GlassesRadioGroup);
+        spinnerBodyShape = (Spinner) findViewById(R.id.spinnerBodyShape);
+        spinnerHairLength = (Spinner) findViewById(R.id.spinnerHairLength);
+        switchGlasses = (Switch) findViewById(R.id.switchGlasses);
 
         checkbox_Permed = (CheckBox) findViewById(R.id.checkbox_Permed);
         checkbox_Dyed = (CheckBox) findViewById(R.id.checkbox_Dyed);
@@ -410,11 +408,11 @@ public class AddEditActivity extends AppCompatActivity {
     public void takePhoto() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File f = null;
-        try{
+        try {
             f = setUpPhotoFile();
             mCurrentPhotoPath = f.getAbsolutePath();
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             f = null;
             mCurrentPhotoPath = null;
@@ -451,7 +449,6 @@ public class AddEditActivity extends AppCompatActivity {
                     out.close();
                     member.setImgPath(photoPath);
                     Glide.with(AddEditActivity.this).load(member.getImgPath()).transform(new CircleTransform(AddEditActivity.this)).into(ivPreview);
-//                    Picasso.with(AddEditActivity.this).load(member.getImgPath()).transform(new CircleTransform()).into(ivPreview);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -549,8 +546,8 @@ public class AddEditActivity extends AppCompatActivity {
             storageDir = mAlbumStorageDirFactory.getAlbumStorageDir(getAlbumName());
 
             if (storageDir != null) {
-                if (! storageDir.mkdirs()) {
-                    if (! storageDir.exists()){
+                if (!storageDir.mkdirs()) {
+                    if (!storageDir.exists()) {
                         Log.d("CameraSample", "failed to create directory");
                         return null;
                     }
