@@ -64,7 +64,12 @@ public class InformationFragment extends Fragment {
         tvTitle[idx] = (TextView)vgParent.findViewById(iTitle);
         tvTitle[idx].setText(sTitle[idx]);
         tvContent[idx] = (TextView)vgParent.findViewById(iContent);
-        tvContent[idx].setText(sContent[idx]);
+
+        if(sContent[idx] == null || sContent[idx].equals("")){
+            vgInformation[idx].setVisibility(View.GONE);
+        }else {
+            tvContent[idx].setText(sContent[idx]);
+        }
     }
 
     //create lifecycle event
@@ -93,7 +98,11 @@ public class InformationFragment extends Fragment {
 
     private void setTextContent() {
         for (int idx = 0; idx < NUM_INFOS; idx++) {
-            tvContent[idx].setText(sContent[idx]);
+            if(sContent[idx] == null || sContent[idx].equals("")){
+                vgInformation[idx].setVisibility(View.GONE);
+            }else {
+                tvContent[idx].setText(sContent[idx]);
+            }
         }
     }
 

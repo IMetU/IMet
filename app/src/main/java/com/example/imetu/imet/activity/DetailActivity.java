@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -58,7 +59,11 @@ public class DetailActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(vpPager);
 
         ivPhoto = (ImageView) findViewById(R.id.personImage);
-        Glide.with(this).load(member.getImgPath()).transform(new CircleTransform(this)).into(ivPhoto);
+        if(member.getImgPath() == null || member.getImgPath().equals("")){
+            ivPhoto.setVisibility(View.GONE);
+        }else {
+            Glide.with(this).load(member.getImgPath()).transform(new CircleTransform(this)).into(ivPhoto);
+        }
         tvName = (TextView) findViewById(R.id.personName);
         tvName.setText(member.getName());
     }

@@ -11,38 +11,32 @@
     <include
         android:id="@+id/gender"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/DetailTopMargin"
+        android:layout_height="@dimen/dialog_action_height"
         layout="@layout/item_title_content"/>
     <include
         android:id="@+id/height"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/DetailTopMargin"
+        android:layout_height="@dimen/dialog_action_height"
         layout="@layout/item_title_content"/>
     <include
         android:id="@+id/bodyShape"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/DetailTopMargin"
+        android:layout_height="@dimen/dialog_action_height"
         layout="@layout/item_title_content"/>
     <include
         android:id="@+id/hair"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/DetailTopMargin"
+        android:layout_height="@dimen/dialog_action_height"
         layout="@layout/item_title_content"/>
     <include
         android:id="@+id/glasses"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/DetailTopMargin"
+        android:layout_height="@dimen/dialog_action_height"
         layout="@layout/item_title_content"/>
     <include
         android:id="@+id/other"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/DetailTopMargin"
+        android:layout_height="@dimen/dialog_action_height"
         layout="@layout/item_title_content"/>
     </LinearLayout>
 </ScrollView>

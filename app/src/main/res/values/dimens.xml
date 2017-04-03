@@ -6,7 +6,7 @@
     <dimen name="PhoneNumberSize">18sp</dimen>
     <dimen name="DetailTextSize">20sp</dimen>
     <dimen name="DetailTopMargin">15dp</dimen>
-    <dimen name="DetailLeftTitleMargin">15dp</dimen>
+    <dimen name="DetailLeftTitleMargin">16dp</dimen>
     <dimen name="DetailLeftContentMargin">150dp</dimen>
 
     <dimen name="card_corner_radius">8dp</dimen>
