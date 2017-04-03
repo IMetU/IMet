@@ -11,10 +11,6 @@ import android.widget.TextView;
 import com.example.imetu.imet.R;
 import com.example.imetu.imet.model.Member;
 
-/**
- * Created by kelly79126 on 2017/3/14.
- */
-
 public class InformationFragment extends Fragment {
 
     public View v;

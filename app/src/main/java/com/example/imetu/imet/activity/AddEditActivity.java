@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -21,12 +23,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.example.imetu.imet.R;
 import com.example.imetu.imet.database.DBEngine;
+import com.example.imetu.imet.image.AlbumStorageDirFactory;
+import com.example.imetu.imet.image.BaseAlbumDirFactory;
 import com.example.imetu.imet.image.CircleTransform;
-import com.example.imetu.imet.image.ImageHelper;
+import com.example.imetu.imet.image.FroyoAlbumDirFactory;
 import com.example.imetu.imet.model.Address;
 import com.example.imetu.imet.model.Member;
 import com.example.imetu.imet.widget.ConfidentialUtil;
@@ -42,6 +47,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 import permissions.dispatcher.NeedsPermission;
@@ -106,6 +113,23 @@ public class AddEditActivity extends AppCompatActivity {
     private final String GEOCODING_API_URL = "https://maps.googleapis.com/maps/api/geocode/json?";
     private final String GEOCODING_API_KEY = ConfidentialUtil.GEOCODING_API_KEY;
 
+    private static final String BITMAP_STORAGE_KEY = "viewbitmap";
+    private static final String IMAGEVIEW_VISIBILITY_STORAGE_KEY = "imageviewvisibility";
+    private ImageView mImageView;
+    private Bitmap mImageBitmap;
+
+    private static final String VIDEO_STORAGE_KEY = "viewvideo";
+    private static final String VIDEOVIEW_VISIBILITY_STORAGE_KEY = "videoviewvisibility";
+    private VideoView mVideoView;
+    private Uri mVideoUri;
+
+    private String mCurrentPhotoPath;
+
+    private static final String JPEG_FILE_PREFIX = "IMG_";
+    private static final String JPEG_FILE_SUFFIX = ".jpg";
+
+    private AlbumStorageDirFactory mAlbumStorageDirFactory = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,6 +153,12 @@ public class AddEditActivity extends AppCompatActivity {
             member.setImgPath(savedInstanceState.getString("ImgPath"));
             Glide.with(AddEditActivity.this).load(member.getImgPath()).transform(new CircleTransform(AddEditActivity.this)).into(ivPreview);
 //            Picasso.with(AddEditActivity.this).load(member.getImgPath()).transform(new CircleTransform()).into(ivPreview);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
+            mAlbumStorageDirFactory = new FroyoAlbumDirFactory();
+        } else {
+            mAlbumStorageDirFactory = new BaseAlbumDirFactory();
         }
 
 
@@ -357,13 +387,14 @@ public class AddEditActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == TAKE_PICTURE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                pictureBitmap = (Bitmap) data.getExtras().get("data");
-
+//                pictureBitmap = (Bitmap) data.getExtras().get("data");
+                Glide.with(AddEditActivity.this).load(mCurrentPhotoPath).transform(new CircleTransform(AddEditActivity.this)).into(ivPreview);
+                member.setImgPath(mCurrentPhotoPath);
 //                pictureBitmap = ImageHelper.getCroppedBitmap(pictureBitmap, 100);
 
-                File photoDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-                photoPath = photoDir + "/IMG_" + System.currentTimeMillis() + ".jpg";
-                AddEditActivityPermissionsDispatcher.savePhotoWithCheck(this, photoPath);
+//                File photoDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+//                photoPath = photoDir + "/IMG_" + System.currentTimeMillis() + ".jpg";
+//                AddEditActivityPermissionsDispatcher.savePhotoWithCheck(this, photoPath);
             }
         }
     }
@@ -378,6 +409,16 @@ public class AddEditActivity extends AppCompatActivity {
     @NeedsPermission({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void takePhoto() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File f = null;
+        try{
+            f = setUpPhotoFile();
+            mCurrentPhotoPath = f.getAbsolutePath();
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+        }catch (IOException e){
+            e.printStackTrace();
+            f = null;
+            mCurrentPhotoPath = null;
+        }
         startActivityForResult(intent, TAKE_PICTURE_REQUEST_CODE);
     }
 
@@ -494,4 +535,49 @@ public class AddEditActivity extends AppCompatActivity {
         AddEditActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
+    /* Photo album for this application */
+    private String getAlbumName() {
+        return getString(R.string.album_name);
+    }
+
+
+    private File getAlbumDir() {
+        File storageDir = null;
+
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+
+            storageDir = mAlbumStorageDirFactory.getAlbumStorageDir(getAlbumName());
+
+            if (storageDir != null) {
+                if (! storageDir.mkdirs()) {
+                    if (! storageDir.exists()){
+                        Log.d("CameraSample", "failed to create directory");
+                        return null;
+                    }
+                }
+            }
+
+        } else {
+            Log.v(getString(R.string.app_name), "External storage is not mounted READ/WRITE.");
+        }
+
+        return storageDir;
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = JPEG_FILE_PREFIX + timeStamp + "_";
+        File albumF = getAlbumDir();
+        File imageF = File.createTempFile(imageFileName, JPEG_FILE_SUFFIX, albumF);
+        return imageF;
+    }
+
+    private File setUpPhotoFile() throws IOException {
+
+        File f = createImageFile();
+        mCurrentPhotoPath = f.getAbsolutePath();
+
+        return f;
+    }
 }

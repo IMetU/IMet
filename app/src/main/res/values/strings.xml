@@ -53,4 +53,6 @@
     <string name="permission_storage_denied">Permission Storage Denied</string>
     <string name="permission_storage_neverask">Permission Storage Never Ask</string>
 
+    <string name="album_name">IMetPhoto</string>
+
 </resources>
