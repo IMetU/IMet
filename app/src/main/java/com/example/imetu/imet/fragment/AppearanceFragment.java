@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.example.imetu.imet.model.Member;
 import com.example.imetu.imet.R;
 
+import org.parceler.Parcels;
+
 import static com.example.imetu.imet.widget.Util.BODY_MEDIUM;
 import static com.example.imetu.imet.widget.Util.BODY_PLUMP;
 import static com.example.imetu.imet.widget.Util.BODY_THIN;
@@ -46,11 +48,24 @@ public class AppearanceFragment  extends Fragment {
     static final private int NUM_INFOS = 6;
     private Member member;
 
-    public AppearanceFragment() {}
-    public AppearanceFragment(Member m) {
-        member = m;
+    // newInstance constructor for creating fragment with arguments
+    public static AppearanceFragment newInstance(Member m) {
+        AppearanceFragment appearanceFragment = new AppearanceFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("member" , Parcels.wrap(m));
+        appearanceFragment.setArguments(args);
+        return appearanceFragment;
     }
 
+
+    // Store instance variables based on arguments passed
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        member = (Member) Parcels.unwrap(getArguments().getParcelable("member"));
+        sContent = new String[NUM_INFOS];
+        setMemberValue();
+    }
 
     //inflation logic
     @Nullable
@@ -80,15 +95,6 @@ public class AppearanceFragment  extends Fragment {
         }else {
             tvContent[idx].setText(sContent[idx]);
         }
-    }
-
-
-    //create lifecycle event
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        sContent = new String[NUM_INFOS];
-        setMemberValue();
     }
 
     public void refresh(Member newMember) {

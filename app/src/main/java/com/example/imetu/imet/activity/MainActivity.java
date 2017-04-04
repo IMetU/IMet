@@ -40,6 +40,7 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
     private final int REQUEST_CODE_ADD_MEMBER = 22;
     private final int REQUEST_CODE_DETAIL_VIEW = 23;
     private final String SEARCH_KEY = "search";
+    private final String USER_ID_KEY = "iMetUserId";
 
     private RecyclerView rvMemberList;
     private ArrayList<Member> memberArrayList;
@@ -60,13 +61,13 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(this);
-        String iMetUserId = mSettings.getString("iMetUserId", null);
+        String iMetUserId = mSettings.getString(USER_ID_KEY, null);
 
         if (iMetUserId == null) {
             Log.d("IMet", "iMetUserId is null");
             SharedPreferences.Editor editor = mSettings.edit();
             String username = UUID.randomUUID().toString();
-            editor.putString("iMetUserId", username);
+            editor.putString(USER_ID_KEY, username);
             editor.apply();
         }
 
@@ -123,7 +124,6 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
         memberListRvAdapter = new MemberListRvAdapter(this, memberArrayList);
         //  set adapter to listview
         rvMemberList.setAdapter(memberListRvAdapter);
-
     }
 
     //  MenuBar Init
@@ -193,9 +193,6 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
             //  set adapter to listview
             rvMemberList.setAdapter(memberListRvAdapter);
 
-            memberFilter.setName(mf.getName());
-            memberFilter.setRelationship(mf.getRelationship());
-            memberFilter.setEvent(mf.getEvent());
             memberFilter.setGender(mf.getGender());
             memberFilter.setHeight(mf.getHeight());
             memberFilter.setBodyShape(mf.getBodyShape());

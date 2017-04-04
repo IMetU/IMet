@@ -4,24 +4,19 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="NameSize">20sp</dimen>
     <dimen name="PhoneNumberSize">18sp</dimen>
-    <dimen name="DetailTextSize">20sp</dimen>
-    <dimen name="DetailTopMargin">15dp</dimen>
-    <dimen name="DetailLeftTitleMargin">16dp</dimen>
-    <dimen name="DetailLeftContentMargin">150dp</dimen>
+    <dimen name="detail_width_margin">16dp</dimen>
+    <dimen name="detail_height_margin">12dp</dimen>
 
     <dimen name="card_corner_radius">8dp</dimen>
-    <dimen name="card_elevation">8dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
     <dimen name="grid_margin">4dp</dimen>
-    <dimen name="cell_margin">16dp</dimen>
-    <dimen name="grid_profile_height">90dp</dimen>
-    <dimen name="palette_height">60dp</dimen>
-    <dimen name="contact_detail_image_height">380dp</dimen>
-    <dimen name="contact_name_margin_top">0dp</dimen>
+    <dimen name="cell_margin">8dp</dimen>
+    <dimen name="contact_name_margin_bottom">8dp</dimen>
+    <dimen name="contact_name_margin_left">16dp</dimen>
     <dimen name="contact_name_text_size">24sp</dimen>
     <dimen name="contact_event_text_size">14sp</dimen>
     <dimen name="contact_details_phone_margin_top">8dp</dimen>
     <dimen name="fab_elevation">8dp</dimen>
-    <dimen name="grid_profile_width">160dp</dimen>
 
     <dimen name="dialog_top_margin">24dp</dimen>
     <dimen name="dialog_width_margin">24dp</dimen>

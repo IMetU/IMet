@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvMemberList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/grid_margin"
+        android:layout_marginRight="@dimen/grid_margin">
+    </android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabAddMember"

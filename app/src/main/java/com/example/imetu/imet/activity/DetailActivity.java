@@ -58,6 +58,10 @@ public class DetailActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(vpPager);
 
+        setPersonInfo();
+    }
+
+    private void setPersonInfo(){
         ivPhoto = (ImageView) findViewById(R.id.personImage);
         if(member.getImgPath() == null || member.getImgPath().equals("")){
             ivPhoto.setVisibility(View.GONE);
@@ -67,7 +71,6 @@ public class DetailActivity extends AppCompatActivity {
         tvName = (TextView) findViewById(R.id.personName);
         tvName.setText(member.getName());
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -97,7 +100,7 @@ public class DetailActivity extends AppCompatActivity {
             if(appearanceFragment != null) {
                 appearanceFragment.refresh(member);
             }
-            getSupportActionBar().setTitle(member.getName());
+            setPersonInfo();
             modifyFlag = true;
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -131,9 +134,9 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             if(position ==0){
-                return new InformationFragment(member);
+                return InformationFragment.newInstance(member);
             }else if(position ==1){
-                return new AppearanceFragment(member);
+                return AppearanceFragment.newInstance(member);
             }else{
                 return null;
             }

@@ -25,7 +25,7 @@
 
     <style name="text_contact_name">
         <item name="android:textSize">@dimen/contact_name_text_size</item>
-        <item name="android:textColor">@color/colorTextBlack</item>
+        <item name="android:textColor">@color/colorTextWhite</item>
         <item name="android:shadowDy">1.0</item>
         <item name="android:shadowRadius">1</item>
         <item name="android:shadowColor">#888</item>
@@ -33,7 +33,7 @@
 
     <style name="text_contact_event">
         <item name="android:textSize">@dimen/contact_event_text_size</item>
-        <item name="android:textColor">@color/colorTextBlack</item>
+        <item name="android:textColor">@color/colorTextWhite</item>
         <item name="android:shadowDy">1.0</item>
         <item name="android:shadowRadius">1</item>
         <item name="android:shadowColor">#888</item>

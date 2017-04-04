@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.example.imetu.imet.R;
 import com.example.imetu.imet.model.Member;
 
+import org.parceler.Parcels;
+
 public class InformationFragment extends Fragment {
 
     public View v;
@@ -32,11 +34,25 @@ public class InformationFragment extends Fragment {
     static final private int NUM_INFOS = 7;
     private Member member;
 
-    public InformationFragment(){}
-
-    public InformationFragment(Member m) {
-        member = m;
+    // newInstance constructor for creating fragment with arguments
+    public static InformationFragment newInstance(Member m) {
+        InformationFragment informationFragment = new InformationFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("member" , Parcels.wrap(m));
+        informationFragment.setArguments(args);
+        return informationFragment;
     }
+
+
+    // Store instance variables based on arguments passed
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        member = (Member) Parcels.unwrap(getArguments().getParcelable("member"));
+        sContent = new String[NUM_INFOS];
+        setMemberValue();
+    }
+
 
     //inflation logic
     @Nullable
@@ -68,14 +84,6 @@ public class InformationFragment extends Fragment {
         }
     }
 
-    //create lifecycle event
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        sContent = new String[NUM_INFOS];
-        setMemberValue();
-    }
-
     public void refresh(Member newMember) {
         member = newMember;
         setMemberValue();
@@ -101,5 +109,4 @@ public class InformationFragment extends Fragment {
             }
         }
     }
-
 }

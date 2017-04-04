@@ -31,6 +31,7 @@ import static com.example.imetu.imet.widget.Util.BODY_UNDEFINED;
 import static com.example.imetu.imet.widget.Util.GENDER_FEMALE;
 import static com.example.imetu.imet.widget.Util.GENDER_MALE;
 import static com.example.imetu.imet.widget.Util.GENDER_UNDEFINED;
+import static com.example.imetu.imet.widget.Util.GLASSES_UNDEFINED;
 import static com.example.imetu.imet.widget.Util.GLASSES_WITH;
 import static com.example.imetu.imet.widget.Util.GLASSES_WITHOUT;
 import static com.example.imetu.imet.widget.Util.HEIGHT_UNDEFINED;
@@ -45,6 +46,7 @@ public class FilterFragment extends DialogFragment implements Button.OnClickList
     @BindView(R.id.cbAny) CheckBox cbAny;
     @BindView(R.id.bodyShape_spinner) Spinner bodyShapeSpinner;
     @BindView(R.id.glasses_switch) Switch glassesSwitch;
+    @BindView(R.id.cbGlassesAny) CheckBox cbGlassAny;
 
     @BindView(R.id.fragment_filter) ObservableScrollView obsScrollView;
 
@@ -99,7 +101,9 @@ public class FilterFragment extends DialogFragment implements Button.OnClickList
 
             @Override
             public void getProgressOnActionUp(int progress, float progressFloat) {
-
+                if(cbAny.isChecked()){
+                    cbAny.setChecked(false);
+                }
             }
 
             @Override
@@ -115,10 +119,12 @@ public class FilterFragment extends DialogFragment implements Button.OnClickList
             }
         });
 
-        cbAny.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        glassesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
+                if(cbGlassAny.isChecked()){
+                    cbGlassAny.setChecked(false);
+                }
             }
         });
 
@@ -166,6 +172,7 @@ public class FilterFragment extends DialogFragment implements Button.OnClickList
                 glassesSwitch.setChecked(false);
                 break;
             default:
+                cbGlassAny.setChecked(true);
                 glassesSwitch.setChecked(false);
         }
     }
@@ -178,6 +185,7 @@ public class FilterFragment extends DialogFragment implements Button.OnClickList
                 bodyShapeSpinner.setSelection(0);
                 glassesSwitch.setChecked(false);
                 cbAny.setChecked(true);
+                cbGlassAny.setChecked(true);
                 break;
             case R.id.btnSearch:
                 FilterSearchListener searchListener = (FilterSearchListener) getActivity();
@@ -201,7 +209,7 @@ public class FilterFragment extends DialogFragment implements Button.OnClickList
                 memberFilter.setGender(GENDER_UNDEFINED);
         }
 
-        if(cbAny.isChecked() == true){
+        if(cbAny.isChecked()){
             memberFilter.setHeight(HEIGHT_UNDEFINED);
         }else {
             memberFilter.setHeight(seekbarHeightProgress);
@@ -222,10 +230,14 @@ public class FilterFragment extends DialogFragment implements Button.OnClickList
                 memberFilter.setBodyShape(BODY_UNDEFINED);
         }
 
-        if(glassesSwitch.isChecked()) {
-            memberFilter.setGlasses(GLASSES_WITH);
-        }else{
-            memberFilter.setGlasses(GLASSES_WITHOUT);
+        if(cbGlassAny.isChecked()){
+            memberFilter.setGlasses(GLASSES_UNDEFINED);
+        }else {
+            if (glassesSwitch.isChecked()) {
+                memberFilter.setGlasses(GLASSES_WITH);
+            } else {
+                memberFilter.setGlasses(GLASSES_WITHOUT);
+            }
         }
 
         return memberFilter;

@@ -47,6 +47,7 @@
                             android:id="@+id/radio_Male"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dialog_action_inter_margin"
                             android:text="@string/radioMale_StrID" />
                     </RadioGroup>
                 </RelativeLayout>
@@ -123,6 +124,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dialog_item_margin"
                         android:layout_centerVertical="true" />
+
+                    <CheckBox
+                        android:id="@+id/cbGlassesAny"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dialog_action_inter_margin"
+                        android:layout_toRightOf="@+id/glasses_switch"
+                        android:text="@string/checkboxAny_StrID" />
                 </RelativeLayout>
             </LinearLayout>
         

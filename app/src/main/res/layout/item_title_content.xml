@@ -2,14 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="@dimen/dialog_action_height">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/detail_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/DetailLeftTitleMargin"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/detail_height_margin"
+        android:layout_marginBottom="@dimen/detail_height_margin"
+        android:layout_marginStart="@dimen/detail_width_margin"
         tools:text="Phone"
         android:textAppearance="@android:style/TextAppearance.Holo.Widget.TextView" />
 
@@ -18,10 +19,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/detail_title"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="@dimen/detail_height_margin"
         android:gravity="end"
-        android:layout_marginStart="@dimen/DetailLeftTitleMargin"
-        android:layout_marginEnd="@dimen/DetailLeftTitleMargin"
+        android:layout_marginStart="@dimen/detail_width_margin"
+        android:layout_marginEnd="@dimen/detail_width_margin"
         android:layout_alignTop="@+id/detail_title"
         tools:text="0910000000"
         android:textAppearance="@android:style/TextAppearance.Widget.TextView" />
@@ -30,8 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/DetailLeftTitleMargin"
-        android:layout_marginRight="@dimen/DetailLeftTitleMargin"
+        android:layout_marginLeft="@dimen/detail_width_margin"
+        android:layout_marginRight="@dimen/detail_width_margin"
         android:background="#bebebe"/>
 
 </RelativeLayout>
