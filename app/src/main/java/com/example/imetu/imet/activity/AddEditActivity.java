@@ -14,6 +14,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -25,7 +26,6 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.example.imetu.imet.R;
@@ -151,8 +151,7 @@ public class AddEditActivity extends AppCompatActivity {
         } else {
             mAlbumStorageDirFactory = new BaseAlbumDirFactory();
         }
-
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setMemberValue() {
@@ -242,6 +241,9 @@ public class AddEditActivity extends AppCompatActivity {
                 return true;
             case R.id.menuTakePhoto:
                 AddEditActivityPermissionsDispatcher.takePhotoWithCheck(this);
+                return true;
+            case android.R.id.home:
+                this.finish();
                 return true;
             default:
                 return false;

@@ -70,6 +70,8 @@ public class DetailActivity extends AppCompatActivity {
         }
         tvName = (TextView) findViewById(R.id.personName);
         tvName.setText(member.getName());
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -79,8 +81,22 @@ public class DetailActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuEdit:
+                editClick();
+                return true;
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return false;
+        }
+    }
+
     //  edit action
-    public void editClick(MenuItem item) {
+    public void editClick() {
         Intent intent = new Intent(DetailActivity.this, AddEditActivity.class);
         intent.putExtra("TYPE", EDIT_MEMBER);
         intent.putExtra("id", member.getId());
