@@ -10,7 +10,9 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,9 +51,14 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
     private MemberFilter memberFilter;
     private String query;
 
+    private Display display;
+    private DisplayMetrics outMetrics ;
+    private float desity;
+    private float dpHeight;
+    private float dpWidth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         SharedPreferences mSettings = PreferenceManager.getDefaultSharedPreferences(this);
         String iMetUserId = mSettings.getString("iMetUserId", null);
 
@@ -91,29 +98,6 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
                     }
                 })
         );
-//
-//        //  long click event
-//        lvMemberList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                Member member = memberArrayAdapter.getItem(position);
-//                FragmentManager fm = getSupportFragmentManager();
-//                DeleteDialogFragment alertDialog = DeleteDialogFragment.newInstance(member);
-//                alertDialog.show(fm, "fragment_alert");
-//                return true;
-//            }
-//        });
-//        //  item click event
-//        lvMemberList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                // view detail
-//                Member member = memberArrayAdapter.getItem(position);
-//                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-//                intent.putExtra("id", member.getId());
-//                startActivityForResult(intent, REQUEST_CODE_DETAIL_VIEW);
-//            }
-//        });
 
         fabAddMember = (FloatingActionButton) findViewById(R.id.fabAddMember);
         fabAddMember.setOnClickListener(new View.OnClickListener() {

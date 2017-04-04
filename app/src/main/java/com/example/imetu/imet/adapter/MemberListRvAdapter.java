@@ -38,12 +38,14 @@ public class MemberListRvAdapter extends RecyclerView.Adapter<MemberListRvAdapte
         public TextView tvName;
         public TextView tvEvent;
         public View rootView;
+        public ImageView ivLocation;
         public ViewHolder(View itemView){
             super(itemView);
             rootView = itemView;
             ivPhoto = (ImageView)itemView.findViewById(R.id.ivProfile);
             tvName = (TextView)itemView.findViewById(R.id.tvName);
             tvEvent = (TextView)itemView.findViewById(R.id.tvEvent);
+            ivLocation = (ImageView)itemView.findViewById(R.id.ivLocation);
         }
     }
 
@@ -68,12 +70,14 @@ public class MemberListRvAdapter extends RecyclerView.Adapter<MemberListRvAdapte
         Member member = mMember.get(position);
         holder.rootView.setTag(member);
         holder.tvName.setText(member.getName());
-        if (member.getEvent().length() != 0 && member.getLocation().length() != 0){
-            holder.tvEvent.setText(member.getEvent() + "," + member.getLocation());
-        }else if (member.getEvent().length() != 0 && member.getLocation().length() == 0){
+        if (member.getEvent().length() != 0){
             holder.tvEvent.setText(member.getEvent());
-        }else if (member.getEvent().length() == 0 && member.getLocation().length() != 0){
+            holder.ivLocation.setVisibility(View.GONE);
+        }else if ( member.getLocation().length() != 0){
             holder.tvEvent.setText(member.getLocation());
+            holder.ivLocation.setVisibility(View.VISIBLE);
+        }else{
+            holder.ivLocation.setVisibility(View.GONE);
         }
 
         if (member.getImgPath() != null){

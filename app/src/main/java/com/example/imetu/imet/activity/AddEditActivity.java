@@ -115,16 +115,6 @@ public class AddEditActivity extends AppCompatActivity {
     private final String GEOCODING_API_URL = "https://maps.googleapis.com/maps/api/geocode/json?";
     private final String GEOCODING_API_KEY = ConfidentialUtil.GEOCODING_API_KEY;
 
-    private static final String BITMAP_STORAGE_KEY = "viewbitmap";
-    private static final String IMAGEVIEW_VISIBILITY_STORAGE_KEY = "imageviewvisibility";
-    private ImageView mImageView;
-    private Bitmap mImageBitmap;
-
-    private static final String VIDEO_STORAGE_KEY = "viewvideo";
-    private static final String VIDEOVIEW_VISIBILITY_STORAGE_KEY = "videoviewvisibility";
-    private VideoView mVideoView;
-    private Uri mVideoUri;
-
     private String mCurrentPhotoPath;
 
     private static final String JPEG_FILE_PREFIX = "IMG_";
@@ -385,14 +375,8 @@ public class AddEditActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == TAKE_PICTURE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-//                pictureBitmap = (Bitmap) data.getExtras().get("data");
                 Glide.with(AddEditActivity.this).load(mCurrentPhotoPath).transform(new CircleTransform(AddEditActivity.this)).into(ivPreview);
                 member.setImgPath(mCurrentPhotoPath);
-//                pictureBitmap = ImageHelper.getCroppedBitmap(pictureBitmap, 100);
-
-//                File photoDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-//                photoPath = photoDir + "/IMG_" + System.currentTimeMillis() + ".jpg";
-//                AddEditActivityPermissionsDispatcher.savePhotoWithCheck(this, photoPath);
             }
         }
     }
