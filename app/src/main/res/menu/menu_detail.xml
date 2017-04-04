@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menuEdit"
         android:title="@string/edit"
         android:icon="@drawable/ic_edit"
         android:orderInCategory="10"
-        app:showAsAction="ifRoom"
-        android:onClick="editClick"/>
+        app:showAsAction="ifRoom" />
 </menu>
