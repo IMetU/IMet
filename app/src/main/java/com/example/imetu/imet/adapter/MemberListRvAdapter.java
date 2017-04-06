@@ -1,13 +1,6 @@
 package com.example.imetu.imet.adapter;
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,17 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.imetu.imet.R;
-import com.example.imetu.imet.image.CircleTransform;
 import com.example.imetu.imet.model.Member;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static android.R.attr.resource;
 
 
 public class MemberListRvAdapter extends RecyclerView.Adapter<MemberListRvAdapter.ViewHolder> {
@@ -82,6 +68,8 @@ public class MemberListRvAdapter extends RecyclerView.Adapter<MemberListRvAdapte
 
         if (member.getImgPath() != null){
             Glide.with(mContext).load(member.getImgPath()).into(holder.ivPhoto);
+        }else{
+            Glide.with(mContext).load(R.mipmap.default_person).into(holder.ivPhoto);
         }
 
     }

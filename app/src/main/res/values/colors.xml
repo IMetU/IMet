@@ -11,6 +11,7 @@
     <color name="colorTextBlack">#000000</color>
     <color name="colorTextWhite">#FFFFFF</color>
 
-    <color name="cardviewTextBackground">#bc424242</color>
+    <color name="grayLine">#bebebe</color>
+
 
 </resources>

@@ -14,7 +14,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -80,6 +80,7 @@ public class AddEditActivity extends AppCompatActivity {
 
     ObservableScrollView obsScrollView;
     ImageView ivPreview;
+    TextInputLayout nameLayout;
     EditText etName;
     EditText etPhone;
     EditText etEmail;
@@ -256,74 +257,80 @@ public class AddEditActivity extends AppCompatActivity {
             member.setId(ADD_MEMBER);
         }
 
-        member.setName(etName.getText().toString());
-        member.setPhone(etPhone.getText().toString());
-        member.setEmail(etEmail.getText().toString());
-        member.setRelationship(etRelationship.getText().toString());
-        member.setEvent(etEvent.getText().toString());
-        member.setLocation(etLocation.getText().toString());
-        member.setYearMet(etYearMet.getText().toString());
-        member.setTopicDiscussed(etTopicDiscussed.getText().toString());
-        member.setOther(etOther.getText().toString());
+        if(etName.length() == 0){
+            nameLayout.setError("Can't leave this empty");
+        }else {
 
-        switch (genderRadioGroup.getCheckedRadioButtonId()) {
-            case R.id.radio_Male:
-                member.setGender(GENDER_MALE);
-                break;
-            case R.id.radio_Female:
-                member.setGender(GENDER_FEMALE);
-                break;
-            default:
-                member.setGender(GENDER_UNDEFINED);
+            member.setName(etName.getText().toString());
+            member.setPhone(etPhone.getText().toString());
+            member.setEmail(etEmail.getText().toString());
+            member.setRelationship(etRelationship.getText().toString());
+            member.setEvent(etEvent.getText().toString());
+            member.setLocation(etLocation.getText().toString());
+            member.setYearMet(etYearMet.getText().toString());
+            member.setTopicDiscussed(etTopicDiscussed.getText().toString());
+            member.setOther(etOther.getText().toString());
+
+            switch (genderRadioGroup.getCheckedRadioButtonId()) {
+                case R.id.radio_Male:
+                    member.setGender(GENDER_MALE);
+                    break;
+                case R.id.radio_Female:
+                    member.setGender(GENDER_FEMALE);
+                    break;
+                default:
+                    member.setGender(GENDER_UNDEFINED);
+            }
+
+            member.setHeight(seekbarHeightProgress);
+
+            switch (spinnerBodyShape.getSelectedItem().toString()) {
+                case "Thin":
+                    member.setBodyShape(BODY_THIN);
+                    break;
+                case "Medium":
+                    member.setBodyShape(BODY_MEDIUM);
+                    break;
+                case "Plump":
+                    member.setBodyShape(BODY_PLUMP);
+                    break;
+                default:
+                    member.setBodyShape(BODY_UNDEFINED);
+            }
+
+            switch (spinnerHairLength.getSelectedItem().toString()) {
+                case "Short":
+                    member.setHairLength(HAIR_SHORT);
+                    break;
+                case "Medium":
+                    member.setHairLength(HAIR_MEDIUM);
+                    break;
+                case "Long":
+                    member.setHairLength(HAIR_LONG);
+                    break;
+                default:
+                    member.setHairLength(HAIR_UNDEFINED);
+            }
+
+            member.setPermed(checkbox_Permed.isChecked() ? true : false);
+            member.setDyed(checkbox_Dyed.isChecked() ? true : false);
+
+            if (switchGlasses.isChecked()) {
+                member.setGlasses(GLASSES_WITH);
+            } else {
+                member.setGlasses(GLASSES_WITHOUT);
+            }
+
+            dbEngine.editMember(member);
+
+            setResult(RESULT_OK);
+            finish();
         }
-
-        member.setHeight(seekbarHeightProgress);
-
-        switch (spinnerBodyShape.getSelectedItem().toString()) {
-            case "Thin":
-                member.setBodyShape(BODY_THIN);
-                break;
-            case "Medium":
-                member.setBodyShape(BODY_MEDIUM);
-                break;
-            case "Plump":
-                member.setBodyShape(BODY_PLUMP);
-                break;
-            default:
-                member.setBodyShape(BODY_UNDEFINED);
-        }
-
-        switch (spinnerHairLength.getSelectedItem().toString()) {
-            case "Short":
-                member.setHairLength(HAIR_SHORT);
-                break;
-            case "Medium":
-                member.setHairLength(HAIR_MEDIUM);
-                break;
-            case "Long":
-                member.setHairLength(HAIR_LONG);
-                break;
-            default:
-                member.setHairLength(HAIR_UNDEFINED);
-        }
-
-        member.setPermed(checkbox_Permed.isChecked() ? true : false);
-        member.setDyed(checkbox_Dyed.isChecked() ? true : false);
-
-        if (switchGlasses.isChecked()) {
-            member.setGlasses(GLASSES_WITH);
-        } else {
-            member.setGlasses(GLASSES_WITHOUT);
-        }
-
-        dbEngine.editMember(member);
-
-        setResult(RESULT_OK);
-        finish();
     }
 
     private void setView() {
         ivPreview = (ImageView) findViewById(R.id.addEditImage);
+        nameLayout = (TextInputLayout)findViewById(R.id.til_et_name);
         etName = (EditText) findViewById(R.id.etName);
         etPhone = (EditText) findViewById(R.id.etPhone);
         etEmail = (EditText) findViewById(R.id.etEmail);

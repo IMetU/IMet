@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/grid_margin"
-        android:layout_marginRight="@dimen/grid_margin">
+        android:layout_marginRight="@dimen/grid_margin"
+        android:layout_marginBottom="@dimen/cell_margin">
     </android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.FloatingActionButton

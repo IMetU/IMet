@@ -38,17 +38,17 @@
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/radio_Female"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/radioFemale_StrID" />
-
-                        <RadioButton
                             android:id="@+id/radio_Male"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dialog_action_inter_margin"
                             android:text="@string/radioMale_StrID" />
+
+                        <RadioButton
+                            android:id="@+id/radio_Female"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dialog_action_inter_margin"
+                            android:text="@string/radioFemale_StrID" />
                     </RadioGroup>
                 </RelativeLayout>
 

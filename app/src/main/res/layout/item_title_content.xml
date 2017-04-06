@@ -34,6 +34,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="@dimen/detail_width_margin"
         android:layout_marginRight="@dimen/detail_width_margin"
-        android:background="#bebebe"/>
+        android:background="@color/grayLine"/>
 
 </RelativeLayout>
