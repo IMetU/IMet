@@ -76,7 +76,7 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dialog_item_height">
+                    android:layout_height="@dimen/add_item_height">
                     <TextView
                         android:id="@+id/tvGender"
                         android:layout_width="wrap_content"
@@ -107,16 +107,16 @@
                     </RadioGroup>
                 </RelativeLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/add_card_item_left_margin"
-                    android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:background="@color/grayLine"/>
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_marginLeft="@dimen/add_card_item_left_margin"-->
+                    <!--android:layout_marginRight="@dimen/activity_vertical_margin"-->
+                    <!--android:background="@color/grayLine"/>-->
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dialog_item_height">
+                    android:layout_height="@dimen/add_item_height">
                     <TextView
                         android:id="@+id/tvHeight"
                         android:layout_width="wrap_content"
@@ -142,16 +142,16 @@
                         app:bsb_track_color="@color/colorPrimaryDark" />
                 </RelativeLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/add_card_item_left_margin"
-                    android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:background="@color/grayLine"/>
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_marginLeft="@dimen/add_card_item_left_margin"-->
+                    <!--android:layout_marginRight="@dimen/activity_vertical_margin"-->
+                    <!--android:background="@color/grayLine"/>-->
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dialog_item_height">
+                    android:layout_height="@dimen/add_item_height">
                     <TextView
                         android:id="@+id/tvBodyShape"
                         android:layout_width="wrap_content"
@@ -168,16 +168,16 @@
                         android:entries="@array/bodyshape_array" />
                 </RelativeLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/add_card_item_left_margin"
-                    android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:background="@color/grayLine"/>
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_marginLeft="@dimen/add_card_item_left_margin"-->
+                    <!--android:layout_marginRight="@dimen/activity_vertical_margin"-->
+                    <!--android:background="@color/grayLine"/>-->
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dialog_item_height">
+                    android:layout_height="@dimen/add_item_height">
 
                     <TextView
                         android:id="@+id/tvHair"
@@ -215,16 +215,16 @@
                         android:text="@string/checkboxDyedHair_StrID" />
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/add_card_item_left_margin"
-                    android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:background="@color/grayLine"/>
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_marginLeft="@dimen/add_card_item_left_margin"-->
+                    <!--android:layout_marginRight="@dimen/activity_vertical_margin"-->
+                    <!--android:background="@color/grayLine"/>-->
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dialog_item_height">
+                    android:layout_height="@dimen/add_item_height">
                     <TextView
                         android:id="@+id/tvGlasses"
                         android:layout_width="wrap_content"
@@ -240,12 +240,12 @@
                         android:layout_marginLeft="@dimen/dialog_item_margin" />
                 </RelativeLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/add_card_item_left_margin"
-                    android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:background="@color/grayLine"/>
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_marginLeft="@dimen/add_card_item_left_margin"-->
+                    <!--android:layout_marginRight="@dimen/activity_vertical_margin"-->
+                    <!--android:background="@color/grayLine"/>-->
 
                 <TextView
                     android:id="@+id/tvOther"

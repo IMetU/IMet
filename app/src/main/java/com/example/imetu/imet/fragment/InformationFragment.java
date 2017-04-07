@@ -20,7 +20,7 @@ public class InformationFragment extends Fragment {
     private ViewGroup vgInformation[];
     private TextView tvTitle[];
     private TextView tvContent[];
-    private String sTitle[] = {"Phone", "Email", "Relationship", "Event", "Location", "Year Met","TopicDiscussed"};
+    private String sTitle[] = {"Phone", "Email", "Relationship", "Event", "Location", "Date Met","Topic Discussed"};
     private String sContent[];
 
     private int vgInformationId[] = { R.id.phone,

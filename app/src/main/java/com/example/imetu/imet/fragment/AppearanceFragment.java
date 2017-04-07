@@ -35,7 +35,7 @@ public class AppearanceFragment  extends Fragment {
     private ViewGroup vgInformation[];
     private TextView tvTitle[];
     private TextView tvContent[];
-    private String sTitle[] = {"Gender", "Height", "bodyShape", "Hair", "Glasses", "Other"};
+    private String sTitle[] = {"Gender", "Height", "Body", "Hair", "Glasses", "Other"};
     private String sContent[];
 
     private int vgInformationId[] = { R.id.gender,

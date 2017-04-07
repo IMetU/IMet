@@ -32,4 +32,5 @@
     <dimen name="add_card_item_left_margin">72dp</dimen>
     <dimen name="add_card_item_left_margin_large">88dp</dimen>
     <dimen name="image_top_margin">16dp</dimen>
+    <dimen name="add_item_height">60dp</dimen>
 </resources>

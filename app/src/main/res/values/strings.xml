@@ -13,7 +13,7 @@
     <string name="tvRelationship_StrID">Relationship</string>
     <string name="tvEvent_StrID">Event</string>
     <string name="tvLocation_StrID">Location</string>
-    <string name="tvYearMet_StrID">Year Met</string>
+    <string name="tvYearMet_StrID">Date Met</string>
     <string name="tvTopicDiscussed_StrID">Topic Discussed</string>
     <string name="tvGender_StrID">Gender</string>
     <string name="tvHeight_StrID">Height</string>
