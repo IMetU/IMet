@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -19,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -384,12 +386,50 @@ public class AddEditActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == TAKE_PICTURE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                Glide.with(AddEditActivity.this).load(mCurrentPhotoPath).transform(new CircleTransform(AddEditActivity.this)).into(ivPreview);
-                member.setImgPath(mCurrentPhotoPath);
+
+                setPic();
+                File photoDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+                photoPath = photoDir + "/IMG_" + System.currentTimeMillis() + ".jpg";
+                AddEditActivityPermissionsDispatcher.savePhotoWithCheck(this, photoPath);
+
+//                Glide.with(AddEditActivity.this).load(mCurrentPhotoPath).transform(new CircleTransform(AddEditActivity.this)).into(ivPreview);
+                Glide.with(AddEditActivity.this).load(photoPath).transform(new CircleTransform(AddEditActivity.this)).into(ivPreview);
+
+                member.setImgPath(photoPath);
             }
         }
     }
+    private void setPic() {
 
+		/* There isn't enough memory to open up more than a couple camera photos */
+		/* So pre-scale the target bitmap into which the file is decoded */
+
+		/* Get the size of the ImageView */
+        int targetW = 400;
+        int targetH = 400;
+
+		/* Get the size of the image */
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+		/* Figure out which way needs to be reduced less */
+        int scaleFactor = 1;
+        if ((targetW > 0) || (targetH > 0)) {
+            scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+        }
+
+		/* Set bitmap options to scale the image decode target */
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+		/* Decode the JPEG file into a Bitmap */
+        pictureBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+
+    }
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString("ImgPath", member.getImgPath());
