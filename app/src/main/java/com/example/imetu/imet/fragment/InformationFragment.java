@@ -81,6 +81,7 @@ public class InformationFragment extends Fragment {
             vgInformation[idx].setVisibility(View.GONE);
         }else {
             tvContent[idx].setText(sContent[idx]);
+            vgInformation[idx].setVisibility(View.VISIBLE);
         }
     }
 
@@ -105,6 +106,7 @@ public class InformationFragment extends Fragment {
             if(sContent[idx] == null || sContent[idx].equals("")){
                 vgInformation[idx].setVisibility(View.GONE);
             }else {
+                vgInformation[idx].setVisibility(View.VISIBLE);
                 tvContent[idx].setText(sContent[idx]);
             }
         }

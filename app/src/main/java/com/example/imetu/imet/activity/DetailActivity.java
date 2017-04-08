@@ -63,9 +63,11 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setPersonInfo(){
         ivPhoto = (ImageView) findViewById(R.id.personImage);
+
         if(member.getImgPath() == null || member.getImgPath().equals("")){
             ivPhoto.setVisibility(View.GONE);
         }else {
+            ivPhoto.setVisibility(View.VISIBLE);
             Glide.with(this).load(member.getImgPath()).transform(new CircleTransform(this)).into(ivPhoto);
         }
         tvName = (TextView) findViewById(R.id.personName);
@@ -88,7 +90,10 @@ public class DetailActivity extends AppCompatActivity {
                 editClick();
                 return true;
             case android.R.id.home:
-                this.finish();
+                if(modifyFlag) {
+                    setResult(RESULT_OK);
+                }
+                finish();
                 return true;
             default:
                 return false;

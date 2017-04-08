@@ -94,6 +94,7 @@ public class AppearanceFragment  extends Fragment {
             vgInformation[idx].setVisibility(View.GONE);
         }else {
             tvContent[idx].setText(sContent[idx]);
+            vgInformation[idx].setVisibility(View.VISIBLE);
         }
     }
 
@@ -168,6 +169,7 @@ public class AppearanceFragment  extends Fragment {
                 vgInformation[idx].setVisibility(View.GONE);
             }else {
                 tvContent[idx].setText(sContent[idx]);
+                vgInformation[idx].setVisibility(View.VISIBLE);
             }
         }
     }
