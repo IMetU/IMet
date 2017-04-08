@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -111,9 +112,17 @@ public class DetailActivity extends AppCompatActivity {
     //  edit action
     public void editClick() {
         Intent intent = new Intent(DetailActivity.this, AddEditActivity.class);
+
         intent.putExtra("TYPE", EDIT_MEMBER);
         intent.putExtra("id", member.getId());
-        startActivityForResult(intent, REQUEST_CODE_EDIT_MEMBER);
+
+        if(member.getImgPath() != null && !member.getImgPath().isEmpty()) {
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(this, (View) ivPhoto, "profileDetailEdit");
+            startActivityForResult(intent, REQUEST_CODE_EDIT_MEMBER, options.toBundle());
+        } else{
+            startActivityForResult(intent, REQUEST_CODE_EDIT_MEMBER);
+        }
     }
 
     @Override

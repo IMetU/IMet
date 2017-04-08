@@ -16,6 +16,7 @@
 
         <ImageView
             android:id="@+id/personImage"
+            android:transitionName="profileDetailEdit"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginTop="@dimen/image_top_margin"

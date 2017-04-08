@@ -49,6 +49,7 @@
 
             <ImageView
                 android:id="@+id/addEditImage"
+                android:transitionName="profileDetailEdit"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginLeft="24dp"

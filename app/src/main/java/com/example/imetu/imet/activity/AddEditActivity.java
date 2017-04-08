@@ -258,7 +258,11 @@ public class AddEditActivity extends AppCompatActivity {
                 AddEditActivityPermissionsDispatcher.takePhotoWithCheck(this);
                 return true;
             case android.R.id.home:
-                this.finish();
+                if(member.getImgPath() != null && !member.getImgPath().isEmpty()) {
+                    supportFinishAfterTransition();
+                }else{
+                    finish();
+                }
                 return true;
             default:
                 return false;
@@ -339,7 +343,11 @@ public class AddEditActivity extends AppCompatActivity {
             dbEngine.editMember(member);
 
             setResult(RESULT_OK);
-            finish();
+            if(member.getImgPath() != null && !member.getImgPath().isEmpty()) {
+                supportFinishAfterTransition();
+            }else{
+                finish();
+            }
         }
     }
 
