@@ -6,17 +6,20 @@
         android:icon="@drawable/ic_search"
         android:orderInCategory="5"
         app:showAsAction="ifRoom"
-        app:actionViewClass="android.support.v7.widget.SearchView" />
+        app:actionViewClass="android.support.v7.widget.SearchView"/>
     <item
-        android:title="@string/reset"
-        android:icon="@drawable/ic_undo"
-        android:orderInCategory="10"
-        app:showAsAction="ifRoom"
-        android:onClick="resetClick"/>
-    <item
+        android:id="@+id/menuFilter"
         android:title="@string/filter"
         android:icon="@drawable/ic_filter"
         android:orderInCategory="10"
         app:showAsAction="ifRoom"
         android:onClick="filterClick"/>
+    <item
+        android:id="@+id/menuFilterRemove"
+        android:title="@string/filter"
+        android:icon="@drawable/ic_filter_remove"
+        android:orderInCategory="10"
+        app:showAsAction="ifRoom"
+        android:visible="false"
+        android:onClick="resetClick"/>
 </menu>

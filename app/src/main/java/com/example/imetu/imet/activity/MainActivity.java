@@ -10,9 +10,8 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.DisplayMetrics;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +32,9 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import static com.example.imetu.imet.widget.Util.ADD_MEMBER;
+import static com.example.imetu.imet.widget.Util.BODY_UNDEFINED;
+import static com.example.imetu.imet.widget.Util.GLASSES_UNDEFINED;
+import static com.example.imetu.imet.widget.Util.HEIGHT_UNDEFINED;
 import static com.example.imetu.imet.widget.Util.REQUEST_ADVANCE_SEARCH;
 
 public class MainActivity extends BaseActivity implements FilterFragment.FilterSearchListener, FilterAdvanceSearchListener {
@@ -52,11 +54,10 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
     private MemberFilter memberFilter;
     private String query;
 
-    private Display display;
-    private DisplayMetrics outMetrics ;
-    private float desity;
-    private float dpHeight;
-    private float dpWidth;
+    private Toolbar toolbar;
+    private MenuItem searchMenuItem;
+    private MenuItem filterMenuItem;
+    private MenuItem filterRemoveMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,13 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Find the toolbar view inside the activity layout
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
+        setSupportActionBar(toolbar);
+
         dbEngine = new DBEngine(iMetUserId);
         memberFilter = new MemberFilter();
         rvMemberList = (RecyclerView) findViewById(R.id.rvMemberList);
@@ -130,8 +138,13 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem searchItem = menu.findItem(R.id.menuSearch);
-        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        searchMenuItem = menu.findItem(R.id.menuSearch);
+        filterMenuItem =  menu.findItem(R.id.menuFilter);
+        filterRemoveMenuItem = menu.findItem(R.id.menuFilterRemove);
+
+
+        searchView = (SearchView) MenuItemCompat.getActionView(searchMenuItem);
         if (query != null && !query.isEmpty()) {
             searchView.onActionViewExpanded();
             searchView.setQuery(query, true);
@@ -177,6 +190,9 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
 
     // reset action
     public void resetClick(MenuItem item) {
+        searchMenuItem.setVisible(true);
+        filterMenuItem.setVisible(true);
+        filterRemoveMenuItem.setVisible(false);
         getAllDataSetView();
     }
 
@@ -234,5 +250,14 @@ public class MainActivity extends BaseActivity implements FilterFragment.FilterS
         memberListRvAdapter = new MemberListRvAdapter(MainActivity.this, memberArrayList);
         //  set adapter to listview
         rvMemberList.setAdapter(memberListRvAdapter);
+
+        if( (memberFilter.getGender() != GLASSES_UNDEFINED)
+                || (memberFilter.getHeight() != HEIGHT_UNDEFINED)
+                || (memberFilter.getBodyShape() != BODY_UNDEFINED)
+                || (memberFilter.getGlasses() != GLASSES_UNDEFINED)) {
+            searchMenuItem.setVisible(false);
+            filterMenuItem.setVisible(false);
+            filterRemoveMenuItem.setVisible(true);
+        }
     }
 }
