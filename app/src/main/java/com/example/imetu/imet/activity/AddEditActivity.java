@@ -20,6 +20,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -64,7 +66,6 @@ import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
-import static com.example.imetu.imet.R.id.toolbar;
 import static com.example.imetu.imet.widget.Util.ADD_MEMBER;
 import static com.example.imetu.imet.widget.Util.BODY_MEDIUM;
 import static com.example.imetu.imet.widget.Util.BODY_PLUMP;
@@ -271,6 +272,7 @@ public class AddEditActivity extends AppCompatActivity {
         }
 
         if(etName.length() == 0){
+            nameLayout.setErrorEnabled(true);
             nameLayout.setError("Can't leave this empty");
         }else {
 
@@ -344,6 +346,33 @@ public class AddEditActivity extends AppCompatActivity {
     private void setView() {
         ivPreview = (ImageView) findViewById(R.id.addEditImage);
         nameLayout = (TextInputLayout)findViewById(R.id.til_et_name);
+
+        nameLayout.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() < 1) {
+                    nameLayout.setErrorEnabled(true);
+                    nameLayout.setError("Can't leave this empty");
+                }
+
+                if (s.length() > 0) {
+                    nameLayout.setError(null);
+                    nameLayout.setErrorEnabled(false);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         etName = (EditText) findViewById(R.id.etName);
         etPhone = (EditText) findViewById(R.id.etPhone);
         etEmail = (EditText) findViewById(R.id.etEmail);
