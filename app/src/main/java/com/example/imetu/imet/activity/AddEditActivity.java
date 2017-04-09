@@ -199,7 +199,7 @@ public class AddEditActivity extends AppCompatActivity {
         menuTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
- //               AddEditActivityPermissionsDispatcher.takePhotoWithCheck(this);  //TODO
+                AddEditActivityPermissionsDispatcher.takePhotoWithCheck(AddEditActivity.this);
             }
         });
 
@@ -290,9 +290,6 @@ public class AddEditActivity extends AppCompatActivity {
             case R.id.menuSave:
                 saveClick();
                 return true;
-        //    case R.id.menuTakePhoto:  //TODO
-         //       AddEditActivityPermissionsDispatcher.takePhotoWithCheck(this);
-          //      return true;
             case android.R.id.home:
                 if(member.getImgPath() != null && !member.getImgPath().isEmpty()) {
                     supportFinishAfterTransition();
