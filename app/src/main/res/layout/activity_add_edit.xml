@@ -10,6 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
         android:layout_marginBottom="@dimen/activity_vertical_margin">
 
         <include
@@ -37,6 +38,7 @@
                 app:errorEnabled="true">
                 <EditText
                     android:id="@+id/etName"
+                    android:transitionName="nameDetailEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
@@ -67,8 +69,7 @@
                 android:layout_marginLeft="24dp"
                 android:layout_alignBottom="@id/addEditImage"
                 android:layout_alignRight="@id/addEditImage"
-                android:background="@drawable/ic_photo" />
-
+                android:src="@mipmap/photo" />
             </RelativeLayout>
         </LinearLayout>
 

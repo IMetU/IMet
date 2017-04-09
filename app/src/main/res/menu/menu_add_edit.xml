@@ -7,10 +7,10 @@
         android:icon="@drawable/ic_save"
         android:orderInCategory="10"
         app:showAsAction="ifRoom" />
- <!--   <item
-        android:id="@+id/menuTakePhoto"
-        android:title="TakePhoto"
-        android:icon="@drawable/ic_photo"
-        android:orderInCategory="5"
-        app:showAsAction="ifRoom" />-->
+    <!--<item-->
+        <!--android:id="@+id/menuTakePhoto"-->
+        <!--android:title="TakePhoto"-->
+        <!--android:icon="@drawable/ic_photo"-->
+        <!--android:orderInCategory="5"-->
+        <!--app:showAsAction="ifRoom" />-->
 </menu>

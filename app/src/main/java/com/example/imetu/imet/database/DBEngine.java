@@ -161,6 +161,13 @@ public class DBEngine implements DBInterface {
                 .from(MemberTable.class)
                 .where(MemberTable_Table.name.like('%'+querystring+'%'))
                 .or(MemberTable_Table.event.like('%'+querystring+'%'))
+                .or(MemberTable_Table.other.like('%'+querystring+'%'))
+                .or(MemberTable_Table.phone.like('%'+querystring+'%'))
+                .or(MemberTable_Table.email.like('%'+querystring+'%'))
+                .or(MemberTable_Table.relationship.like('%'+querystring+'%'))
+                .or(MemberTable_Table.location.like('%'+querystring+'%'))
+                .or(MemberTable_Table.yearMet.like('%'+querystring+'%'))
+                .or(MemberTable_Table.topicDiscussed.like('%'+querystring+'%'))
                 .orderBy(name, true)
                 .queryList();
 

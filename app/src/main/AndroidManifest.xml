@@ -35,8 +35,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.TakePhoto" />
         <activity android:name=".activity.ImagePreview" />
-        <activity android:name=".activity.AddEditActivity"
-            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".activity.AddEditActivity" />
     </application>
 
 </manifest>
