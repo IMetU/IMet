@@ -55,7 +55,9 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
@@ -144,6 +146,25 @@ public class AddEditActivity extends AppCompatActivity {
         type = getIntent().getIntExtra("TYPE", ADD_MEMBER);
         if (type == ADD_MEMBER) {
             member = new Member();
+            Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            String monthWithZero;
+            if(month+1 < 10){
+                monthWithZero = "0"+String.valueOf(month+1);
+            } else {
+                monthWithZero = String.valueOf(month+1);
+            }
+            int day = c.get(Calendar.DATE);
+            String dayWithZero;
+            if(day < 10){
+                dayWithZero = "0"+String.valueOf(day);
+            } else {
+                dayWithZero = String.valueOf(day);
+            }
+            StringBuilder sb = new StringBuilder();
+            sb.append(year).append("-").append(monthWithZero).append("-").append(dayWithZero);
+            etYearMet.setText(sb.toString());
             AddEditActivityPermissionsDispatcher.getGPSWithCheck(this);
         } else {
             member = dbEngine.selectOne(getIntent().getIntExtra("id", 0));
