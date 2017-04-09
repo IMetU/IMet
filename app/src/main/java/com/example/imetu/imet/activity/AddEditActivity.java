@@ -1,6 +1,7 @@
 package com.example.imetu.imet.activity;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +26,8 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -68,6 +71,7 @@ import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
+import static com.example.imetu.imet.R.id.menuTakePhoto;
 import static com.example.imetu.imet.widget.Util.ADD_MEMBER;
 import static com.example.imetu.imet.widget.Util.BODY_MEDIUM;
 import static com.example.imetu.imet.widget.Util.BODY_PLUMP;
@@ -108,6 +112,8 @@ public class AddEditActivity extends AppCompatActivity {
     Switch switchGlasses;
     CheckBox checkbox_Permed;
     CheckBox checkbox_Dyed;
+
+    ImageView menuTakePhoto;
 
     private DBEngine dbEngine;
     private Member member;
@@ -188,6 +194,15 @@ public class AddEditActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        menuTakePhoto = (ImageView) findViewById(R.id.menuTakePhoto);
+        menuTakePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+ //               AddEditActivityPermissionsDispatcher.takePhotoWithCheck(this);  //TODO
+            }
+        });
+
     }
 
     private void setMemberValue() {
@@ -275,9 +290,9 @@ public class AddEditActivity extends AppCompatActivity {
             case R.id.menuSave:
                 saveClick();
                 return true;
-            case R.id.menuTakePhoto:
-                AddEditActivityPermissionsDispatcher.takePhotoWithCheck(this);
-                return true;
+        //    case R.id.menuTakePhoto:  //TODO
+         //       AddEditActivityPermissionsDispatcher.takePhotoWithCheck(this);
+          //      return true;
             case android.R.id.home:
                 if(member.getImgPath() != null && !member.getImgPath().isEmpty()) {
                     supportFinishAfterTransition();

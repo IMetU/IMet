@@ -47,6 +47,10 @@
                     android:inputType="textPersonName" />
             </android.support.design.widget.TextInputLayout>
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/addEditImage"
                 android:transitionName="profileDetailEdit"
@@ -55,6 +59,17 @@
                 android:layout_marginLeft="24dp"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 app:srcCompat="@mipmap/default_person" />
+
+            <ImageView
+                android:id="@+id/menuTakePhoto"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="24dp"
+                android:layout_alignBottom="@id/addEditImage"
+                android:layout_alignRight="@id/addEditImage"
+                android:background="@drawable/ic_photo" />
+
+            </RelativeLayout>
         </LinearLayout>
 
 
