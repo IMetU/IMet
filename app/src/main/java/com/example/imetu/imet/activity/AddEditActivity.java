@@ -271,7 +271,6 @@ public class AddEditActivity extends AppCompatActivity {
                 switchGlasses.setChecked(false);
         }
 
-
         if (member.getImgPath() != null) {
             Glide.with(AddEditActivity.this).load(member.getImgPath()).transform(new CircleTransform(AddEditActivity.this)).into(ivPreview);
         }
